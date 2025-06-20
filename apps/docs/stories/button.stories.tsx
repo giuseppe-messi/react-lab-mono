@@ -1,14 +1,14 @@
+import { Button } from "@react-lab-mono/ui/button";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "@acme/ui/button";
 
 const meta: Meta<typeof Button> = {
   component: Button,
   argTypes: {
     type: {
       control: { type: "radio" },
-      options: ["button", "submit", "reset"],
-    },
-  },
+      options: ["button", "submit", "reset"]
+    }
+  }
 };
 
 export default meta;
@@ -40,7 +40,7 @@ export const Primary: Story = {
       color: "blue",
       border: "1px solid gray",
       padding: 10,
-      borderRadius: 10,
-    },
-  },
+      borderRadius: 10
+    }
+  }
 };

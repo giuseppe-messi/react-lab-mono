@@ -15,25 +15,31 @@ module.exports = {
   extends: [
     "@vercel/style-guide/eslint/browser",
     "@vercel/style-guide/eslint/typescript",
-    "@vercel/style-guide/eslint/react",
+    "@vercel/style-guide/eslint/react"
   ].map(require.resolve),
   parserOptions: {
-    project,
+    project
   },
   plugins: ["only-warn"],
   globals: {
-    JSX: true,
+    JSX: true
   },
   settings: {
     "import/resolver": {
       typescript: {
-        project,
-      },
-    },
+        project
+      }
+    }
   },
   ignorePatterns: ["node_modules/", "dist/", ".eslintrc.js", "**/*.css"],
   // add rules configurations here
   rules: {
     "import/no-default-export": "off",
-  },
+
+    // removes rule related to naming file cases
+    "unicorn/filename-case": "off",
+
+    // removes rule for having a return function type (ts will infer anyway)
+    "@typescript-eslint/explicit-function-return-type": "off"
+  }
 };
