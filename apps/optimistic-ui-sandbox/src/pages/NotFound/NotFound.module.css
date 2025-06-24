@@ -1,0 +1,7 @@
+.container {
+  text-align: center;
+}
+
+.container > h2 {
+  margin-bottom: var(--space-lg);
+}

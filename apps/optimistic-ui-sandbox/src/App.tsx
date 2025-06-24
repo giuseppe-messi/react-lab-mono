@@ -1,19 +1,19 @@
-import { ControlsPanel } from "./components/ControlsPanel/ControlsPanel";
-import { Footer } from "./components/Footer/Footer";
-import { Header } from "./components/Header/Header";
-import { ResourceList } from "./components/ResourceList/ResourceList";
+import NotFound from "./pages/NotFound/NotFound";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
+import { Home } from "./pages/Home/Home";
 import "./App.css";
 
 function App() {
   return (
-    <div className="app">
-      <Header />
-      <div className="main">
-        <ControlsPanel />
-        <ResourceList />
-      </div>
-      <Footer />
-    </div>
+    <ErrorBoundary>
+      <Router>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </ErrorBoundary>
   );
 }
 
