@@ -8,12 +8,14 @@ import {
   useMemo,
   memo
 } from "react";
+import { useAutoComplete } from "../../hooks/useAutoComplete";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useThrottleCallback } from "../../hooks/useThrottleCallback";
 import styles from "./Autocomplete.module.css";
 
 interface Props<T> {
-  options: T[];
+  fetcher: (query: string, page: number) => Promise<T[]>;
+  // options: T[];
   value: string;
   getOptionLabel: (option: T) => string;
   getOptionKey: (option: T) => string | number;
@@ -24,18 +26,25 @@ interface Props<T> {
 }
 
 export function AutocompleteInner<T>({
-  options,
+  fetcher,
+  // options,
   value,
   getOptionLabel,
   getOptionKey,
   onChange,
-  onOpen,
-  onLoadMore,
+  // onOpen,
+  // onLoadMore,
   placeholder = "Type to search…"
 }: Props<T>): ReactElement {
   const [highlight, setHighlight] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const {
+    items: options,
+    loadMore,
+    reloadLast
+  } = useAutoComplete(fetcher, value, 300);
 
   // hook that given a ref element, fires callback when clicking
   // outside that element
@@ -44,7 +53,7 @@ export function AutocompleteInner<T>({
   });
 
   const throttledLoadMore = useThrottleCallback(() => {
-    onLoadMore?.();
+    loadMore();
   }, 400);
 
   // callback when reached the end of the dropdown
@@ -74,9 +83,9 @@ export function AutocompleteInner<T>({
   );
 
   const openDropdown = useCallback(() => {
-    onOpen?.();
+    reloadLast();
     setIsOpen(true);
-  }, [onOpen]);
+  }, [reloadLast]);
 
   // a few key handlers for navigating the dropdown
   // which sets the correct highlight item in the list

@@ -1,0 +1,12 @@
+footer {
+  padding: var(--space-sm);
+  text-align: right;
+  color: var(--color-light-white);
+  font-size: small;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    font-size: 0.8rem;
+  }
+}

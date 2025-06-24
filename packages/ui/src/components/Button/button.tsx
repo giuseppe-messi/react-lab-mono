@@ -1,14 +1,29 @@
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-}
+import React from "react";
+import "./Button.css";
 
-export function Button({ children, ...other }: ButtonProps): JSX.Element {
+export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  text: string;
+  variant?: "primary" | "secondary";
+  onClick: () => void;
+};
+
+const VARIANT_CLASS: Record<string, string> = {
+  primary: "button--primary",
+  secondary: "button--secondary"
+};
+
+export const Button: React.FC<Props> = ({
+  variant = "primary",
+  className = "",
+  text,
+  onClick,
+  ...props
+}) => {
+  const classes = ["button", VARIANT_CLASS[variant], className].join(" ");
+
   return (
-    <button type="button" {...other}>
-      {children}
+    <button className={classes} onClick={onClick} {...props}>
+      {text}
     </button>
   );
-}
-
-Button.displayName = "Button";
+};

@@ -1,0 +1,11 @@
+.resourceList {
+  flex: 1;
+  background-color: cadetblue;
+}
+
+.resourceList h4 {
+  text-align: center;
+  padding: var(--space-md);
+  color: var(--color-primary);
+  font-weight: 500;
+}

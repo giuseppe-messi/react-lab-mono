@@ -39,7 +39,7 @@ module.exports = {
     // removes rule related to naming file cases
     "unicorn/filename-case": "off",
 
-    // removes rule for having a return function type (ts will infer anyway)
+    // removes rule for having a return function type (ts will infer anyway, most times at least)
     "@typescript-eslint/explicit-function-return-type": "off"
   }
 };
