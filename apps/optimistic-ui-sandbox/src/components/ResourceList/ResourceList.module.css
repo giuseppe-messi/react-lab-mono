@@ -1,4 +1,5 @@
 .resourceList {
+  display: flex;
   flex: 1;
   background-color: cadetblue;
 }

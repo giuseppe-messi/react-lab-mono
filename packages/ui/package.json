@@ -5,14 +5,19 @@
   "license": "MIT",
   "exports": {
     "./button": {
-      "types": "./dist/Button/button.tsx",
-      "import": "./dist/Button/Button.mjs",
-      "require": "./dist/Button/Button.js"
+      "types": "./dist/components/Button/button.tsx",
+      "import": "./dist/components/Button/Button.mjs",
+      "require": "./dist/components/Button/Button.js"
     },
     "./autocomplete": {
-      "types": "./dist/Autocomplete/Autocomplete.tsx",
-      "import": "./dist/Autocomplete/Autocomplete.mjs",
-      "require": "./dist/Autocomplete/Autocomplete.js"
+      "types": "./dist/components/Autocomplete/Autocomplete.tsx",
+      "import": "./dist/components/Autocomplete/Autocomplete.mjs",
+      "require": "./dist/components/Autocomplete/Autocomplete.js"
+    },
+    "./useOnClickOutside": {
+      "types": "./dist/hooks/useOnClickOutside.d.ts",
+      "import": "./dist/hooks/useOnClickOutside.mjs",
+      "require": "./dist/hooks/useOnClickOutside.js"
     }
   },
   "scripts": {

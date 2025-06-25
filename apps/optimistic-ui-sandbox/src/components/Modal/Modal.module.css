@@ -1,0 +1,28 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-light-white);
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  gap: var(--space-md);
+  transform: translate(-50%, -50%);
+  width: 455px;
+  max-width: 90%;
+  max-height: 80%;
+  padding: var(--space-lg);
+  color: var(--color-primary);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0; /* (top:0; right:0; bottom:0; left:0) */
+  background-color: #00000047;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}

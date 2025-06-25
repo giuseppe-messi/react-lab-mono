@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { nanoid } from "nanoid";
 
-type Todo = {
+export type Todo = {
   id: string;
   label: string;
 };
