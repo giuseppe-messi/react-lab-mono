@@ -1,4 +1,5 @@
 import styles from "./AddTodoModal.module.css";
+import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
 
 type AddTodoModalProps = {
@@ -28,8 +29,8 @@ export const AddTodoModal = ({
           required
         />
         <div className={styles.modalActions}>
-          <button type="submit">Add</button>
-          <button onClick={handleHideModal}>Close</button>
+          <Button type="submit" text="Add" />
+          <Button text="Close" onClick={handleHideModal} />
         </div>
       </form>
     </Modal>

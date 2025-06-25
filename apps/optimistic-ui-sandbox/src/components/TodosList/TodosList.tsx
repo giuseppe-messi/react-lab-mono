@@ -1,5 +1,6 @@
 import styles from "./TodosList.module.css";
-import { CloseIcon } from "../CloseIcon/CloseIcon";
+import { TodoItem } from "../TodoItem/TodoItem";
+import { useCallback, useState } from "react";
 import { useTodosStore, type Todo } from "../../stores/todosStore";
 
 type TodosListProps = {
@@ -7,19 +8,29 @@ type TodosListProps = {
 };
 
 export const TodosList = ({ todos }: TodosListProps) => {
-  const { deleteTodo } = useTodosStore();
+  const [editingId, setEditingId] = useState("");
+  const { deleteTodo, editTodoLabel } = useTodosStore();
+
+  const handleEditingId = useCallback((id: string) => setEditingId(id), []);
+
+  const handleUpdateTodo = useCallback(
+    (id: string, label: string) => {
+      editTodoLabel(id, label);
+      setEditingId("");
+    },
+    [editTodoLabel]
+  );
 
   return (
     <ul className={styles.todoList}>
       {todos.map((todo) => (
-        <li key={todo.id} className={styles.todoListItem} tabIndex={0}>
-          <span className={styles.todoListLabel}>{todo.label}</span>
-
-          <CloseIcon
-            aria-label={`delete ${todo.label}`}
-            onClose={() => deleteTodo(todo.id)}
-          />
-        </li>
+        <TodoItem
+          todo={todo}
+          editingId={editingId}
+          onEditingId={handleEditingId}
+          onDeleteTodo={deleteTodo}
+          onUpdateTodo={handleUpdateTodo}
+        />
       ))}
     </ul>
   );

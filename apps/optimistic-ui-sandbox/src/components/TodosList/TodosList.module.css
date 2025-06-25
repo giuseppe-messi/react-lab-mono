@@ -6,29 +6,3 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-
-.todoListItem {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  padding: 1rem;
-  margin-bottom: var(--space-sm);
-}
-
-.todoListItem:hover {
-  background: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.todoListItem:focus {
-  outline: 2px solid var(--input-focus);
-  outline-offset: 2px;
-}
-
-.todoListLabel {
-  color: var(--color-primary);
-}

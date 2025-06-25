@@ -27,7 +27,9 @@ export const Modal = ({ title, showModal, onClose, children }: ModalProps) => {
             aria-describedby="modal-desc"
           >
             <div ref={nodeRef} className={styles.modal} tabIndex={-1}>
-              {onClose && <CloseIcon onClose={onClose} />}
+              {onClose && (
+                <CloseIcon className={styles.closeIcon} onClose={onClose} />
+              )}
               <header>
                 <h2>{title}</h2>
               </header>

@@ -1,9 +1,6 @@
 .closeIcon {
-  font-size: 2rem;
+  font-size: 30px;
   font-weight: bold;
   color: var(--color-light-red);
-  position: absolute;
-  top: 0;
-  right: 10px;
   cursor: pointer;
 }

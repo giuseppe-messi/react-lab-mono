@@ -1,0 +1,11 @@
+.card {
+  display: flex;
+  justify-content: center;
+}
+
+.inputsBox {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 30px;
+  flex-wrap: wrap;
+}

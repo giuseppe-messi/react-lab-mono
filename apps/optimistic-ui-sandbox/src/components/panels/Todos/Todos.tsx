@@ -1,6 +1,10 @@
+import styles from "./Todos.module.css";
 import { AddTodoModal } from "../../AddTodoModal/AddTodoModal";
-import { Card } from "../../Card/Card";
+import { Box } from "../../Box/Box";
+import { Button } from "../../Button/Button";
+import { FilterTodos } from "../../FilterTodos/FilterTodos";
 import { TodosList } from "../../TodosList/TodosList";
+import { Typography } from "../../Typography/Typography";
 import { useCallback, useRef, useState } from "react";
 import { useTodosStore } from "../../../stores/todosStore";
 
@@ -25,10 +29,13 @@ export const Todos = () => {
   const handleHideModal = useCallback(() => setShowModal(false), []);
 
   return (
-    <Card size="md">
-      <h4>Todos</h4>
+    <Box>
+      <Typography type="h3">Todos</Typography>
 
-      <button onClick={() => setShowModal(true)}>Add</button>
+      <Box className={styles.header}>
+        <Typography type="body">Add a new todo</Typography>
+        <Button onClick={() => setShowModal(true)} text="Add" />
+      </Box>
 
       <AddTodoModal
         showModal={showModal}
@@ -37,7 +44,8 @@ export const Todos = () => {
         handleHideModal={handleHideModal}
       />
 
+      <FilterTodos />
       <TodosList todos={todos} />
-    </Card>
+    </Box>
   );
 };
