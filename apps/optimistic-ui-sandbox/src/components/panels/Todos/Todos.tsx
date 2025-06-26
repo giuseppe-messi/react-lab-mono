@@ -3,13 +3,15 @@ import { AddTodoModal } from "../../AddTodoModal/AddTodoModal";
 import { Box } from "../../Box/Box";
 import { Button } from "../../Button/Button";
 import { FilterTodos } from "../../FilterTodos/FilterTodos";
+import { selectFilteredTodos, useTodosStore } from "../../../stores/todosStore";
 import { TodosList } from "../../TodosList/TodosList";
 import { Typography } from "../../Typography/Typography";
 import { useCallback, useRef, useState } from "react";
-import { useTodosStore } from "../../../stores/todosStore";
+import { useShallow } from "zustand/shallow";
 
 export const Todos = () => {
-  const { todos, addTodo } = useTodosStore();
+  const filteredTodos = useTodosStore(useShallow(selectFilteredTodos));
+  const addTodo = useTodosStore((state) => state.addTodo);
   const [showModal, setShowModal] = useState(false);
   const valueRef = useRef<HTMLInputElement | null>(null);
 
@@ -30,11 +32,11 @@ export const Todos = () => {
 
   return (
     <Box>
-      <Typography type="h3">Todos</Typography>
+      <Typography type="h2">Todos</Typography>
 
       <Box className={styles.header}>
         <Typography type="body">Add a new todo</Typography>
-        <Button onClick={() => setShowModal(true)} text="Add" />
+        <Button size="sm" onClick={() => setShowModal(true)} text="Add" />
       </Box>
 
       <AddTodoModal
@@ -45,7 +47,10 @@ export const Todos = () => {
       />
 
       <FilterTodos />
-      <TodosList todos={todos} />
+      <TodosList todos={filteredTodos} />
+      <Typography type="body" className={styles.total}>
+        Total todos: {filteredTodos.length}
+      </Typography>
     </Box>
   );
 };

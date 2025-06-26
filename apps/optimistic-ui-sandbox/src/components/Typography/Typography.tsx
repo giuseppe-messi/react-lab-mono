@@ -4,12 +4,17 @@ type TypographyTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body";
 
 type TypographyProps = {
   type: TypographyTag;
+  className?: string;
   children: ReactNode;
 };
 
-export const Typography = ({ type, children }: TypographyProps) => {
+export const Typography = ({ type, className, children }: TypographyProps) => {
   const Tag = type === "body" ? "p" : type;
   const style = type !== "body" ? { textAlign: "center" as const } : undefined;
 
-  return <Tag style={style}>{children}</Tag>;
+  return (
+    <Tag className={className} style={style}>
+      {children}
+    </Tag>
+  );
 };

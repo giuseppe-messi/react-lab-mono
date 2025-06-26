@@ -1,3 +1,4 @@
+import { Box } from "../Box/Box";
 import { useCallback } from "react";
 import { useResourceStore } from "../../stores/resourceStore";
 import { RESOURCE_OPTIONS, type ResourceOption } from "../../interfaces";
@@ -12,7 +13,7 @@ export const ResourceSelect = () => {
   );
 
   return (
-    <div>
+    <Box>
       <label htmlFor="resource-select">Choose a resource:</label>
       <select
         id="resource-select"
@@ -30,6 +31,6 @@ export const ResourceSelect = () => {
           </option>
         ))}
       </select>
-    </div>
+    </Box>
   );
 };

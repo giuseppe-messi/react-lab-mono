@@ -1,16 +1,18 @@
 import styles from "./FilterTodos.module.css";
 import { Box } from "../Box/Box";
-import { useCallback, useState, type ChangeEvent } from "react";
-
-type FilterTypes = "all" | "active" | "completed";
+import { useShallow } from "zustand/shallow";
+import { useTodosStore, type FilterType } from "../../stores/todosStore";
+import { useCallback, type ChangeEvent } from "react";
 
 export const FilterTodos = () => {
-  const [filter, setFilter] = useState<FilterTypes>("all");
+  const [filter, setFilter] = useTodosStore(
+    useShallow((state) => [state.filter, state.setFilter])
+  );
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) =>
-      setFilter(e.target.value as FilterTypes),
-    []
+      setFilter(e.target.value as FilterType),
+    [setFilter]
   );
 
   return (

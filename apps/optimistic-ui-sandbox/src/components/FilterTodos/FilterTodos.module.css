@@ -1,6 +1,8 @@
 .card {
   display: flex;
   justify-content: center;
+  background: #f8f8ff8a;
+  border-radius: var(--app-radius);
 }
 
 .inputsBox {
@@ -8,4 +10,8 @@
   justify-content: space-evenly;
   gap: 30px;
   flex-wrap: wrap;
+}
+
+.inputsBox input {
+  cursor: pointer;
 }

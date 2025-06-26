@@ -1,6 +1,6 @@
 import styles from "./EmojiIcon.module.css";
 import type { HTMLAttributes, ReactNode } from "react";
-type EmojiType = "check" | "edit";
+type EmojiType = "check" | "edit" | "lightning" | "alert";
 
 type EmojiIconProps = HTMLAttributes<HTMLDivElement> & {
   type: EmojiType;
@@ -10,7 +10,9 @@ type EmojiIconProps = HTMLAttributes<HTMLDivElement> & {
 
 const emojiMap: Record<EmojiType, ReactNode> = {
   check: "✅",
-  edit: "✏️"
+  edit: "✏️",
+  lightning: "⚡",
+  alert: "⚠️"
 };
 
 export const EmojiIcon = ({

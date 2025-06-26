@@ -19,7 +19,7 @@ export const TodoItem = ({
   onUpdateTodo,
   onDeleteTodo
 }: TodoItemProps) => {
-  const { toggleTodoDone } = useTodosStore();
+  const toggleTodoDone = useTodosStore((state) => state.toggleTodoDone);
   const textInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -42,11 +42,15 @@ export const TodoItem = ({
           name="label"
           aria-label="Edit todo label"
           ref={textInputRef}
-          className={`${styles.input} ${todo.done ? styles.done : ""}    `}
+          className={styles.input}
           defaultValue={todo.label}
         />
       ) : (
-        <span className={styles.todoListLabel}>{todo.label}</span>
+        <span
+          className={`${styles.todoListLabel} ${todo.done ? styles.done : ""}`}
+        >
+          {todo.label}
+        </span>
       )}
 
       <div className={styles.iconsBox}>
@@ -70,6 +74,7 @@ export const TodoItem = ({
           checked={todo.done}
           name="is todo done?"
           onChange={() => toggleTodoDone(todo.id)}
+          style={{ cursor: "pointer" }}
         />
 
         <CloseIcon

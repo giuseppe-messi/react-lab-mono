@@ -1,6 +1,7 @@
 import styles from "./AddTodoModal.module.css";
 import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
+import { useEffect } from "react";
 
 type AddTodoModalProps = {
   showModal: boolean;
@@ -15,6 +16,12 @@ export const AddTodoModal = ({
   handleAddTodo,
   handleHideModal
 }: AddTodoModalProps) => {
+  useEffect(() => {
+    if (showModal && valueRef.current) {
+      valueRef.current.focus();
+    }
+  }, [showModal, valueRef]);
+
   return (
     <Modal title="New Todo" showModal={showModal} onClose={handleHideModal}>
       <form className={styles.modalForm} onSubmit={handleAddTodo}>

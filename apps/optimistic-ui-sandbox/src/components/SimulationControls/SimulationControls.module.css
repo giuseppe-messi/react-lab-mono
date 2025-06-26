@@ -1,0 +1,10 @@
+.switchesBox {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.switchesBox > label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}

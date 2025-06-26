@@ -1,5 +1,12 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-sm);
+}
+
+.total {
+  text-align: right;
+  padding-top: var(--space-md);
+  color: var(--color-primary);
 }

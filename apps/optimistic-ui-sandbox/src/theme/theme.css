@@ -33,7 +33,8 @@
   /* Typography */
   --font-size-base: 1rem;
 
-  /* Buttons */
+  /* Border radius */
+  --app-radius: 6px;
   --btn-radius: 4px;
 
   /* breakpoints */
@@ -60,7 +61,7 @@ h1 {
 }
 
 button {
-  border-radius: 5px;
+  border-radius: var(--app-radius);
   border: 1px solid transparent;
   padding: 0.3em 1.2em;
   font-size: 1em;
