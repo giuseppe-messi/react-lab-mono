@@ -2,8 +2,20 @@ import styles from "./SimulationControls.module.css";
 import { Box } from "../Box/Box";
 import { Button } from "../Button/Button";
 import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
+import { useControlsPanelStore } from "../../stores/useControlsPanelStore";
+import { useShallow } from "zustand/shallow";
 
 export const SimulationControls = () => {
+  const [mockLatency, mockError, toggleMockLatency, toggleMockError] =
+    useControlsPanelStore(
+      useShallow((state) => [
+        state.mockLatency,
+        state.mockError,
+        state.toggleMockLatency,
+        state.toggleMockError
+      ])
+    );
+
   return (
     <Box>
       <div className={styles.switchesBox}>
@@ -13,6 +25,8 @@ export const SimulationControls = () => {
             id="simulate-latency"
             name="simulateLatency"
             role="switch"
+            checked={mockLatency}
+            onChange={toggleMockLatency}
           />
           Latency <EmojiIcon type="lightning" />
         </label>
@@ -22,6 +36,8 @@ export const SimulationControls = () => {
             id="simulate-error"
             name="simulateError"
             role="switch"
+            checked={mockError}
+            onChange={toggleMockError}
           />
           Error <EmojiIcon type="alert" />
         </label>

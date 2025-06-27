@@ -2,7 +2,7 @@ import styles from "./TodosList.module.css";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { useCallback, useState } from "react";
 import { useShallow } from "zustand/shallow";
-import { useTodosStore, type Todo } from "../../stores/todosStore";
+import { useTodosStore, type Todo } from "../../stores/useTodosStore";
 
 type TodosListProps = {
   todos: Todo[];

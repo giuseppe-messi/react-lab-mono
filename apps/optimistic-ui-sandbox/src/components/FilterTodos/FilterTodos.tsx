@@ -1,7 +1,7 @@
 import styles from "./FilterTodos.module.css";
 import { Box } from "../Box/Box";
 import { useShallow } from "zustand/shallow";
-import { useTodosStore, type FilterType } from "../../stores/todosStore";
+import { useTodosStore, type FilterType } from "../../stores/useTodosStore";
 import { useCallback, type ChangeEvent } from "react";
 
 export const FilterTodos = () => {

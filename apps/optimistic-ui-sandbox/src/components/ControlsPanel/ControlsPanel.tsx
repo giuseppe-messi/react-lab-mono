@@ -1,6 +1,6 @@
 import styles from "./ControlsPanel.module.css";
 import { Box } from "../Box/Box";
-import { ResourceSelect } from "../ResourceSelect/ResourceSelect";
+import { CategorySelect } from "../CategorySelect/CategorySelect";
 import { SimulationControls } from "../SimulationControls/SimulationControls";
 import { Typography } from "../Typography/Typography";
 
@@ -9,7 +9,7 @@ export const ControlsPanel = () => {
     <aside className={styles.ctrlPanel} aria-label="Controls Panel">
       <Box>
         <Typography type="h2">Controls Panel</Typography>
-        <ResourceSelect />
+        <CategorySelect />
         <SimulationControls />
       </Box>
     </aside>

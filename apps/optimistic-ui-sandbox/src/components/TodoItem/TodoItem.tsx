@@ -2,7 +2,7 @@ import styles from "./TodoItem.module.css";
 import { CloseIcon } from "../CloseIcon/CloseIcon";
 import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
 import { useEffect, useRef } from "react";
-import { useTodosStore, type Todo } from "../../stores/todosStore";
+import { useTodosStore, type Todo } from "../../stores/useTodosStore";
 
 type TodoItemProps = {
   todo: Todo;
