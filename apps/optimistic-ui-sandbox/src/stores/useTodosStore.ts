@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { nanoid } from "nanoid";
 import { useControlsPanelStore } from "./useControlsPanelStore";
 
+const STORE_KEY = "todos-storage";
+
 type Setter = {
   (
     partial:
@@ -16,8 +18,6 @@ type Setter = {
   ): void;
 };
 
-const STORE_KEY = "todos-storage";
-
 const getStateFromStore = (): { todos: Todo[]; filter: FilterType } => {
   const raw = localStorage.getItem(STORE_KEY);
 
@@ -30,17 +30,18 @@ const getStateFromStore = (): { todos: Todo[]; filter: FilterType } => {
   }
 };
 
-export const updateStateToStore = (
+const updateLocalStore = (newState: { todos: Todo[]; filter: FilterType }) => {
+  const stringified = JSON.stringify(newState);
+  localStorage.setItem(STORE_KEY, stringified);
+};
+
+const syncZustandWithLocalStore = (
+  setter: Setter,
   newState: {
     todos: Todo[];
     filter: FilterType;
-  },
-  setter: Setter
-) => {
-  const stringified = JSON.stringify(newState);
-  localStorage.setItem(STORE_KEY, stringified);
-  setter((state) => ({ ...state, ...newState }));
-};
+  }
+) => setter((state) => ({ ...state, ...newState }));
 
 export type FilterType = "all" | "active" | "completed";
 
@@ -89,13 +90,17 @@ export const useTodosStore = create<StateProps>()((set) => ({
   addTodo: (label) => {
     const newTodo: Todo = { id: nanoid(), done: false, label };
     const store = getStateFromStore();
-    updateStateToStore({ ...store, todos: [...store.todos, newTodo] }, set);
+    const newStore = { ...store, todos: [...store.todos, newTodo] };
+    updateLocalStore(newStore);
+    syncZustandWithLocalStore(set, newStore);
   },
 
   deleteTodo: (id) => {
     const store = getStateFromStore();
     const newTodos = store.todos.filter((todo) => todo.id !== id);
-    updateStateToStore({ ...store, todos: newTodos }, set);
+    const newStore = { ...store, todos: newTodos };
+    updateLocalStore(newStore);
+    syncZustandWithLocalStore(set, newStore);
   },
 
   editTodoLabel: (id, label) => {
@@ -103,22 +108,26 @@ export const useTodosStore = create<StateProps>()((set) => ({
     const newTodos = store.todos.map((todo) =>
       todo.id === id ? { ...todo, label: label } : todo
     );
-    updateStateToStore({ ...store, todos: newTodos }, set);
+    const newStore = { ...store, todos: newTodos };
+    updateLocalStore(newStore);
+    syncZustandWithLocalStore(set, newStore);
   },
-  // set((state) => ({
-  // todos: state.todos.map((todo) =>
-  //   todo.id === id ? { ...todo, label: label } : todo
-  //   )
-  // })),
 
-  toggleTodoDone: (id) =>
-    set((state) => ({
-      todos: state.todos.map((todo) =>
-        todo.id === id ? { ...todo, done: !todo.done } : todo
-      )
-    })),
-
-  setFilter: (filter) => set(() => ({ filter: filter }))
+  toggleTodoDone: (id) => {
+    const store = getStateFromStore();
+    const newTodos = store.todos.map((todo) =>
+      todo.id === id ? { ...todo, done: !todo.done } : todo
+    );
+    const newStore = { ...store, todos: newTodos };
+    updateLocalStore(newStore);
+    syncZustandWithLocalStore(set, newStore);
+  },
+  setFilter: (filter) => {
+    const store = getStateFromStore();
+    const newStore = { ...store, filter };
+    updateLocalStore(newStore);
+    syncZustandWithLocalStore(set, newStore);
+  }
 }));
 
 export const selectFilteredTodos = (state: StateProps) => {
