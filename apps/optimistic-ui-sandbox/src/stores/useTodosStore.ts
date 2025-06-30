@@ -1,22 +1,10 @@
 import { create } from "zustand";
+import { HttpError } from "../utils/HttpError";
 import { nanoid } from "nanoid";
+import { subscribeWithSelector } from "zustand/middleware";
 import { useControlsPanelStore } from "./useControlsPanelStore";
 
-const STORE_KEY = "todos-storage";
-
-type Setter = {
-  (
-    partial:
-      | StateProps
-      | Partial<StateProps>
-      | ((state: StateProps) => StateProps | Partial<StateProps>),
-    replace?: false
-  ): void;
-  (
-    state: StateProps | ((state: StateProps) => StateProps),
-    replace: true
-  ): void;
-};
+export const STORE_KEY = "todos-storage";
 
 const getStateFromStore = (): { todos: Todo[]; filter: FilterType } => {
   const raw = localStorage.getItem(STORE_KEY);
@@ -29,19 +17,6 @@ const getStateFromStore = (): { todos: Todo[]; filter: FilterType } => {
     return { todos: [], filter: "all" };
   }
 };
-
-const updateLocalStore = (newState: { todos: Todo[]; filter: FilterType }) => {
-  const stringified = JSON.stringify(newState);
-  localStorage.setItem(STORE_KEY, stringified);
-};
-
-const syncZustandWithLocalStore = (
-  setter: Setter,
-  newState: {
-    todos: Todo[];
-    filter: FilterType;
-  }
-) => setter((state) => ({ ...state, ...newState }));
 
 export type FilterType = "all" | "active" | "completed";
 
@@ -64,71 +39,99 @@ type StateProps = {
   setFilter: (filter: FilterType) => void;
 };
 
-export const useTodosStore = create<StateProps>()((set) => ({
-  todos: [],
-  isLoading: false,
-  error: null,
-  filter: "all",
+const simulateApiControls = async (work: () => void) => {
+  const { mockLatency, mockError } = useControlsPanelStore.getState();
 
-  getTodos: async () => {
-    set({ isLoading: true });
-    const { mockLatency } = useControlsPanelStore.getState();
-
-    try {
-      if (mockLatency) {
-        // fake API delay
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-      }
-      set((state) => ({ ...state, ...getStateFromStore() }));
-    } catch (err) {
-      set({ error: err as Error });
-    } finally {
-      set({ isLoading: false });
-    }
-  },
-
-  addTodo: (label) => {
-    const newTodo: Todo = { id: nanoid(), done: false, label };
-    const store = getStateFromStore();
-    const newStore = { ...store, todos: [...store.todos, newTodo] };
-    updateLocalStore(newStore);
-    syncZustandWithLocalStore(set, newStore);
-  },
-
-  deleteTodo: (id) => {
-    const store = getStateFromStore();
-    const newTodos = store.todos.filter((todo) => todo.id !== id);
-    const newStore = { ...store, todos: newTodos };
-    updateLocalStore(newStore);
-    syncZustandWithLocalStore(set, newStore);
-  },
-
-  editTodoLabel: (id, label) => {
-    const store = getStateFromStore();
-    const newTodos = store.todos.map((todo) =>
-      todo.id === id ? { ...todo, label: label } : todo
-    );
-    const newStore = { ...store, todos: newTodos };
-    updateLocalStore(newStore);
-    syncZustandWithLocalStore(set, newStore);
-  },
-
-  toggleTodoDone: (id) => {
-    const store = getStateFromStore();
-    const newTodos = store.todos.map((todo) =>
-      todo.id === id ? { ...todo, done: !todo.done } : todo
-    );
-    const newStore = { ...store, todos: newTodos };
-    updateLocalStore(newStore);
-    syncZustandWithLocalStore(set, newStore);
-  },
-  setFilter: (filter) => {
-    const store = getStateFromStore();
-    const newStore = { ...store, filter };
-    updateLocalStore(newStore);
-    syncZustandWithLocalStore(set, newStore);
+  // mock api delay
+  if (mockLatency) {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
   }
-}));
+
+  // mock api error
+  if (mockError) {
+    throw new HttpError();
+  }
+
+  work();
+};
+
+const doAction = async (
+  set: (
+    partial:
+      | StateProps
+      | Partial<StateProps>
+      | ((state: StateProps) => StateProps | Partial<StateProps>),
+    replace?: false
+  ) => void,
+  work: () => void
+) => {
+  set({ isLoading: true });
+
+  try {
+    await simulateApiControls(work);
+  } catch (err) {
+    console.error(err);
+    set({ error: err as Error });
+  } finally {
+    set({ isLoading: false });
+  }
+};
+
+export const useTodosStore = create<StateProps>()(
+  subscribeWithSelector((set) => ({
+    todos: [],
+    isLoading: false,
+    error: null,
+    filter: "all",
+
+    getTodos: () => {
+      doAction(set, () => {
+        set((state) => ({ ...state, ...getStateFromStore() }));
+      });
+    },
+
+    addTodo: (label) => {
+      doAction(set, () => {
+        set((state) => ({
+          todos: [...state.todos, { id: nanoid(), done: false, label }]
+        }));
+      });
+    },
+
+    deleteTodo: (id) => {
+      doAction(set, () => {
+        set((state) => ({
+          todos: state.todos.filter((todo) => todo.id !== id)
+        }));
+      });
+    },
+
+    editTodoLabel: (id, label) => {
+      doAction(set, () => {
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id ? { ...todo, label: label } : todo
+          )
+        }));
+      });
+    },
+
+    toggleTodoDone: (id) => {
+      doAction(set, () => {
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id ? { ...todo, done: !todo.done } : todo
+          )
+        }));
+      });
+    },
+    setFilter: (filter) => {
+      set({
+        filter
+      });
+    }
+  }))
+);
 
 export const selectFilteredTodos = (state: StateProps) => {
   const { todos, filter } = state;

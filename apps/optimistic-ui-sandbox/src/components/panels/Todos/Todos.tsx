@@ -15,19 +15,16 @@ import { useShallow } from "zustand/shallow";
 
 export const Todos = () => {
   const filteredTodos = useTodosStore(useShallow(selectFilteredTodos));
-
-  console.log(" filteredTodos:", filteredTodos);
-
   const [getTodos, addTodo, isLoading] = useTodosStore(
     useShallow((state) => [state.getTodos, state.addTodo, state.isLoading])
   );
 
+  const [showModal, setShowModal] = useState(false);
+  const valueRef = useRef<HTMLInputElement | null>(null);
+
   useEffect(() => {
     getTodos();
   }, [getTodos]);
-
-  const [showModal, setShowModal] = useState(false);
-  const valueRef = useRef<HTMLInputElement | null>(null);
 
   const handleAddTodo = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
