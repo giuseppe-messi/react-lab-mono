@@ -2,6 +2,7 @@ import { CategoryList } from "../../components/CategoryList/CategoryList";
 import { ControlsPanel } from "../../components/ControlsPanel/ControlsPanel";
 import { Footer } from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
+import { Toaster } from "../../components/Toaster/Toaster";
 
 export const Home = () => (
   <div className="app">
@@ -11,5 +12,6 @@ export const Home = () => (
       <CategoryList />
     </div>
     <Footer />
+    <Toaster />
   </div>
 );
