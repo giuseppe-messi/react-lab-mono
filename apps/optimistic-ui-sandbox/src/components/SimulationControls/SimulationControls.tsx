@@ -6,15 +6,21 @@ import { useControlsPanelStore } from "../../stores/useControlsPanelStore";
 import { useShallow } from "zustand/shallow";
 
 export const SimulationControls = () => {
-  const [mockLatency, mockError, toggleMockLatency, toggleMockError] =
-    useControlsPanelStore(
-      useShallow((state) => [
-        state.mockLatency,
-        state.mockError,
-        state.toggleMockLatency,
-        state.toggleMockError
-      ])
-    );
+  const [
+    mockLatency,
+    mockError,
+    toggleMockLatency,
+    toggleMockError,
+    resetSimulations
+  ] = useControlsPanelStore(
+    useShallow((state) => [
+      state.mockLatency,
+      state.mockError,
+      state.toggleMockLatency,
+      state.toggleMockError,
+      state.resetSimulations
+    ])
+  );
 
   return (
     <Box>
@@ -48,6 +54,7 @@ export const SimulationControls = () => {
         type="button"
         name="reset-data"
         aria-label="Reset all data to initial state"
+        onClick={resetSimulations}
       />
     </Box>
   );

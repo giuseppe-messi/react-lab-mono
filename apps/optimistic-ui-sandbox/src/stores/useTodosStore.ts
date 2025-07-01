@@ -3,6 +3,7 @@ import { HttpError } from "../utils/HttpError";
 import { nanoid } from "nanoid";
 import { subscribeWithSelector } from "zustand/middleware";
 import { useControlsPanelStore } from "./useControlsPanelStore";
+import { useToastersStore } from "./useToastersStore";
 
 export const STORE_KEY = "todos-storage";
 
@@ -55,23 +56,34 @@ const simulateApiControls = async (work: () => void) => {
   work();
 };
 
-const doAction = async (
+type doActionMethodParams = {
   set: (
     partial:
       | StateProps
       | Partial<StateProps>
       | ((state: StateProps) => StateProps | Partial<StateProps>),
     replace?: false
-  ) => void,
-  work: () => void
-) => {
+  ) => void;
+  work: () => void;
+  onSucess?: () => void;
+  onError?: () => void;
+};
+
+const doAction = async ({
+  set,
+  work,
+  onSucess,
+  onError
+}: doActionMethodParams) => {
   set({ isLoading: true });
 
   try {
     await simulateApiControls(work);
+    onSucess?.();
   } catch (err) {
     console.error(err);
     set({ error: err as Error });
+    onError?.();
   } finally {
     set({ isLoading: false });
   }
@@ -85,44 +97,95 @@ export const useTodosStore = create<StateProps>()(
     filter: "all",
 
     getTodos: () => {
-      doAction(set, () => {
-        set((state) => ({ ...state, ...getStateFromStore() }));
+      doAction({
+        set,
+        work: () => {
+          set((state) => ({ ...state, ...getStateFromStore() }));
+        }
       });
     },
 
     addTodo: (label) => {
-      doAction(set, () => {
-        set((state) => ({
-          todos: [...state.todos, { id: nanoid(), done: false, label }]
-        }));
+      doAction({
+        set,
+        work: () => {
+          set((state) => ({
+            todos: [...state.todos, { id: nanoid(), done: false, label }]
+          }));
+        },
+        onSucess: () =>
+          useToastersStore
+            .getState()
+            .enQueueToast("sucess", "Todo added successfully!"),
+        onError: () => {
+          useToastersStore
+            .getState()
+            .enQueueToast("error", "Something went wrong! Todo not added!");
+        }
       });
     },
 
     deleteTodo: (id) => {
-      doAction(set, () => {
-        set((state) => ({
-          todos: state.todos.filter((todo) => todo.id !== id)
-        }));
+      doAction({
+        set,
+        work: () => {
+          set((state) => ({
+            todos: state.todos.filter((todo) => todo.id !== id)
+          }));
+        },
+        onSucess: () =>
+          useToastersStore
+            .getState()
+            .enQueueToast("sucess", "Todo deleted successfully!"),
+        onError: () =>
+          useToastersStore
+            .getState()
+            .enQueueToast("error", "Something went wrong! Todo not deleted!")
       });
     },
 
     editTodoLabel: (id, label) => {
-      doAction(set, () => {
-        set((state) => ({
-          todos: state.todos.map((todo) =>
-            todo.id === id ? { ...todo, label: label } : todo
-          )
-        }));
+      doAction({
+        set,
+        work: () => {
+          set((state) => ({
+            todos: state.todos.map((todo) =>
+              todo.id === id ? { ...todo, label: label } : todo
+            )
+          }));
+        },
+        onSucess: () =>
+          useToastersStore
+            .getState()
+            .enQueueToast("sucess", "Todo edited successfully!"),
+        onError: () =>
+          useToastersStore
+            .getState()
+            .enQueueToast("error", "Something went wrong! Todo not edited!")
       });
     },
 
     toggleTodoDone: (id) => {
-      doAction(set, () => {
-        set((state) => ({
-          todos: state.todos.map((todo) =>
-            todo.id === id ? { ...todo, done: !todo.done } : todo
-          )
-        }));
+      doAction({
+        set,
+        work: () => {
+          set((state) => ({
+            todos: state.todos.map((todo) =>
+              todo.id === id ? { ...todo, done: !todo.done } : todo
+            )
+          }));
+        },
+        onSucess: () =>
+          useToastersStore
+            .getState()
+            .enQueueToast("sucess", "Todo status was changed successfully!"),
+        onError: () =>
+          useToastersStore
+            .getState()
+            .enQueueToast(
+              "error",
+              "Something went wrong! Todo status wasn't changed!"
+            )
       });
     },
     setFilter: (filter) => {

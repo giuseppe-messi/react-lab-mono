@@ -1,4 +1,5 @@
 import styles from "./TodosList.module.css";
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { useCallback, useState } from "react";
 import { useShallow } from "zustand/shallow";
@@ -10,8 +11,12 @@ type TodosListProps = {
 
 export const TodosList = ({ todos }: TodosListProps) => {
   const [editingId, setEditingId] = useState("");
-  const [deleteTodo, editTodoLabel] = useTodosStore(
-    useShallow((state) => [state.deleteTodo, state.editTodoLabel])
+  const [deleteTodo, editTodoLabel, isLoading] = useTodosStore(
+    useShallow((state) => [
+      state.deleteTodo,
+      state.editTodoLabel,
+      state.isLoading
+    ])
   );
 
   const handleEditingId = useCallback((id: string) => setEditingId(id), []);
@@ -36,6 +41,7 @@ export const TodosList = ({ todos }: TodosListProps) => {
           onUpdateTodo={handleUpdateTodo}
         />
       ))}
+      {isLoading && <LoadingSpinner />}
     </ul>
   );
 };

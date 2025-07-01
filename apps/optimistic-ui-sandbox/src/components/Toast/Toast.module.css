@@ -1,6 +1,6 @@
 .box {
-  background-color: var(--color-light-white);
   padding: var(--space-sm);
+  margin-bottom: var(--space-sm);
   border-radius: var(--app-radius);
   animation: slideInDown 0.4s ease-out forwards;
 }

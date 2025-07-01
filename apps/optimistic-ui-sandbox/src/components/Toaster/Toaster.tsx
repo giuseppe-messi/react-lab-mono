@@ -11,7 +11,7 @@ export const Toaster = () => {
       {createPortal(
         <div className={styles.container}>
           {toastQueue.map((t) => (
-            <Toast key={t.id} text={t.text} type={t.type} />
+            <Toast key={t.id} text={t.text} type={t.type} id={t.id} />
           ))}
         </div>,
         document.body

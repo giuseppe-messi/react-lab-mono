@@ -1,9 +1,9 @@
 import styles from "./Toast.module.css";
 import { Typography } from "../Typography/Typography";
 import { useEffect, useState } from "react";
-import type { IToast } from "../../stores/useToastersStore";
+import { useToastersStore, type IToast } from "../../stores/useToastersStore";
 
-type ToastProps = Pick<IToast, "text" | "type"> & {
+type ToastProps = IToast & {
   delay?: number;
 };
 
@@ -13,8 +13,9 @@ const typeMap: Record<IToast["type"], string> = {
   warning: styles.warning
 };
 
-export const Toast = ({ text, type, delay = 2000 }: ToastProps) => {
+export const Toast = ({ text, type, id, delay = 2000 }: ToastProps) => {
   const [dismiss, setDismiss] = useState(false);
+  const deQueueToast = useToastersStore((state) => state.deQueueToast);
 
   useEffect(() => {
     const timeout = setTimeout(() => setDismiss(true), delay);
@@ -22,10 +23,19 @@ export const Toast = ({ text, type, delay = 2000 }: ToastProps) => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [delay]);
+  }, [delay, deQueueToast, id]);
+
+  const handleDequeue = () => {
+    if (dismiss) {
+      deQueueToast(id);
+    }
+  };
 
   return (
-    <div className={`${styles.box} ${dismiss && styles.exit} ${typeMap[type]}`}>
+    <div
+      className={`${styles.box} ${dismiss && styles.exit} ${typeMap[type]}`}
+      onAnimationEnd={handleDequeue}
+    >
       <Typography type="body">{text}</Typography>
     </div>
   );

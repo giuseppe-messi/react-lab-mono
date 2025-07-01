@@ -20,6 +20,7 @@ type StateProps = {
   setCategory: (newCategory: CategoryOption) => void;
   toggleMockLatency: () => void;
   toggleMockError: () => void;
+  resetSimulations: () => void;
 };
 
 export const useControlsPanelStore = create<StateProps>()(
@@ -33,7 +34,8 @@ export const useControlsPanelStore = create<StateProps>()(
         set((state) => ({ ...state, mockLatency: !state.mockLatency })),
       // set({mockLatency: !get().mockLatency })
       toggleMockError: () =>
-        set((state) => ({ ...state, mockError: !state.mockError }))
+        set((state) => ({ ...state, mockError: !state.mockError })),
+      resetSimulations: () => set({ mockError: false, mockLatency: false })
     }),
     {
       name: CATEGORY_STORE_KEY
