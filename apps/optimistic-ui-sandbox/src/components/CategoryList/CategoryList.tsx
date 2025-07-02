@@ -1,4 +1,5 @@
 import styles from "./CategoryList.module.css";
+import { Notes } from "../panels/Notes/Notes";
 import { Todos } from "../panels/Todos/Todos";
 import type { JSX } from "react";
 import {
@@ -8,7 +9,7 @@ import {
 
 const panels: Record<CategoryOption, JSX.Element> = {
   todos: <Todos />,
-  notes: <h4>notes</h4>,
+  notes: <Notes />,
   bookmarks: <h4>bookmarks</h4>,
   contacts: <h4>contacts</h4>
 };

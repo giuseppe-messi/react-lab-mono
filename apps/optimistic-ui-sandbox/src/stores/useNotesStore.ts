@@ -5,39 +5,39 @@ import { subscribeWithSelector } from "zustand/middleware";
 import { useControlsPanelStore } from "./useControlsPanelStore";
 import { useToastersStore } from "./useToastersStore";
 
-export const TODOS_STORE_KEY = "todos-storage";
+export const NOTES_STORE_KEY = "notes-storage";
 
-const getStateFromStore = (): { todos: Todo[]; filter: TodoFilterType } => {
-  const raw = localStorage.getItem(TODOS_STORE_KEY);
+const getStateFromStore = (): { notes: Note[]; filter: NoteFilterType } => {
+  const raw = localStorage.getItem(NOTES_STORE_KEY);
 
-  if (!raw) return { todos: [], filter: "all" };
+  if (!raw) return { notes: [], filter: "all" };
 
   try {
     return JSON.parse(raw);
   } catch {
-    return { todos: [], filter: "all" };
+    return { notes: [], filter: "all" };
   }
 };
 
-export type TodoFilterType = "all" | "active" | "completed";
+export type NoteFilterType = "all" | "active" | "completed";
 
-export type Todo = {
+export type Note = {
   id: string;
-  label: string;
+  text: string;
   done: boolean;
 };
 
 type StateProps = {
-  todos: Todo[];
+  notes: Note[];
   isLoading: boolean;
   error: Error | null;
-  filter: TodoFilterType;
-  getTodos: () => void;
-  addTodo: (label: string) => void;
-  deleteTodo: (id: string) => void;
-  editTodoLabel: (id: string, label: string) => void;
-  toggleTodoDone: (id: string) => void;
-  setFilter: (filter: TodoFilterType) => void;
+  filter: NoteFilterType;
+  getNotes: () => void;
+  addNote: (text: string) => void;
+  deleteNote: (id: string) => void;
+  editNoteText: (id: string, text: string) => void;
+  toggleNoteDone: (id: string) => void;
+  setFilter: (filter: NoteFilterType) => void;
 };
 
 const simulateApiControls = async () => {
@@ -94,7 +94,7 @@ const doAction = async ({
   }
 };
 
-let todosSnap: Todo[] | null = null;
+let notesSnap: Note[] | null = null;
 
 const enQueueErrorToast = (text: string) =>
   useToastersStore.getState().enQueueToast("error", text);
@@ -102,14 +102,14 @@ const enQueueErrorToast = (text: string) =>
 const enQueueSucessToast = (text: string) =>
   useToastersStore.getState().enQueueToast("sucess", text);
 
-export const useTodosStore = create<StateProps>()(
+export const useNotesStore = create<StateProps>()(
   subscribeWithSelector((set, get) => ({
-    todos: [],
+    notes: [],
     isLoading: false,
     error: null,
     filter: "all",
 
-    getTodos: async () => {
+    getNotes: async () => {
       set({ isLoading: true, error: null });
 
       doAction({
@@ -117,102 +117,102 @@ export const useTodosStore = create<StateProps>()(
         work: () => set((state) => ({ ...state, ...getStateFromStore() })),
         api: () => simulateApiControls(),
         onError: () =>
-          enQueueErrorToast("Something went wrong fetching the todos!"),
+          enQueueErrorToast("Something went wrong fetching the notes!"),
         onFinally: () => set({ isLoading: false })
       });
     },
 
-    addTodo: (label) => {
-      const newTodoId = nanoid();
+    addNote: (text) => {
+      const newNoteId = nanoid();
       doAction({
         set,
         work: () => {
           set((state) => ({
-            todos: [...state.todos, { id: newTodoId, done: false, label }]
+            notes: [...state.notes, { id: newNoteId, done: false, text }]
           }));
         },
         api: () => simulateApiControls(),
-        onSucess: () => enQueueSucessToast("Todo added successfully!"),
+        onSucess: () => enQueueSucessToast("Note added successfully!"),
         onError: () =>
-          enQueueErrorToast("Something went wrong! Todo not added!"),
+          enQueueErrorToast("Something went wrong! Note not added!"),
         rollback: () =>
           set((state) => ({
-            todos: state.todos.filter((todo) => todo.id !== newTodoId)
+            notes: state.notes.filter((note) => note.id !== newNoteId)
           }))
       });
     },
 
-    deleteTodo: (id) => {
-      const { todos } = get();
+    deleteNote: (id) => {
+      const { notes } = get();
 
-      if (!todosSnap) {
-        todosSnap = todos;
+      if (!notesSnap) {
+        notesSnap = notes;
       }
 
       doAction({
         set,
         work: () => {
           set((state) => ({
-            todos: state.todos.filter((todo) => todo.id !== id)
+            notes: state.notes.filter((note) => note.id !== id)
           }));
         },
         api: () => simulateApiControls(),
-        onSucess: () => enQueueSucessToast("Todo deleted successfully!"),
+        onSucess: () => enQueueSucessToast("Note deleted successfully!"),
         onError: () =>
-          enQueueErrorToast("Something went wrong! Todo not deleted!"),
+          enQueueErrorToast("Something went wrong! Note not deleted!"),
         rollback: () => {
-          if (todosSnap) {
+          if (notesSnap) {
             set({
-              todos: todosSnap
+              notes: notesSnap
             });
-            todosSnap = null;
+            notesSnap = null;
           }
         }
       });
     },
 
-    editTodoLabel: (id, label) => {
-      const { todos } = get();
-      const index = todos.findIndex((t) => t.id === id);
-      const currentTodo = todos[index];
+    editNoteText: (id, text) => {
+      const { notes } = get();
+      const index = notes.findIndex((t) => t.id === id);
+      const currentNote = notes[index];
 
-      const editTodo = (label: string) =>
+      const editNote = (text: string) =>
         set((state) => ({
-          todos: state.todos.map((todo) =>
-            todo.id === id ? { ...todo, label: label } : todo
+          notes: state.notes.map((note) =>
+            note.id === id ? { ...note, text } : note
           )
         }));
 
       doAction({
         set,
-        work: () => editTodo(label),
+        work: () => editNote(text),
         api: () => simulateApiControls(),
-        onSucess: () => enQueueSucessToast("Todo edited successfully!"),
+        onSucess: () => enQueueSucessToast("Note edited successfully!"),
         onError: () =>
-          enQueueErrorToast("Something went wrong! Todo not edited!"),
-        rollback: () => editTodo(currentTodo.label)
+          enQueueErrorToast("Something went wrong! Note not edited!"),
+        rollback: () => editNote(currentNote.text)
       });
     },
 
-    toggleTodoDone: (id) => {
-      const editTodo = () =>
+    toggleNoteDone: (id) => {
+      const editNote = () =>
         set((state) => ({
-          todos: state.todos.map((todo) =>
-            todo.id === id ? { ...todo, done: !todo.done } : todo
+          notes: state.notes.map((note) =>
+            note.id === id ? { ...note, done: !note.done } : note
           )
         }));
 
       doAction({
         set,
-        work: () => editTodo(),
+        work: () => editNote(),
         api: () => simulateApiControls(),
         onSucess: () =>
-          enQueueSucessToast("Todo status was changed successfully!"),
+          enQueueSucessToast("Note status was changed successfully!"),
         onError: () =>
           enQueueErrorToast(
-            "Something went wrong! Todo status wasn't changed!"
+            "Something went wrong! Note status wasn't changed!"
           ),
-        rollback: () => editTodo()
+        rollback: () => editNote()
       });
     },
     setFilter: (filter) => {
@@ -223,9 +223,9 @@ export const useTodosStore = create<StateProps>()(
   }))
 );
 
-export const selectFilteredTodos = (state: StateProps) => {
-  const { todos, filter } = state;
-  if (filter === "active") return todos.filter((t) => !t.done);
-  if (filter === "completed") return todos.filter((t) => t.done);
-  return todos;
+export const selectFilteredNotes = (state: StateProps) => {
+  const { notes, filter } = state;
+  if (filter === "active") return notes.filter((n) => !n.done);
+  if (filter === "completed") return notes.filter((n) => n.done);
+  return notes;
 };
