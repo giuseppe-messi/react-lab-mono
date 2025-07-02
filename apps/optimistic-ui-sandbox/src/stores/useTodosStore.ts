@@ -40,7 +40,7 @@ type StateProps = {
   setFilter: (filter: FilterType) => void;
 };
 
-const simulateApiControls = async (work: () => void) => {
+const simulateApiControls = async () => {
   const { mockLatency, mockError } = useControlsPanelStore.getState();
 
   // mock api delay
@@ -52,8 +52,6 @@ const simulateApiControls = async (work: () => void) => {
   if (mockError) {
     throw new HttpError();
   }
-
-  work();
 };
 
 type doActionMethodParams = {
@@ -65,67 +63,92 @@ type doActionMethodParams = {
     replace?: false
   ) => void;
   work: () => void;
+  api?: () => Promise<void>;
   onSucess?: () => void;
   onError?: () => void;
+  rollback?: () => void;
+  onFinally?: () => void;
 };
 
 const doAction = async ({
   set,
   work,
+  api,
   onSucess,
-  onError
+  onError,
+  rollback,
+  onFinally
 }: doActionMethodParams) => {
-  set({ isLoading: true });
-
+  set({ error: null });
   try {
-    await simulateApiControls(work);
+    work();
+    await api?.();
     onSucess?.();
   } catch (err) {
     console.error(err);
     set({ error: err as Error });
     onError?.();
+    rollback?.();
   } finally {
-    set({ isLoading: false });
+    onFinally?.();
   }
 };
 
+let todosSnap: Todo[] | null = null;
+
+const enQueueErrorToast = (text: string) =>
+  useToastersStore.getState().enQueueToast("error", text);
+
+const enQueueSucessToast = (text: string) =>
+  useToastersStore.getState().enQueueToast("sucess", text);
+
 export const useTodosStore = create<StateProps>()(
-  subscribeWithSelector((set) => ({
+  subscribeWithSelector((set, get) => ({
     todos: [],
     isLoading: false,
     error: null,
     filter: "all",
 
-    getTodos: () => {
+    getTodos: async () => {
+      set({ isLoading: true, error: null });
+
       doAction({
         set,
-        work: () => {
-          set((state) => ({ ...state, ...getStateFromStore() }));
-        }
+        work: () => set((state) => ({ ...state, ...getStateFromStore() })),
+        api: () => simulateApiControls(),
+        onError: () =>
+          enQueueErrorToast("Something went wrong fetching the todos!"),
+        onFinally: () => set({ isLoading: false })
       });
     },
 
     addTodo: (label) => {
+      const newTodoId = nanoid();
       doAction({
         set,
         work: () => {
           set((state) => ({
-            todos: [...state.todos, { id: nanoid(), done: false, label }]
+            todos: [...state.todos, { id: newTodoId, done: false, label }]
           }));
         },
-        onSucess: () =>
-          useToastersStore
-            .getState()
-            .enQueueToast("sucess", "Todo added successfully!"),
-        onError: () => {
-          useToastersStore
-            .getState()
-            .enQueueToast("error", "Something went wrong! Todo not added!");
-        }
+        api: () => simulateApiControls(),
+        onSucess: () => enQueueSucessToast("Todo added successfully!"),
+        onError: () =>
+          enQueueErrorToast("Something went wrong! Todo not added!"),
+        rollback: () =>
+          set((state) => ({
+            todos: state.todos.filter((todo) => todo.id !== newTodoId)
+          }))
       });
     },
 
     deleteTodo: (id) => {
+      const { todos } = get();
+
+      if (!todosSnap) {
+        todosSnap = todos;
+      }
+
       doAction({
         set,
         work: () => {
@@ -133,59 +156,63 @@ export const useTodosStore = create<StateProps>()(
             todos: state.todos.filter((todo) => todo.id !== id)
           }));
         },
-        onSucess: () =>
-          useToastersStore
-            .getState()
-            .enQueueToast("sucess", "Todo deleted successfully!"),
+        api: () => simulateApiControls(),
+        onSucess: () => enQueueSucessToast("Todo deleted successfully!"),
         onError: () =>
-          useToastersStore
-            .getState()
-            .enQueueToast("error", "Something went wrong! Todo not deleted!")
+          enQueueErrorToast("Something went wrong! Todo not deleted!"),
+        rollback: () => {
+          if (todosSnap) {
+            set({
+              todos: todosSnap
+            });
+            todosSnap = null;
+          }
+        }
       });
     },
 
     editTodoLabel: (id, label) => {
+      const { todos } = get();
+      const index = todos.findIndex((t) => t.id === id);
+      const currentTodo = todos[index];
+
+      const editTodo = (label: string) =>
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id ? { ...todo, label: label } : todo
+          )
+        }));
+
       doAction({
         set,
-        work: () => {
-          set((state) => ({
-            todos: state.todos.map((todo) =>
-              todo.id === id ? { ...todo, label: label } : todo
-            )
-          }));
-        },
-        onSucess: () =>
-          useToastersStore
-            .getState()
-            .enQueueToast("sucess", "Todo edited successfully!"),
+        work: () => editTodo(label),
+        api: () => simulateApiControls(),
+        onSucess: () => enQueueSucessToast("Todo edited successfully!"),
         onError: () =>
-          useToastersStore
-            .getState()
-            .enQueueToast("error", "Something went wrong! Todo not edited!")
+          enQueueErrorToast("Something went wrong! Todo not edited!"),
+        rollback: () => editTodo(currentTodo.label)
       });
     },
 
     toggleTodoDone: (id) => {
+      const editTodo = () =>
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id ? { ...todo, done: !todo.done } : todo
+          )
+        }));
+
       doAction({
         set,
-        work: () => {
-          set((state) => ({
-            todos: state.todos.map((todo) =>
-              todo.id === id ? { ...todo, done: !todo.done } : todo
-            )
-          }));
-        },
+        work: () => editTodo(),
+        api: () => simulateApiControls(),
         onSucess: () =>
-          useToastersStore
-            .getState()
-            .enQueueToast("sucess", "Todo status was changed successfully!"),
+          enQueueSucessToast("Todo status was changed successfully!"),
         onError: () =>
-          useToastersStore
-            .getState()
-            .enQueueToast(
-              "error",
-              "Something went wrong! Todo status wasn't changed!"
-            )
+          enQueueErrorToast(
+            "Something went wrong! Todo status wasn't changed!"
+          ),
+        rollback: () => editTodo()
       });
     },
     setFilter: (filter) => {
