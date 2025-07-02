@@ -71,3 +71,38 @@ export const Todos = () => {
     </Box>
   );
 };
+
+// return (
+//   <Box>
+//     <Typography type="h2">Todos</Typography>
+
+//     {error && (
+//       <Typography type="h3" className={styles.errorText}>
+//         Something went wrong! Try again!
+//       </Typography>
+//     )}
+//     {isLoading && <LoadingSpinner />}
+
+//     {!isLoading && !error && (
+//       <>
+//         <Box className={styles.header}>
+//           <Typography type="body">Add a new todo</Typography>
+//           <Button size="sm" onClick={() => setShowModal(true)} text="Add" />
+//         </Box>
+
+//         <AddTodoModal
+//           showModal={showModal}
+//           valueRef={valueRef}
+//           handleAddTodo={handleAddTodo}
+//           handleHideModal={handleHideModal}
+//         />
+
+//         <FilterTodos />
+//         <TodosList todos={filteredTodos} />
+//         <Typography type="body" className={styles.total}>
+//           Total todos: {filteredTodos.length}
+//         </Typography>
+//       </>
+//     )}
+//   </Box>
+// );
