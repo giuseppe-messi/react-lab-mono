@@ -1,6 +1,7 @@
 .switchesBox {
   display: flex;
   gap: var(--space-md);
+  margin-bottom: var(--space-xl);
 }
 
 .switchesBox > label {

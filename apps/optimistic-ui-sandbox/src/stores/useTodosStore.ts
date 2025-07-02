@@ -45,8 +45,16 @@ const simulateApiControls = async () => {
 
   // mock api delay
   if (mockLatency) {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const delay =
+      mockLatency === "random" ? Math.random() * 5000 : Number(mockLatency);
+
+    await new Promise((resolve) => setTimeout(resolve, delay));
   }
+
+  // mock api delay
+  // if (mockLatency) {
+  //   await new Promise((resolve) => setTimeout(resolve, mockLatency));
+  // }
 
   // mock api error
   if (mockError) {

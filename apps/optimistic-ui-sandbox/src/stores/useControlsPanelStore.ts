@@ -13,12 +13,15 @@ export const CATEGORY_OPTIONS = [
 // TODOS: understand this and add it to the ts personal doc
 export type CategoryOption = (typeof CATEGORY_OPTIONS)[number];
 
+export type LatencyDelay = "500" | "1000" | "2000" | "3000" | "random";
+export const defaultLatency: LatencyDelay = "2000";
+
 type StateProps = {
   category: CategoryOption;
-  mockLatency: boolean;
+  mockLatency: LatencyDelay | null;
   mockError: boolean;
   setCategory: (newCategory: CategoryOption) => void;
-  toggleMockLatency: () => void;
+  setMockLatency: (value: LatencyDelay | null) => void;
   toggleMockError: () => void;
   resetSimulations: () => void;
 };
@@ -27,15 +30,17 @@ export const useControlsPanelStore = create<StateProps>()(
   persist(
     (set) => ({
       category: "todos",
-      mockLatency: false,
+      mockLatency: null,
       mockError: false,
       setCategory: (newCategory) => set({ category: newCategory }),
-      toggleMockLatency: () =>
-        set((state) => ({ ...state, mockLatency: !state.mockLatency })),
+      setMockLatency: (value) => {
+        console.log(typeof value);
+        set({ mockLatency: value });
+      },
       // set({mockLatency: !get().mockLatency })
       toggleMockError: () =>
         set((state) => ({ ...state, mockError: !state.mockError })),
-      resetSimulations: () => set({ mockError: false, mockLatency: false })
+      resetSimulations: () => set({ mockError: false, mockLatency: null })
     }),
     {
       name: CATEGORY_STORE_KEY
