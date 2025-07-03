@@ -1,8 +1,8 @@
-import { Box } from "../Box/Box";
+import styles from "./CategorySelect.module.css";
 import { useCallback } from "react";
 import { useShallow } from "zustand/shallow";
 import {
-  CATEGORY_OPTIONS,
+  categoryOptions,
   useControlsPanelStore,
   type CategoryOption
 } from "../../stores/useControlsPanelStore";
@@ -19,24 +19,25 @@ export const CategorySelect = () => {
   );
 
   return (
-    <Box>
-      <label htmlFor="category-select">Choose a category:</label>
-      <select
-        id="category-select"
-        name="category"
-        value={category}
-        onChange={handleSelect}
-      >
-        <option value="" disabled>
-          Select an option
-        </option>
-
-        {CATEGORY_OPTIONS.map((category) => (
-          <option key={category} value={category}>
-            {category}
+    <>
+      <label htmlFor="category-select" className={styles.label}>
+        Choose a category:
+        <select
+          id="category-select"
+          name="category"
+          value={category}
+          onChange={handleSelect}
+        >
+          <option value="" disabled>
+            Select an option
           </option>
-        ))}
-      </select>
-    </Box>
+          {categoryOptions.map((c) => (
+            <option key={c.id} value={c.label} disabled={c.disabled}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+    </>
   );
 };

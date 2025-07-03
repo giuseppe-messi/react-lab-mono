@@ -15,14 +15,16 @@ type FilterProps<T> = {
   items: FilterItems<T>[];
   selected: T;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 };
 
 export const Filter = <T extends string>({
   items,
   selected,
-  onChange
+  onChange,
+  className
 }: FilterProps<T>) => (
-  <Box className={styles.card}>
+  <Box className={`${className} ${styles.card}`}>
     <div
       className={styles.inputsBox}
       role="radiogroup"

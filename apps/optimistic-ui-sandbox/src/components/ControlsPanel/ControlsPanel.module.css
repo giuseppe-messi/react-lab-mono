@@ -1,17 +1,24 @@
-.ctrlPanel {
+.container {
   display: flex;
   flex: 1;
   background-color: var(--color-light-white);
   color: black;
 }
 
-.ctrlPanel h4 {
+.container h4 {
   text-align: center;
   padding: var(--space-md);
   color: var(--color-primary);
   font-weight: 500;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.innerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
 }

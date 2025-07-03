@@ -42,6 +42,11 @@ export const FilterTodos = () => {
   );
 
   return (
-    <Filter items={todoFilterItems} selected={filter} onChange={handleChange} />
+    <Filter
+      items={todoFilterItems}
+      selected={filter}
+      onChange={handleChange}
+      className="maxWidthStretch"
+    />
   );
 };
