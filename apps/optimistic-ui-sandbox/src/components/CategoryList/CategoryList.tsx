@@ -10,12 +10,12 @@ import {
 const panels: Record<CategoryOption, JSX.Element> = {
   todos: <Todos />,
   notes: <Notes />,
-  bookmarks: <h4>bookmarks</h4>,
-  contacts: <h4>contacts</h4>
+  bookmarks: <></>,
+  contacts: <></>
 };
 
 export const CategoryList = () => {
   const category = useControlsPanelStore((state) => state.category);
 
-  return <main className={styles.resourceList}>{panels[category]}</main>;
+  return <main className={styles.main}>{panels[category]}</main>;
 };

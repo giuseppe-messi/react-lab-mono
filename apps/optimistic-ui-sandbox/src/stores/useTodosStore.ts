@@ -1,8 +1,11 @@
 import { create } from "zustand";
 import { HttpError } from "../utils/HttpError";
+import {
+  maxLatencyRandomValue,
+  useControlsPanelStore
+} from "./useControlsPanelStore";
 import { nanoid } from "nanoid";
 import { subscribeWithSelector } from "zustand/middleware";
-import { useControlsPanelStore } from "./useControlsPanelStore";
 import { useToastersStore } from "./useToastersStore";
 
 export const TODOS_STORE_KEY = "todos-storage";
@@ -45,9 +48,13 @@ const simulateApiControls = async () => {
 
   // mock api delay
   if (mockLatency) {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-  }
+    const delay =
+      mockLatency === "random"
+        ? Math.random() * maxLatencyRandomValue
+        : Number(mockLatency);
 
+    await new Promise((resolve) => setTimeout(resolve, delay));
+  }
   // mock api error
   if (mockError) {
     throw new HttpError();
@@ -157,7 +164,10 @@ export const useTodosStore = create<StateProps>()(
           }));
         },
         api: () => simulateApiControls(),
-        onSucess: () => enQueueSucessToast("Todo deleted successfully!"),
+        onSucess: () => {
+          enQueueSucessToast("Todo deleted successfully!");
+          todosSnap = null;
+        },
         onError: () =>
           enQueueErrorToast("Something went wrong! Todo not deleted!"),
         rollback: () => {

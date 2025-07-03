@@ -1,61 +1,66 @@
 import styles from "./SimulationControls.module.css";
-import { Box } from "../Box/Box";
-import { Button } from "../Button/Button";
 import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
-import { useControlsPanelStore } from "../../stores/useControlsPanelStore";
 import { useShallow } from "zustand/shallow";
+import {
+  defaultLatency,
+  useControlsPanelStore,
+  type LatencyDelay
+} from "../../stores/useControlsPanelStore";
 
 export const SimulationControls = () => {
-  const [
-    mockLatency,
-    mockError,
-    toggleMockLatency,
-    toggleMockError,
-    resetSimulations
-  ] = useControlsPanelStore(
-    useShallow((state) => [
-      state.mockLatency,
-      state.mockError,
-      state.toggleMockLatency,
-      state.toggleMockError,
-      state.resetSimulations
-    ])
-  );
+  const [mockLatency, mockError, setMockLatency, toggleMockError] =
+    useControlsPanelStore(
+      useShallow((state) => [
+        state.mockLatency,
+        state.mockError,
+        state.setMockLatency,
+        state.toggleMockError
+      ])
+    );
 
   return (
-    <Box>
-      <div className={styles.switchesBox}>
-        <label htmlFor="simulate-latency">
+    <div className={styles.container}>
+      <div className={styles.latencyBox}>
+        <label htmlFor="simulate-latency" className={styles.label}>
           <input
             type="checkbox"
             id="simulate-latency"
             name="simulateLatency"
             role="switch"
-            checked={mockLatency}
-            onChange={toggleMockLatency}
+            checked={!!mockLatency}
+            onChange={() => setMockLatency(mockLatency ? null : defaultLatency)}
           />
           Latency <EmojiIcon type="lightning" />
         </label>
-        <label htmlFor="simulate-error">
-          <input
-            type="checkbox"
-            id="simulate-error"
-            name="simulateError"
-            role="switch"
-            checked={mockError}
-            onChange={toggleMockError}
-          />
-          Error <EmojiIcon type="alert" />
-        </label>
+        {!!mockLatency && (
+          <select
+            name="latency-delay"
+            id="latency-delay"
+            value={mockLatency}
+            onChange={(e) => setMockLatency(e.target.value as LatencyDelay)}
+          >
+            <option value="" disabled>
+              Select an delay
+            </option>
+            <option value="500">500ms</option>
+            <option value="1000">1sec</option>
+            <option value="2000">2sec</option>
+            <option value="3000">3sec</option>
+            <option value="random">random</option>
+          </select>
+        )}
       </div>
-      <Button
-        text="Reset data"
-        size="sm"
-        type="button"
-        name="reset-data"
-        aria-label="Reset all data to initial state"
-        onClick={resetSimulations}
-      />
-    </Box>
+      <label htmlFor="simulate-error" className={styles.label}>
+        <input
+          type="checkbox"
+          id="simulate-error"
+          name="simulateError"
+          role="switch"
+          checked={mockError}
+          onChange={toggleMockError}
+        />
+        Error <EmojiIcon type="alert" />
+      </label>
+    </div>
   );
 };

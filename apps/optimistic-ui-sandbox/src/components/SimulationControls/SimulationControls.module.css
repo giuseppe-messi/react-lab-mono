@@ -1,9 +1,15 @@
-.switchesBox {
+.container {
   display: flex;
   gap: var(--space-md);
 }
 
-.switchesBox > label {
+.latencyBox {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.label {
   display: flex;
   align-items: center;
   gap: 3px;

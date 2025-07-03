@@ -1,3 +1,5 @@
+import styles from "./Box.module.css";
+
 type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
 type BoxProps = {
@@ -7,15 +9,15 @@ type BoxProps = {
 };
 
 const paddingMap: Record<Size, string> = {
-  xs: "var(--space-xs)",
-  sm: "var(--space-sm)",
-  md: "var(--space-md)",
-  lg: "var(--space-lg)",
-  xl: "var(--space-xl)"
+  xs: styles.xs,
+  sm: styles.sm,
+  md: styles.md,
+  lg: styles.lg,
+  xl: styles.xl
 };
 
 export const Box = ({ size = "md", className = "", children }: BoxProps) => (
-  <div className={className} style={{ flex: 1, padding: paddingMap[size] }}>
+  <div className={`${styles.box} ${paddingMap[size]} ${className}`}>
     {children}
   </div>
 );
