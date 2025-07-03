@@ -1,4 +1,5 @@
 .header {
   padding: var(--space-md);
   color: var(--color-light-white);
+  flex: 0 0 auto;
 }

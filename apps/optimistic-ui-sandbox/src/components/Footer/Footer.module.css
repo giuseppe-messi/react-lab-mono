@@ -3,6 +3,7 @@ footer {
   text-align: right;
   color: var(--color-light-white);
   font-size: small;
+  flex: 0 0 auto;
 }
 
 @media (max-width: 768px) {

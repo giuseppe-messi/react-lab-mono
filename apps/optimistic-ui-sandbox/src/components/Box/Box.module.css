@@ -1,0 +1,23 @@
+.box {
+  width: 100%;
+}
+
+.xs {
+  padding: var(--space-xs);
+}
+
+.sm {
+  padding: var(--space-sm);
+}
+
+.md {
+  padding: var(--space-md);
+}
+
+.lg {
+  padding: var(--space-lg);
+}
+
+.xl {
+  padding: var(--space-xl);
+}

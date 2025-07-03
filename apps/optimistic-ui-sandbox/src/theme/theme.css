@@ -62,11 +62,11 @@ h1 {
   font-size: 1.4em;
 }
 
-.maxWidthStretch {
+/* .maxWidthStretch {
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-}
+} */
 
 button {
   border-radius: var(--app-radius);

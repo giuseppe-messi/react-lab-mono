@@ -6,6 +6,6 @@
   flex-direction: column;
   gap: 0.5rem;
   overflow: auto;
-  height: 60vh;
+  flex: 1 1 auto;
   padding: var(--space-md);
 }

@@ -1,3 +1,5 @@
 .label {
   display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
 }

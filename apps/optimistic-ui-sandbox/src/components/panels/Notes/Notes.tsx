@@ -42,7 +42,7 @@ export const Notes = () => {
   const handleHideModal = useCallback(() => setShowModal(false), []);
 
   return (
-    <Box>
+    <Box className={styles.container}>
       <Typography type="h2">Notes</Typography>
 
       {isLoading ? (

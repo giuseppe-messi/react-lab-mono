@@ -42,7 +42,7 @@ export const Todos = () => {
   const handleHideModal = useCallback(() => setShowModal(false), []);
 
   return (
-    <Box>
+    <Box className={styles.container}>
       <Typography type="h2">Todos</Typography>
 
       {isLoading ? (

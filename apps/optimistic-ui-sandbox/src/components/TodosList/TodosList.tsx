@@ -30,7 +30,7 @@ export const TodosList = ({ todos }: TodosListProps) => {
   );
 
   return (
-    <ul className={`${"maxWidthStretch"} ${styles.todoList}`}>
+    <ul className={styles.todoList}>
       {todos.map((todo) => (
         <TodoItem
           key={todo.id}
