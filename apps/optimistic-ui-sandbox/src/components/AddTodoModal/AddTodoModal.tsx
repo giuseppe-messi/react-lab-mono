@@ -1,5 +1,6 @@
 import styles from "./AddTodoModal.module.css";
 import { Button } from "../Button/Button";
+import { InputText } from "../InputText/InputText";
 import { Modal } from "../Modal/Modal";
 import { useEffect } from "react";
 
@@ -25,14 +26,11 @@ export const AddTodoModal = ({
   return (
     <Modal title="New Todo" showModal={showModal} onClose={handleHideModal}>
       <form className={styles.modalForm} onSubmit={handleAddTodo}>
-        <input
+        <InputText
           ref={valueRef}
           id="new-todo"
-          name="label"
-          type="text"
-          className={styles.modalInput}
+          name="todo input"
           placeholder="Enter todo label"
-          aria-label="Todo label"
           required
         />
         <div className={styles.modalActions}>

@@ -1,32 +1,20 @@
+import { RadioGroup } from "../RadioGroup/RadioGroup";
 import { useShallow } from "zustand/shallow";
-import { Filter, type FilterItems } from "../Filter/Filter";
 import { useTodosStore, type TodoFilterType } from "../../stores/useTodosStore";
 import { useCallback, type ChangeEvent } from "react";
 
-const todoFilterItems: FilterItems<TodoFilterType>[] = [
+const todoFilterItems = [
   {
     value: "all",
-    label: "all",
-    role: "radio",
-    type: "radio",
-    id: "filter-all",
-    name: "filter"
+    id: "filter-all"
   },
   {
     value: "active",
-    label: "active",
-    role: "radio",
-    type: "radio",
-    id: "filter-active",
-    name: "filter"
+    id: "filter-active"
   },
   {
     value: "completed",
-    label: "completed",
-    role: "radio",
-    type: "radio",
-    id: "filter-completed",
-    name: "filter"
+    id: "filter-completed"
   }
 ];
 
@@ -42,6 +30,12 @@ export const FilterTodos = () => {
   );
 
   return (
-    <Filter items={todoFilterItems} selected={filter} onChange={handleChange} />
+    <RadioGroup
+      items={todoFilterItems}
+      selected={filter}
+      getItemId={(item) => item.id}
+      getItemValue={(item) => item.value}
+      onChange={handleChange}
+    />
   );
 };

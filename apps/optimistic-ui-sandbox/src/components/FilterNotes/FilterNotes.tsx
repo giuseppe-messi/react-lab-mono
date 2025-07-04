@@ -1,32 +1,20 @@
+import { RadioGroup } from "../RadioGroup/RadioGroup";
 import { useShallow } from "zustand/shallow";
-import { Filter, type FilterItems } from "../Filter/Filter";
 import { useNotesStore, type NoteFilterType } from "../../stores/useNotesStore";
 import { useCallback, type ChangeEvent } from "react";
 
-const noteFilterItems: FilterItems<NoteFilterType>[] = [
+const noteFilterItems = [
   {
     value: "all",
-    label: "all",
-    role: "radio",
-    type: "radio",
-    id: "filter-all",
-    name: "filter"
+    id: "filter-all"
   },
   {
     value: "active",
-    label: "active",
-    role: "radio",
-    type: "radio",
-    id: "filter-active",
-    name: "filter"
+    id: "filter-active"
   },
   {
     value: "completed",
-    label: "completed",
-    role: "radio",
-    type: "radio",
-    id: "filter-completed",
-    name: "filter"
+    id: "filter-completed"
   }
 ];
 
@@ -42,6 +30,12 @@ export const FilterNotes = () => {
   );
 
   return (
-    <Filter items={noteFilterItems} selected={filter} onChange={handleChange} />
+    <RadioGroup
+      items={noteFilterItems}
+      selected={filter}
+      getItemId={(item) => item.id}
+      getItemValue={(item) => item.value}
+      onChange={handleChange}
+    />
   );
 };

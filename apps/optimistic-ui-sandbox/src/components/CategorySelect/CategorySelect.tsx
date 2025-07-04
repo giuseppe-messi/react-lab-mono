@@ -1,4 +1,4 @@
-import styles from "./CategorySelect.module.css";
+import { Select } from "../Select/Select";
 import { useCallback } from "react";
 import { useShallow } from "zustand/shallow";
 import {
@@ -19,25 +19,17 @@ export const CategorySelect = () => {
   );
 
   return (
-    <>
-      <label htmlFor="category-select" className={styles.label}>
-        Choose a category:
-        <select
-          id="category-select"
-          name="category"
-          value={category}
-          onChange={handleSelect}
-        >
-          <option value="" disabled>
-            Select an option
-          </option>
-          {categoryOptions.map((c) => (
-            <option key={c.id} value={c.label} disabled={c.disabled}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-      </label>
-    </>
+    <Select
+      name="category-select"
+      labelText="Choose a category:"
+      options={categoryOptions}
+      value={category}
+      onChange={handleSelect}
+      getOptionValue={(option) => option.value}
+      getOptionLabel={(option) => option.label}
+      getOptionId={(option) => option.id}
+      getOptionDisabled={(option) => option.disabled}
+      placeholder="Select an option"
+    />
   );
 };

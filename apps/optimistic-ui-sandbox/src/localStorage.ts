@@ -2,10 +2,10 @@ import { NOTES_STORE_KEY, useNotesStore } from "./stores/useNotesStore";
 import { shallow } from "zustand/shallow";
 import { TODOS_STORE_KEY, useTodosStore } from "./stores/useTodosStore";
 
+// Hydrate from localStorages
 export const hydrateAndSubscribe = () => {
-  // Hydrate from localStorages
+  /* Todos store */
   const fromTodosStorage = localStorage.getItem(TODOS_STORE_KEY);
-  const fromNotesStorage = localStorage.getItem(NOTES_STORE_KEY);
 
   if (fromTodosStorage) {
     try {
@@ -14,7 +14,7 @@ export const hydrateAndSubscribe = () => {
       console.warn("Invalid data in localStorage, resetting store");
     }
   }
-  // Subscribe to changes
+  // Todos store subscribe to changes
   useTodosStore.subscribe(
     (state) => ({ todos: state.todos, filter: state.filter }),
     (slice) => {
@@ -23,6 +23,9 @@ export const hydrateAndSubscribe = () => {
     { equalityFn: shallow }
   );
 
+  /* Notes store */
+  const fromNotesStorage = localStorage.getItem(NOTES_STORE_KEY);
+
   if (fromNotesStorage) {
     try {
       useNotesStore.setState(JSON.parse(fromNotesStorage));
@@ -30,7 +33,7 @@ export const hydrateAndSubscribe = () => {
       console.warn("Invalid data in localStorage, resetting store");
     }
   }
-  // Subscribe to changes
+  // Notes store subscribe to changes
   useNotesStore.subscribe(
     (state) => ({ notes: state.notes, filter: state.filter }),
     (slice) => {

@@ -1,4 +1,5 @@
 import styles from "./CategoryList.module.css";
+import { hydrateAndSubscribe } from "../../localStorage";
 import { Notes } from "../panels/Notes/Notes";
 import { Todos } from "../panels/Todos/Todos";
 import type { JSX } from "react";
@@ -6,6 +7,9 @@ import {
   useControlsPanelStore,
   type CategoryOption
 } from "../../stores/useControlsPanelStore";
+
+// local storage sync up with stores
+hydrateAndSubscribe();
 
 const panels: Record<CategoryOption, JSX.Element> = {
   todos: <Todos />,
