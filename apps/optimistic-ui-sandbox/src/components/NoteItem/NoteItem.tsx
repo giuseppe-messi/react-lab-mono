@@ -1,5 +1,4 @@
 import styles from "./NoteItem.module.css";
-import { Box } from "../Box/Box";
 import { CloseIcon } from "../CloseIcon/CloseIcon";
 import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
 import { useEffect, useRef } from "react";
@@ -49,11 +48,11 @@ export const NoteItem = ({
           defaultValue={note.text}
         ></textarea>
       ) : (
-        <Box
+        <span
           className={`${styles.noteListLabel} ${note.done ? styles.done : ""}`}
         >
           {note.text}
-        </Box>
+        </span>
       )}
 
       <div className={styles.iconsBox}>

@@ -15,8 +15,13 @@ import { useShallow } from "zustand/shallow";
 
 export const Notes = () => {
   const filteredNotes = useNotesStore(useShallow(selectFilteredNotes));
-  const [getNotes, addNote, isLoading] = useNotesStore(
-    useShallow((state) => [state.getNotes, state.addNote, state.isLoading])
+  const [totalCount, getNotes, addNote, isLoading] = useNotesStore(
+    useShallow((state) => [
+      state.totalCount,
+      state.getNotes,
+      state.addNote,
+      state.isLoading
+    ])
   );
 
   const [showModal, setShowModal] = useState(false);
@@ -65,7 +70,7 @@ export const Notes = () => {
           <NotesList notes={filteredNotes} />
 
           <Typography type="body" className={styles.total}>
-            Total notes: {filteredNotes.length}
+            Total notes: {totalCount}
           </Typography>
         </>
       )}

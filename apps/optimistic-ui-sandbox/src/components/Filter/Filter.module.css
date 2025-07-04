@@ -8,10 +8,27 @@
 .inputsBox {
   display: flex;
   justify-content: space-evenly;
-  gap: 30px;
+  gap: var(--space-xl);
   flex-wrap: wrap;
 }
 
 .inputsBox input {
   cursor: pointer;
+}
+
+@media (max-width: 400px) {
+  .inputsBox {
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 290px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .inputsBox {
+    gap: var(--space-xs);
+    flex-direction: column;
+  }
 }

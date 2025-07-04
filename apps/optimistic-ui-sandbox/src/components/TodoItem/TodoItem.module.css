@@ -22,6 +22,8 @@
 
 .todoListLabel {
   color: var(--color-primary);
+  text-align: justify;
+  margin-right: var(--space-md);
 }
 
 .iconsBox {

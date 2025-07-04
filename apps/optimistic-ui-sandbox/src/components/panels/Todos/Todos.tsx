@@ -15,8 +15,13 @@ import { useShallow } from "zustand/shallow";
 
 export const Todos = () => {
   const filteredTodos = useTodosStore(useShallow(selectFilteredTodos));
-  const [getTodos, addTodo, isLoading] = useTodosStore(
-    useShallow((state) => [state.getTodos, state.addTodo, state.isLoading])
+  const [totalCount, getTodos, addTodo, isLoading] = useTodosStore(
+    useShallow((state) => [
+      state.totalCount,
+      state.getTodos,
+      state.addTodo,
+      state.isLoading
+    ])
   );
 
   const [showModal, setShowModal] = useState(false);
@@ -65,7 +70,7 @@ export const Todos = () => {
           <TodosList todos={filteredTodos} />
 
           <Typography type="body" className={styles.total}>
-            Total todos: {filteredTodos.length}
+            Total todos: {totalCount}
           </Typography>
         </>
       )}

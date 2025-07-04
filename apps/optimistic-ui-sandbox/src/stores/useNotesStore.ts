@@ -29,6 +29,7 @@ export type Note = {
 
 type StateProps = {
   notes: Note[];
+  totalCount: number;
   isLoading: boolean;
   error: Error | null;
   filter: NoteFilterType;
@@ -103,124 +104,135 @@ const enQueueSucessToast = (text: string) =>
   useToastersStore.getState().enQueueToast("sucess", text);
 
 export const useNotesStore = create<StateProps>()(
-  subscribeWithSelector((set, get) => ({
-    notes: [],
-    isLoading: false,
-    error: null,
-    filter: "all",
+  subscribeWithSelector((set, get, api) => {
+    api.subscribe(
+      (state) => state?.notes ?? [],
+      (notes) => set({ totalCount: notes.length })
+    );
 
-    getNotes: async () => {
-      set({ isLoading: true, error: null });
+    return {
+      notes: [],
+      totalCount: 0,
+      isLoading: false,
+      error: null,
+      filter: "all",
 
-      doAction({
-        set,
-        work: () => set((state) => ({ ...state, ...getStateFromStore() })),
-        api: () => simulateApiControls(),
-        onError: () =>
-          enQueueErrorToast("Something went wrong fetching the notes!"),
-        onFinally: () => set({ isLoading: false })
-      });
-    },
+      getNotes: async () => {
+        set({ isLoading: true, error: null });
 
-    addNote: (text) => {
-      const newNoteId = nanoid();
-      doAction({
-        set,
-        work: () => {
-          set((state) => ({
-            notes: [...state.notes, { id: newNoteId, done: false, text }]
-          }));
-        },
-        api: () => simulateApiControls(),
-        onSucess: () => enQueueSucessToast("Note added successfully!"),
-        onError: () =>
-          enQueueErrorToast("Something went wrong! Note not added!"),
-        rollback: () =>
-          set((state) => ({
-            notes: state.notes.filter((note) => note.id !== newNoteId)
-          }))
-      });
-    },
+        doAction({
+          set,
+          work: () => set((state) => ({ ...state, ...getStateFromStore() })),
+          api: () => simulateApiControls(),
+          onError: () =>
+            enQueueErrorToast("Something went wrong fetching the notes!"),
+          onFinally: () => set({ isLoading: false })
+        });
+      },
 
-    deleteNote: (id) => {
-      const { notes } = get();
+      addNote: (text) => {
+        const newNoteId = nanoid();
+        doAction({
+          set,
+          work: () => {
+            set((state) => ({
+              notes: [...state.notes, { id: newNoteId, done: false, text }]
+            }));
+          },
+          api: () => simulateApiControls(),
+          onSucess: () => enQueueSucessToast("Note added successfully!"),
+          onError: () =>
+            enQueueErrorToast("Something went wrong! Note not added!"),
+          rollback: () =>
+            set((state) => ({
+              notes: state.notes.filter((note) => note.id !== newNoteId)
+            }))
+        });
+      },
 
-      if (!notesSnap) {
-        notesSnap = notes;
-      }
+      deleteNote: (id) => {
+        const { notes } = get();
 
-      doAction({
-        set,
-        work: () => {
-          set((state) => ({
-            notes: state.notes.filter((note) => note.id !== id)
-          }));
-        },
-        api: () => simulateApiControls(),
-        onSucess: () => enQueueSucessToast("Note deleted successfully!"),
-        onError: () =>
-          enQueueErrorToast("Something went wrong! Note not deleted!"),
-        rollback: () => {
-          if (notesSnap) {
-            set({
-              notes: notesSnap
-            });
-            notesSnap = null;
-          }
+        if (!notesSnap) {
+          notesSnap = notes;
         }
-      });
-    },
 
-    editNoteText: (id, text) => {
-      const { notes } = get();
-      const index = notes.findIndex((t) => t.id === id);
-      const currentNote = notes[index];
+        doAction({
+          set,
+          work: () => {
+            set((state) => ({
+              notes: state.notes.filter((note) => note.id !== id)
+            }));
+          },
+          api: () => simulateApiControls(),
+          onSucess: () => {
+            enQueueSucessToast("Note deleted successfully!");
+            notesSnap = null;
+          },
+          onError: () =>
+            enQueueErrorToast("Something went wrong! Note not deleted!"),
+          rollback: () => {
+            if (notesSnap) {
+              set({
+                notes: notesSnap
+              });
+              notesSnap = null;
+            }
+          }
+        });
+      },
 
-      const editNote = (text: string) =>
-        set((state) => ({
-          notes: state.notes.map((note) =>
-            note.id === id ? { ...note, text } : note
-          )
-        }));
+      editNoteText: (id, text) => {
+        const { notes } = get();
+        const index = notes.findIndex((t) => t.id === id);
+        const currentNote = notes[index];
 
-      doAction({
-        set,
-        work: () => editNote(text),
-        api: () => simulateApiControls(),
-        onSucess: () => enQueueSucessToast("Note edited successfully!"),
-        onError: () =>
-          enQueueErrorToast("Something went wrong! Note not edited!"),
-        rollback: () => editNote(currentNote.text)
-      });
-    },
+        const editNote = (text: string) =>
+          set((state) => ({
+            notes: state.notes.map((note) =>
+              note.id === id ? { ...note, text } : note
+            )
+          }));
 
-    toggleNoteDone: (id) => {
-      const editNote = () =>
-        set((state) => ({
-          notes: state.notes.map((note) =>
-            note.id === id ? { ...note, done: !note.done } : note
-          )
-        }));
+        doAction({
+          set,
+          work: () => editNote(text),
+          api: () => simulateApiControls(),
+          onSucess: () => enQueueSucessToast("Note edited successfully!"),
+          onError: () =>
+            enQueueErrorToast("Something went wrong! Note not edited!"),
+          rollback: () => editNote(currentNote.text)
+        });
+      },
 
-      doAction({
-        set,
-        work: () => editNote(),
-        api: () => simulateApiControls(),
-        onSucess: () =>
-          enQueueSucessToast("Note status was changed successfully!"),
-        onError: () =>
-          enQueueErrorToast(
-            "Something went wrong! Note status wasn't changed!"
-          ),
-        rollback: () => editNote()
-      });
-    },
-    setFilter: (filter) => {
-      set({
-        filter
-      });
-    }
-  }))
+      toggleNoteDone: (id) => {
+        const editNote = () =>
+          set((state) => ({
+            notes: state.notes.map((note) =>
+              note.id === id ? { ...note, done: !note.done } : note
+            )
+          }));
+
+        doAction({
+          set,
+          work: () => editNote(),
+          api: () => simulateApiControls(),
+          onSucess: () =>
+            enQueueSucessToast("Note status was changed successfully!"),
+          onError: () =>
+            enQueueErrorToast(
+              "Something went wrong! Note status wasn't changed!"
+            ),
+          rollback: () => editNote()
+        });
+      },
+      setFilter: (filter) => {
+        set({
+          filter
+        });
+      }
+    };
+  })
 );
 
 export const selectFilteredNotes = (state: StateProps) => {

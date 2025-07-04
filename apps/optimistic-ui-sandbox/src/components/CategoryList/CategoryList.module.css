@@ -10,3 +10,9 @@
   color: var(--color-primary);
   font-weight: 500;
 }
+
+@media (max-width: 768px) {
+  .main {
+    flex: 1;
+  }
+}

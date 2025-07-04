@@ -18,13 +18,12 @@
 .innerBox {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-lg);
+  gap: var(--space-xl);
   margin-top: var(--space-xl);
 }
 
 @media (max-width: 768px) {
-  .innerBox {
-    align-items: center;
+  .container {
+    flex: 0;
   }
 }

@@ -15,7 +15,7 @@ export const ControlsPanel = () => {
     <aside className={styles.container} aria-label="Controls Panel">
       <Box>
         <Typography type="h2">Controls Panel</Typography>
-        <div className={styles.innerBox}>
+        <Box className={styles.innerBox}>
           <CategorySelect />
           <SimulationControls />
           <Button
@@ -26,7 +26,7 @@ export const ControlsPanel = () => {
             aria-label="Reset all data to initial state"
             onClick={resetSimulations}
           />
-        </div>
+        </Box>
       </Box>
     </aside>
   );
