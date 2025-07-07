@@ -1,15 +1,15 @@
 import styles from "./Todos.module.css";
 import { AddTodoModal } from "../../AddTodoModal/AddTodoModal";
-import { Box } from "../../Box/Box";
-import { Button } from "../../Button/Button";
+import { Box } from "../../Box";
+import { Button } from "../../Button";
 import { FilterTodos } from "../../FilterTodos/FilterTodos";
-import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "../../LoadingSpinner";
 import {
   selectFilteredTodos,
   useTodosStore
 } from "../../../stores/useTodosStore";
 import { TodosList } from "../../TodosList/TodosList";
-import { Typography } from "../../Typography/Typography";
+import { Typography } from "../../Typography";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/shallow";
 

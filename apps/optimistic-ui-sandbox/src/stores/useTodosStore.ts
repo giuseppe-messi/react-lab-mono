@@ -23,6 +23,7 @@ const getStateFromStore = (): { todos: Todo[]; filter: TodoFilterType } => {
 };
 
 export type TodoFilterType = "all" | "active" | "completed";
+export const todoFilters: TodoFilterType[] = ["all", "active", "completed"];
 
 export type Todo = {
   id: string;

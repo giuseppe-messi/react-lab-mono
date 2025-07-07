@@ -1,9 +1,9 @@
 import styles from "./ControlsPanel.module.css";
-import { Box } from "../Box/Box";
-import { Button } from "../Button/Button";
+import { Box } from "../Box";
+import { Button } from "../Button";
 import { CategorySelect } from "../CategorySelect/CategorySelect";
 import { SimulationControls } from "../SimulationControls/SimulationControls";
-import { Typography } from "../Typography/Typography";
+import { Typography } from "../Typography";
 import { useControlsPanelStore } from "../../stores/useControlsPanelStore";
 
 export const ControlsPanel = () => {

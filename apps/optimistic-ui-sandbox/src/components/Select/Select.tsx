@@ -13,7 +13,7 @@ type SelectProps<T> = React.SelectHTMLAttributes<HTMLSelectElement> & {
   placeholder: string;
 };
 
-export const Select = <T,>({
+export function Select<T>({
   name,
   labelText,
   options,
@@ -25,25 +25,25 @@ export const Select = <T,>({
   onChange,
   placeholder,
   ...props
-}: SelectProps<T>) => {
+}: SelectProps<T>) {
   return (
-    <label htmlFor={name} className={styles.label}>
+    <label className={styles.label} htmlFor={name}>
       {labelText}
       <select
         id={name}
         name={name}
-        value={value}
         onChange={onChange}
+        value={value}
         {...props}
       >
-        <option value="" disabled>
+        <option disabled value="">
           {placeholder}
         </option>
         {options.map((option) => (
           <option
+            disabled={getOptionDisabled?.(option)}
             key={getOptionId(option)}
             value={getOptionValue(option)}
-            disabled={getOptionDisabled?.(option)}
           >
             {getOptionLabel(option)}
           </option>
@@ -51,4 +51,4 @@ export const Select = <T,>({
       </select>
     </label>
   );
-};
+}

@@ -1,4 +1,4 @@
-import { Select } from "../Select/Select";
+import { Select } from "../Select";
 import { useCallback } from "react";
 import { useShallow } from "zustand/shallow";
 import {

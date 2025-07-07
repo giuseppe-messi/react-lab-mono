@@ -2,10 +2,10 @@ import styles from "./LoadingSpinner.module.css";
 
 type Size = "sm" | "md" | "lg";
 
-type LoadingSpinnerProps = {
+interface LoadingSpinnerProps {
   size?: Size;
   color?: string;
-};
+}
 
 const sizeMap: Record<Size, number> = {
   sm: 24,
@@ -13,36 +13,38 @@ const sizeMap: Record<Size, number> = {
   lg: 60
 };
 
-export const LoadingSpinner = ({
+export function LoadingSpinner({
   size = "md",
   color = "currentColor"
-}: LoadingSpinnerProps) => (
-  <div className={styles.box}>
-    <svg
-      width={sizeMap[size]}
-      height={sizeMap[size]}
-      viewBox="0 0 24 24"
-      role="status"
-      aria-label="Loading"
-    >
-      <circle
-        cx="12"
-        cy="12"
-        r="10"
-        stroke={color}
-        strokeWidth="4"
-        fill="none"
-        strokeDasharray="31.4 31.4"
+}: LoadingSpinnerProps) {
+  return (
+    <div className={styles.box}>
+      <svg
+        aria-label="Loading"
+        height={sizeMap[size]}
+        role="status"
+        viewBox="0 0 24 24"
+        width={sizeMap[size]}
       >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from="0 12 12"
-          to="360 12 12"
-          dur="1s"
-          repeatCount="indefinite"
-        />
-      </circle>
-    </svg>
-  </div>
-);
+        <circle
+          cx="12"
+          cy="12"
+          fill="none"
+          r="10"
+          stroke={color}
+          strokeDasharray="31.4 31.4"
+          strokeWidth="4"
+        >
+          <animateTransform
+            attributeName="transform"
+            dur="1s"
+            from="0 12 12"
+            repeatCount="indefinite"
+            to="360 12 12"
+            type="rotate"
+          />
+        </circle>
+      </svg>
+    </div>
+  );
+}

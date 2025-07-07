@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import { useDebouncedValue } from "./useDebouncedValue";
+import { useDebouncedValue } from "../useDebouncedValue/useDebouncedValue";
 
 interface State<T> {
   items: T[];

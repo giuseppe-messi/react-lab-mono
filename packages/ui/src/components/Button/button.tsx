@@ -1,29 +1,15 @@
-import React from "react";
-import "./Button.css";
+import * as S from "./Button.styles";
+import type { ButtonProps } from "./Button.types";
 
-export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  text: string;
-  variant?: "primary" | "secondary";
-  onClick: () => void;
-};
-
-const VARIANT_CLASS: Record<string, string> = {
-  primary: "button--primary",
-  secondary: "button--secondary"
-};
-
-export const Button: React.FC<Props> = ({
-  variant = "primary",
-  className = "",
-  text,
+export const Button = ({
   onClick,
+  text,
+  size = "md",
   ...props
-}) => {
-  const classes = ["button", VARIANT_CLASS[variant], className].join(" ");
-
+}: ButtonProps) => {
   return (
-    <button className={classes} onClick={onClick} {...props}>
+    <S.Button onClick={onClick} size={size} {...props}>
       {text}
-    </button>
+    </S.Button>
   );
 };

@@ -20,6 +20,7 @@ const getStateFromStore = (): { notes: Note[]; filter: NoteFilterType } => {
 };
 
 export type NoteFilterType = "all" | "active" | "completed";
+export const noteFilters = ["all", "active", "completed"];
 
 export type Note = {
   id: string;

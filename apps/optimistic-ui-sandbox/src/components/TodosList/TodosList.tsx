@@ -1,5 +1,5 @@
 import styles from "./TodosList.module.css";
-import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "../LoadingSpinner";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { useCallback, useState } from "react";
 import { useShallow } from "zustand/shallow";

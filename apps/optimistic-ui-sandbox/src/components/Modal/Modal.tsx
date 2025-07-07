@@ -1,7 +1,7 @@
 import styles from "./Modal.module.css";
 import { CloseIcon } from "../CloseIcon/CloseIcon";
 import { createPortal } from "react-dom";
-import { useOnClickOutside } from "@react-lab-mono/ui/useOnClickOutside";
+import { useOnClickOutside } from "@react-lab-mono/ui/hooks/useOnClickOutside";
 import { useRef, type ReactNode } from "react";
 
 type ModalProps = {

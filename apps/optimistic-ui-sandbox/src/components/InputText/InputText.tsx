@@ -1,30 +1,32 @@
 import styles from "./InputText.module.css";
 
 type InputTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  ref: React.RefObject<HTMLInputElement | null>;
+  ref: React.LegacyRef<HTMLInputElement> | undefined;
   id: string;
   name: string;
   className?: string;
-  placeholder: string;
+  placeholder?: string;
 };
 
-export const InputText = ({
+export function InputText({
   ref,
   id,
   name,
   className,
   placeholder,
   ...props
-}: InputTextProps) => (
-  <input
-    ref={ref}
-    id={id}
-    name={name}
-    type="text"
-    className={`${styles.input} ${className}`}
-    placeholder={placeholder}
-    aria-label={`${name} label`}
-    required
-    {...props}
-  />
-);
+}: InputTextProps) {
+  return (
+    <input
+      aria-label={`${name} label`}
+      className={`${styles.input} ${className}`}
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      ref={ref}
+      required
+      type="text"
+      {...props}
+    />
+  );
+}

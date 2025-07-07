@@ -1,6 +1,7 @@
 import styles from "./AddNoteModal.module.css";
-import { Button } from "../Button/Button";
+import { Button } from "../Button";
 import { Modal } from "../Modal/Modal";
+import { TextArea } from "../TextArea";
 import { useEffect } from "react";
 
 type AddTodoModalProps = {
@@ -25,14 +26,13 @@ export const AddNoteModal = ({
   return (
     <Modal title="New Note" showModal={showModal} onClose={handleHideModal}>
       <form className={styles.modalForm} onSubmit={handleAddNote}>
-        <textarea
+        <TextArea
           ref={valueRef}
-          name="note"
+          name="new note"
           id="new-note"
           placeholder="Enter some text"
-          aria-label="Note label"
           required
-        ></textarea>
+        />
 
         <div className={styles.modalActions}>
           <Button type="submit" text="Add" />

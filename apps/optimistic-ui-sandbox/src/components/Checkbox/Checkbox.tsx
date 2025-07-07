@@ -1,6 +1,5 @@
-import styles from "./Checkbox.module.css";
-
 import type { ReactNode } from "react";
+import styles from "./Checkbox.module.css";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string;
@@ -10,27 +9,27 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const Checkbox = ({
+export function Checkbox({
   name,
   labelText,
   labelPosition = "after",
   checked,
   onChange,
   ...props
-}: InputProps) => {
+}: InputProps) {
   return (
-    <label htmlFor={name} className={styles.label}>
+    <label className={styles.label} htmlFor={name}>
       {labelPosition === "before" && labelText}
       <input
-        type="checkbox"
-        role="switch"
+        checked={checked}
         id={name}
         name={name}
-        checked={checked}
         onChange={onChange}
+        role="switch"
+        type="checkbox"
         {...props}
       />
       {labelPosition === "after" && labelText}
     </label>
   );
-};
+}

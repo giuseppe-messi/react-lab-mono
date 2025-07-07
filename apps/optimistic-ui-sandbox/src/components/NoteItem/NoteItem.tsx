@@ -1,6 +1,6 @@
 import styles from "./NoteItem.module.css";
 import { CloseIcon } from "../CloseIcon/CloseIcon";
-import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
+import { EmojiIcon } from "../EmojiIcon";
 import { useEffect, useRef } from "react";
 import { useNotesStore, type Note } from "../../stores/useNotesStore";
 

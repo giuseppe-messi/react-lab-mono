@@ -1,15 +1,15 @@
 import styles from "./Notes.module.css";
 import { AddNoteModal } from "../../AddNoteModal/AddNoteModal";
-import { Box } from "../../Box/Box";
-import { Button } from "../../Button/Button";
+import { Box } from "../../Box";
+import { Button } from "../../Button";
 import { FilterNotes } from "../../FilterNotes/FilterNotes";
-import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "../../LoadingSpinner";
 import { NotesList } from "../../NotesList/NotesList";
 import {
   selectFilteredNotes,
   useNotesStore
 } from "../../../stores/useNotesStore";
-import { Typography } from "../../Typography/Typography";
+import { Typography } from "../../Typography";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/shallow";
 

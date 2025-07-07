@@ -1,5 +1,5 @@
 import styles from "./NotesList.module.css";
-import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner } from "../LoadingSpinner";
 import { NoteItem } from "../NoteItem/NoteItem";
 import { useCallback, useState } from "react";
 import { useShallow } from "zustand/shallow";

@@ -40,6 +40,12 @@ module.exports = {
     "unicorn/filename-case": "off",
 
     // removes rule for having a return function type (ts will infer anyway, most times at least)
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+
+    // Allow both function declarations and arrow functions for components
+    "react/function-component-definition": "off",
+
+    // not restriction between type and interface
+    "@typescript-eslint/consistent-type-definitions": "off"
   }
 };

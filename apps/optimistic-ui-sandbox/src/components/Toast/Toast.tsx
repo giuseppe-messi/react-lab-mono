@@ -1,5 +1,5 @@
 import styles from "./Toast.module.css";
-import { Typography } from "../Typography/Typography";
+import { Typography } from "../Typography";
 import { useEffect, useState } from "react";
 import { useToastersStore, type IToast } from "../../stores/useToastersStore";
 

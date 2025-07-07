@@ -2,11 +2,11 @@ import styles from "./Box.module.css";
 
 type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
-type BoxProps = {
+interface BoxProps {
   size?: Size;
   className?: string;
   children: React.ReactNode;
-};
+}
 
 const paddingMap: Record<Size, string> = {
   xs: styles.xs,
@@ -16,8 +16,10 @@ const paddingMap: Record<Size, string> = {
   xl: styles.xl
 };
 
-export const Box = ({ size = "md", className = "", children }: BoxProps) => (
-  <div className={`${styles.box} ${paddingMap[size]} ${className}`}>
-    {children}
-  </div>
-);
+export function Box({ size = "md", className = "", children }: BoxProps) {
+  return (
+    <div className={`${styles.box} ${paddingMap[size]} ${className}`}>
+      {children}
+    </div>
+  );
+}

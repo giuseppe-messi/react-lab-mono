@@ -1,7 +1,7 @@
 import styles from "./SimulationControls.module.css";
-import { Checkbox } from "../Checkbox/Checkbox";
-import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
-import { Select } from "../Select/Select";
+import { Checkbox } from "../Checkbox";
+import { EmojiIcon } from "../EmojiIcon";
+import { Select } from "../Select";
 import { useShallow } from "zustand/shallow";
 import {
   defaultLatency,
