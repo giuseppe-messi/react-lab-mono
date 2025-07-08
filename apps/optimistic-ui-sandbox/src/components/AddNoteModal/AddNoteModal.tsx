@@ -1,8 +1,8 @@
-import styles from "./AddNoteModal.module.css";
-import { Button } from "../Button";
-import { Modal } from "../Modal/Modal";
-import { TextArea } from "../TextArea";
-import { useEffect } from "react";
+import styles from './AddNoteModal.module.css';
+import { Button } from '@react-lab-mono/ui';
+import { Modal } from '../Modal/Modal';
+import { TextArea } from '../TextArea';
+import { useEffect } from 'react';
 
 type AddTodoModalProps = {
   showModal: boolean;

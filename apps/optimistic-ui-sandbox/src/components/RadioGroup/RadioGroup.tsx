@@ -1,5 +1,5 @@
-import styles from "./RadioGroup.module.css";
-import { Box } from "../../../../../apps/optimistic-ui-sandbox/src/components/Box/Box";
+import styles from './RadioGroup.module.css';
+import { Box } from '@react-lab-mono/ui';
 import { type ChangeEvent } from "react";
 
 interface RadioGroupProps {

@@ -1,5 +1,30 @@
-import * as S from "./Button.styles";
-import type { ButtonProps } from "./Button.types";
+import styles from "./Button.module.css";
+
+type ButtonSize = "sm" | "md" | "lg";
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  onClick?: () => void;
+  text: string;
+  size?: ButtonSize;
+};
+
+const paddingMap: Record<ButtonSize, string> = {
+  sm: "4px 8px",
+  md: "8px 16px",
+  lg: "12px 24px"
+};
+
+const fontSizeMap: Record<ButtonSize, string> = {
+  sm: "1rem",
+  md: "1rem",
+  lg: "1.25rem"
+};
+
+const fontWeightMap: Record<ButtonSize, React.CSSProperties["fontWeight"]> = {
+  sm: 300,
+  md: "normal",
+  lg: "normal"
+};
 
 export const Button = ({
   onClick,
@@ -8,8 +33,17 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   return (
-    <S.Button onClick={onClick} size={size} {...props}>
+    <button
+      className={styles.button}
+      onClick={onClick}
+      style={{
+        padding: paddingMap[size],
+        fontSize: fontSizeMap[size],
+        fontWeight: fontWeightMap[size]
+      }}
+      {...props}
+    >
       {text}
-    </S.Button>
+    </button>
   );
 };

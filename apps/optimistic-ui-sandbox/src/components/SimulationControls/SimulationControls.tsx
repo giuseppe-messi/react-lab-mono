@@ -1,5 +1,5 @@
 import styles from "./SimulationControls.module.css";
-import { Checkbox } from "../Checkbox";
+import { Checkbox } from "@react-lab-mono/ui";
 import { EmojiIcon } from "../EmojiIcon";
 import { Select } from "../Select";
 import { useShallow } from "zustand/shallow";

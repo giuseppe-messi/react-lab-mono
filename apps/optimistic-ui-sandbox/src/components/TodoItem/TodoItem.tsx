@@ -1,5 +1,5 @@
 import styles from "./TodoItem.module.css";
-import { Checkbox } from "../Checkbox";
+import { Checkbox } from "@react-lab-mono/ui";
 import { CloseIcon } from "../CloseIcon/CloseIcon";
 import { EmojiIcon } from "../EmojiIcon";
 import { InputText } from "../InputText";

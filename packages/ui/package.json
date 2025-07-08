@@ -5,24 +5,14 @@
   "license": "MIT",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
-    },
-    "./components/*": {
-      "import": "./dist/components/*/index.mjs",
-      "require": "./dist/components/*/index.js",
-      "types": "./dist/components/*/index.d.ts"
-    },
-    "./hooks/*": {
-      "import": "./dist/hooks/*/index.mjs",
-      "require": "./dist/hooks/*/index.js",
-      "types": "./dist/hooks/*/index.d.ts"
     }
   },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "vite build",
+    "dev": "vite --watch",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo node_modules dist"
   },
@@ -31,12 +21,17 @@
     "@repo/typescript-config": "workspace:*",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^8.57.0",
     "typescript": "5.5.4",
-    "tsup": "^8.0.2"
+    "vite": "^7.0.3",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0"
   },
   "dependencies": {
-    "react": "^18.2.0",
     "styled-components": "^6.1.19"
   },
   "publishConfig": {

@@ -1,8 +1,8 @@
-import styles from "./AddTodoModal.module.css";
-import { Button } from "../Button";
-import { InputText } from "../InputText";
-import { Modal } from "../Modal/Modal";
-import { useEffect } from "react";
+import styles from './AddTodoModal.module.css';
+import { Button } from '@react-lab-mono/ui';
+import { InputText } from '../InputText';
+import { Modal } from '../Modal/Modal';
+import { useEffect } from 'react';
 
 type AddTodoModalProps = {
   showModal: boolean;
