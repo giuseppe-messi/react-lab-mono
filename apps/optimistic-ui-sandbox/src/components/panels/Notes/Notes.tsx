@@ -1,15 +1,14 @@
 import styles from "./Notes.module.css";
 import { AddNoteModal } from "../../AddNoteModal/AddNoteModal";
-import { Box } from "../../Box/Box";
-import { Button } from "../../Button/Button";
+import { Box } from "@react-lab-mono/ui";
+import { Button } from "@react-lab-mono/ui";
 import { FilterNotes } from "../../FilterNotes/FilterNotes";
-import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner";
+import { LoadingSpinner, Typography } from "@react-lab-mono/ui";
 import { NotesList } from "../../NotesList/NotesList";
 import {
   selectFilteredNotes,
   useNotesStore
 } from "../../../stores/useNotesStore";
-import { Typography } from "../../Typography/Typography";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useShallow } from "zustand/shallow";
 

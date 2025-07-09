@@ -4,39 +4,36 @@
   "sideEffects": false,
   "license": "MIT",
   "exports": {
-    "./button": {
-      "types": "./dist/components/Button/button.tsx",
-      "import": "./dist/components/Button/Button.mjs",
-      "require": "./dist/components/Button/Button.js"
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
     },
-    "./autocomplete": {
-      "types": "./dist/components/Autocomplete/Autocomplete.tsx",
-      "import": "./dist/components/Autocomplete/Autocomplete.mjs",
-      "require": "./dist/components/Autocomplete/Autocomplete.js"
-    },
-    "./useOnClickOutside": {
-      "types": "./dist/hooks/useOnClickOutside.d.ts",
-      "import": "./dist/hooks/useOnClickOutside.mjs",
-      "require": "./dist/hooks/useOnClickOutside.js"
-    }
+    "./index.d.ts": "./dist/index.d.ts"
   },
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "vite build",
+    "dev": "vite",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo node_modules dist"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^8.57.0",
-    "@repo/typescript-config": "workspace:*",
-    "tsup": "^8.0.2",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "vite": "^7.0.3",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0"
   },
   "dependencies": {
-    "react": "^18.2.0"
+    "nanoid": "^5.1.5",
+    "zustand": "^5.0.5"
   },
   "publishConfig": {
     "access": "public"

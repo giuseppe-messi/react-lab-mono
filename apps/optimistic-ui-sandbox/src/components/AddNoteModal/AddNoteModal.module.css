@@ -6,21 +6,6 @@
   width: 100%;
 }
 
-.modalForm > textarea {
-  width: 100%;
-  max-width: 400px;
-  height: 300px;
-  max-height: 300px;
-  overflow-y: auto;
-  padding: var(--space-xs);
-}
-
-.modalInput:focus {
-  border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.25);
-  outline: none;
-}
-
 .modalActions {
   display: flex;
   justify-content: center;

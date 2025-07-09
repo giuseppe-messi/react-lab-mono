@@ -3,7 +3,7 @@ import { CategoryList } from "../../components/CategoryList/CategoryList";
 import { ControlsPanel } from "../../components/ControlsPanel/ControlsPanel";
 import { Footer } from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
-import { Toaster } from "../../components/Toaster/Toaster";
+import { Toaster } from "@react-lab-mono/ui";
 
 export const Home = () => (
   <div className={styles.app}>

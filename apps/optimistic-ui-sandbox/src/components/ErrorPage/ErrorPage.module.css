@@ -1,8 +1,0 @@
-.container {
-  text-align: center;
-  margin-top: var(--space-xl);
-}
-
-.container > h2 {
-  margin-bottom: var(--space-xl);
-}

@@ -1,34 +1,11 @@
+import { RadioGroup } from "@react-lab-mono/ui";
 import { useShallow } from "zustand/shallow";
-import { Filter, type FilterItems } from "../Filter/Filter";
-import { useNotesStore, type NoteFilterType } from "../../stores/useNotesStore";
+import {
+  noteFilters,
+  useNotesStore,
+  type NoteFilterType
+} from "../../stores/useNotesStore";
 import { useCallback, type ChangeEvent } from "react";
-
-const noteFilterItems: FilterItems<NoteFilterType>[] = [
-  {
-    value: "all",
-    label: "all",
-    role: "radio",
-    type: "radio",
-    id: "filter-all",
-    name: "filter"
-  },
-  {
-    value: "active",
-    label: "active",
-    role: "radio",
-    type: "radio",
-    id: "filter-active",
-    name: "filter"
-  },
-  {
-    value: "completed",
-    label: "completed",
-    role: "radio",
-    type: "radio",
-    id: "filter-completed",
-    name: "filter"
-  }
-];
 
 export const FilterNotes = () => {
   const [filter, setFilter] = useNotesStore(
@@ -42,6 +19,6 @@ export const FilterNotes = () => {
   );
 
   return (
-    <Filter items={noteFilterItems} selected={filter} onChange={handleChange} />
+    <RadioGroup items={noteFilters} selected={filter} onChange={handleChange} />
   );
 };

@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./NotFound.module.css";
-import { Button } from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import styles from './NotFound.module.css';
+import { Button } from '@react-lab-mono/ui';
+import { useNavigate } from 'react-router-dom';
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();

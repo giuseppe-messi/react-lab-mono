@@ -1,28 +1,49 @@
-import React from "react";
-import "./Button.css";
+import styles from "./button.module.css";
 
-export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonSize = "sm" | "md" | "lg";
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  onClick?: () => void;
   text: string;
-  variant?: "primary" | "secondary";
-  onClick: () => void;
+  size?: ButtonSize;
 };
 
-const VARIANT_CLASS: Record<string, string> = {
-  primary: "button--primary",
-  secondary: "button--secondary"
+const paddingMap: Record<ButtonSize, string> = {
+  sm: "4px 8px",
+  md: "8px 16px",
+  lg: "12px 24px"
 };
 
-export const Button: React.FC<Props> = ({
-  variant = "primary",
-  className = "",
-  text,
+const fontSizeMap: Record<ButtonSize, string> = {
+  sm: "1rem",
+  md: "1rem",
+  lg: "1.25rem"
+};
+
+const fontWeightMap: Record<ButtonSize, React.CSSProperties["fontWeight"]> = {
+  sm: 300,
+  md: "normal",
+  lg: "normal"
+};
+
+export const Button = ({
   onClick,
+  text,
+  size = "md",
   ...props
-}) => {
-  const classes = ["button", VARIANT_CLASS[variant], className].join(" ");
-
+}: ButtonProps) => {
   return (
-    <button className={classes} onClick={onClick} {...props}>
+    <button
+      className={styles.button}
+      onClick={onClick}
+      style={{
+        padding: paddingMap[size],
+        fontSize: fontSizeMap[size],
+        fontWeight: fontWeightMap[size]
+      }}
+      type="button"
+      {...props}
+    >
       {text}
     </button>
   );

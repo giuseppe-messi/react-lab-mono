@@ -1,7 +1,8 @@
 import styles from "./TodoItem.module.css";
-import { CloseIcon } from "../CloseIcon/CloseIcon";
-import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
+import { Checkbox } from "@react-lab-mono/ui";
+import { CloseIcon, EmojiIcon, InputText } from "@react-lab-mono/ui";
 import { useEffect, useRef } from "react";
+
 import { useTodosStore, type Todo } from "../../stores/useTodosStore";
 
 type TodoItemProps = {
@@ -37,11 +38,10 @@ export const TodoItem = ({
   return (
     <li key={todo.id} className={styles.todoListItem} tabIndex={0}>
       {editingId === todo.id ? (
-        <input
-          type="text"
-          name="label"
-          aria-label="Edit todo label"
+        <InputText
           ref={textInputRef}
+          id={`edit todo ${todo.id}`}
+          name="edit todo"
           className={styles.input}
           defaultValue={todo.label}
         />
@@ -69,12 +69,10 @@ export const TodoItem = ({
           />
         )}
 
-        <input
-          type="checkbox"
-          checked={todo.done}
+        <Checkbox
           name="is todo done?"
+          checked={todo.done}
           onChange={() => toggleTodoDone(todo.id)}
-          style={{ cursor: "pointer" }}
         />
 
         <CloseIcon

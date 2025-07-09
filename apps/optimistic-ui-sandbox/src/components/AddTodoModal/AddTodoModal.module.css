@@ -6,17 +6,6 @@
   width: 100%;
 }
 
-.modalInput {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: var(--app-radius);
-}
-.modalInput:focus {
-  border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.25);
-  outline: none;
-}
-
 .modalActions {
   display: flex;
   justify-content: center;

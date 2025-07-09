@@ -9,14 +9,29 @@ export type CategoryOption = "todos" | "notes" | "bookmarks" | "contacts";
 type Category = {
   id: string;
   label: CategoryOption;
+  value: CategoryOption;
   disabled: boolean;
 };
 
+type Delay = {
+  id: LatencyDelay;
+  value: LatencyDelay;
+  label: string;
+};
+
 export const categoryOptions: Category[] = [
-  { id: nanoid(), label: "todos", disabled: false },
-  { id: nanoid(), label: "notes", disabled: false },
-  { id: nanoid(), label: "bookmarks", disabled: true },
-  { id: nanoid(), label: "contacts", disabled: true }
+  { id: nanoid(), label: "todos", value: "todos", disabled: false },
+  { id: nanoid(), label: "notes", value: "notes", disabled: false },
+  { id: nanoid(), label: "bookmarks", value: "bookmarks", disabled: true },
+  { id: nanoid(), label: "contacts", value: "contacts", disabled: true }
+];
+
+export const delayOptions: Delay[] = [
+  { id: "500", value: "500", label: "500ms" },
+  { id: "1000", value: "1000", label: "1sec" },
+  { id: "2000", value: "2000", label: "2sec" },
+  { id: "3000", value: "3000", label: "3sec" },
+  { id: "random", value: "random", label: "random" }
 ];
 
 export type LatencyDelay = "500" | "1000" | "2000" | "3000" | "random";

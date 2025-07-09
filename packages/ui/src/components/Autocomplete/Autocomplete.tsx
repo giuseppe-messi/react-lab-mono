@@ -8,9 +8,9 @@ import {
   useMemo,
   memo
 } from "react";
-import { useAutoComplete } from "../../hooks/useAutoComplete";
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
-import { useThrottleCallback } from "../../hooks/useThrottleCallback";
+import { useAutoComplete } from "../../hooks/useAutoComplete/useAutoComplete";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside/useOnClickOutside";
+import { useThrottleCallback } from "../../hooks/useThrottleCallback/useThrottleCallback";
 import styles from "./Autocomplete.module.css";
 
 interface Props<T> {

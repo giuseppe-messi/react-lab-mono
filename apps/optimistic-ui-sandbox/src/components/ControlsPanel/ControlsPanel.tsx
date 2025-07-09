@@ -1,9 +1,8 @@
 import styles from "./ControlsPanel.module.css";
-import { Box } from "../Box/Box";
-import { Button } from "../Button/Button";
+import { Box, Button } from "@react-lab-mono/ui";
 import { CategorySelect } from "../CategorySelect/CategorySelect";
 import { SimulationControls } from "../SimulationControls/SimulationControls";
-import { Typography } from "../Typography/Typography";
+import { Typography } from "@react-lab-mono/ui";
 import { useControlsPanelStore } from "../../stores/useControlsPanelStore";
 
 export const ControlsPanel = () => {

@@ -1,8 +1,10 @@
 import styles from "./SimulationControls.module.css";
-import { EmojiIcon } from "../EmojiIcon/EmojiIcon";
+import { Checkbox } from "@react-lab-mono/ui";
+import { EmojiIcon, Select } from "@react-lab-mono/ui";
 import { useShallow } from "zustand/shallow";
 import {
   defaultLatency,
+  delayOptions,
   useControlsPanelStore,
   type LatencyDelay
 } from "../../stores/useControlsPanelStore";
@@ -21,46 +23,39 @@ export const SimulationControls = () => {
   return (
     <div className={styles.container}>
       <div className={styles.latencyBox}>
-        <label htmlFor="simulate-latency" className={styles.label}>
-          <input
-            type="checkbox"
-            id="simulate-latency"
-            name="simulateLatency"
-            role="switch"
-            checked={!!mockLatency}
-            onChange={() => setMockLatency(mockLatency ? null : defaultLatency)}
-          />
-          Latency <EmojiIcon type="lightning" />
-        </label>
+        <Checkbox
+          name="simulate-latency"
+          labelText={
+            <>
+              Latency <EmojiIcon type="lightning" />
+            </>
+          }
+          checked={!!mockLatency}
+          onChange={() => setMockLatency(mockLatency ? null : defaultLatency)}
+        />
         {!!mockLatency && (
-          <select
+          <Select
             name="latency-delay"
-            id="latency-delay"
+            options={delayOptions}
             value={mockLatency}
+            getOptionValue={(option) => option.value}
+            getOptionLabel={(option) => option.label}
+            getOptionId={(option) => option.id}
             onChange={(e) => setMockLatency(e.target.value as LatencyDelay)}
-          >
-            <option value="" disabled>
-              Select an delay
-            </option>
-            <option value="500">500ms</option>
-            <option value="1000">1sec</option>
-            <option value="2000">2sec</option>
-            <option value="3000">3sec</option>
-            <option value="random">random</option>
-          </select>
+            placeholder="Select an delay"
+          />
         )}
       </div>
-      <label htmlFor="simulate-error" className={styles.label}>
-        <input
-          type="checkbox"
-          id="simulate-error"
-          name="simulateError"
-          role="switch"
-          checked={mockError}
-          onChange={toggleMockError}
-        />
-        Error <EmojiIcon type="alert" />
-      </label>
+      <Checkbox
+        name="simulate-error"
+        labelText={
+          <>
+            Error <EmojiIcon type="alert" />
+          </>
+        }
+        checked={mockError}
+        onChange={toggleMockError}
+      />
     </div>
   );
 };
