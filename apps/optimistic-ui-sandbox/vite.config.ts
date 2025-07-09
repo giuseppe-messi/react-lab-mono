@@ -1,7 +1,39 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import path from "node:path";
 
-// https://vite.dev/config/
+const uiSrc = path.resolve(__dirname, "../../packages/ui/src");
+
 export default defineConfig({
-  plugins: [react()],
-})
+  /* Set up development to alias imports to the UI package’s source directory, 
+so every component import reflects changes instantly during development. */
+
+  resolve: {
+    alias: [
+      // everything under @react-lab-mono/ui/ gets mapped into src/
+      {
+        find: /^@react-lab-mono\/ui(.*)$/,
+        replacement: uiSrc + "$1"
+      },
+      // the bare package also to src/index
+      {
+        find: /^@react-lab-mono\/ui$/,
+        replacement: uiSrc
+      }
+    ]
+  },
+  optimizeDeps: {
+    include: ["@react-lab-mono/ui"]
+  },
+  server: {
+    fs: {
+      // this lets Vite serve files from outside your app root
+      allow: [
+        path.resolve(__dirname, "../../packages/ui"),
+        path.resolve(__dirname)
+      ]
+    }
+  },
+
+  plugins: [react()]
+});

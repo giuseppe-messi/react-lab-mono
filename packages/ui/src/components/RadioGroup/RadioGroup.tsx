@@ -1,6 +1,6 @@
-import styles from './RadioGroup.module.css';
-import { Box } from '@react-lab-mono/ui';
 import { type ChangeEvent } from "react";
+import { Box } from "../Box";
+import styles from "./RadioGroup.module.css";
 
 interface RadioGroupProps {
   items: string[];

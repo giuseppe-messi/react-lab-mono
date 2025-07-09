@@ -47,5 +47,7 @@ module.exports = {
 
     // not restriction between type and interface
     "@typescript-eslint/consistent-type-definitions": "off"
+
+    // "@typescript-eslint/no-unsafe-assignment": "off"
   }
 };

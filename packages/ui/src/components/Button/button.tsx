@@ -1,4 +1,4 @@
-import styles from "./Button.module.css";
+import styles from "./button.module.css";
 
 type ButtonSize = "sm" | "md" | "lg";
 
@@ -41,6 +41,7 @@ export const Button = ({
         fontSize: fontSizeMap[size],
         fontWeight: fontWeightMap[size]
       }}
+      type="button"
       {...props}
     >
       {text}

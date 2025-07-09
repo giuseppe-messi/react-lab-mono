@@ -1,4 +1,3 @@
-// src/utils/httpError.ts
 export class HttpError extends Error {
   status: number;
   statusText: string;

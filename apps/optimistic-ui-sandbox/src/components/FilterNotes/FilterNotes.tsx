@@ -1,4 +1,4 @@
-import { RadioGroup } from "../RadioGroup";
+import { RadioGroup } from "@react-lab-mono/ui";
 import { useShallow } from "zustand/shallow";
 import {
   noteFilters,

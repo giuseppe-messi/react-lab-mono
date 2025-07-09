@@ -1,4 +1,4 @@
-import styles from "./Box.module.css";
+import styles from "./box.module.css";
 
 type Size = "xs" | "sm" | "md" | "lg" | "xl";
 

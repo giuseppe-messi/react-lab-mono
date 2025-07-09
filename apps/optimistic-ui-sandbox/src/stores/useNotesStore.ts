@@ -3,7 +3,7 @@ import { HttpError } from "../utils/HttpError";
 import { nanoid } from "nanoid";
 import { subscribeWithSelector } from "zustand/middleware";
 import { useControlsPanelStore } from "./useControlsPanelStore";
-import { useToastersStore } from "./useToastersStore";
+import { useToastersStore } from "@react-lab-mono/ui";
 
 export const NOTES_STORE_KEY = "notes-storage";
 

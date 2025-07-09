@@ -1,19 +1,16 @@
-import styles from './Notes.module.css';
-import { AddNoteModal } from '../../AddNoteModal/AddNoteModal';
-import { Box } from '@react-lab-mono/ui';
-import { Button } from '@react-lab-mono/ui';
-import { FilterNotes } from '../../FilterNotes/FilterNotes';
-import { LoadingSpinner } from '../../LoadingSpinner';
-import { NotesList } from '../../NotesList/NotesList';
-import { selectFilteredNotes, useNotesStore } from '../../../stores/useNotesStore';
-import { Typography } from '../../Typography';
+import styles from "./Notes.module.css";
+import { AddNoteModal } from "../../AddNoteModal/AddNoteModal";
+import { Box } from "@react-lab-mono/ui";
+import { Button } from "@react-lab-mono/ui";
+import { FilterNotes } from "../../FilterNotes/FilterNotes";
+import { LoadingSpinner, Typography } from "@react-lab-mono/ui";
+import { NotesList } from "../../NotesList/NotesList";
 import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-  } from 'react';
-import { useShallow } from 'zustand/shallow';
+  selectFilteredNotes,
+  useNotesStore
+} from "../../../stores/useNotesStore";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export const Notes = () => {
   const filteredNotes = useNotesStore(useShallow(selectFilteredNotes));

@@ -1,4 +1,6 @@
 import React from "react";
+import { Button } from "../Button";
+import { Typography } from "../Typography";
 import styles from "./ErrorPage.module.css";
 
 type Props = {
@@ -13,8 +15,8 @@ export const ErrorPage: React.FC<Props> = ({ onClearError }) => {
 
   return (
     <div className={styles.container}>
-      <h2>Something is not right!</h2>
-      <button onClick={handleBackHome}>Go Back Home</button>
+      <Typography type="h2">Something is not right!</Typography>
+      <Button onClick={handleBackHome} text="Go Back Home" />
     </div>
   );
 };

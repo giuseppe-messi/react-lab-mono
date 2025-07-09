@@ -1,7 +1,6 @@
 import styles from "./SimulationControls.module.css";
 import { Checkbox } from "@react-lab-mono/ui";
-import { EmojiIcon } from "../EmojiIcon";
-import { Select } from "../Select";
+import { EmojiIcon, Select } from "@react-lab-mono/ui";
 import { useShallow } from "zustand/shallow";
 import {
   defaultLatency,

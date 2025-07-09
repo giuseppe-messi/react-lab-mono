@@ -1,8 +1,12 @@
 import * as React from "react";
-import { ErrorPage } from "../ErrorPage/ErrorPage";
+
+type FallbackRenderProps = {
+  onClearError: () => void;
+};
 
 type Props = {
   children?: React.ReactNode;
+  fallbackRender: ({ onClearError }: FallbackRenderProps) => React.ReactNode;
 };
 
 export class ErrorBoundary extends React.Component<Props> {
@@ -22,7 +26,7 @@ export class ErrorBoundary extends React.Component<Props> {
 
   render() {
     if (this.state.hasError) {
-      return <ErrorPage onClearError={this.reset} />;
+      return this.props.fallbackRender({ onClearError: this.reset });
     }
     return this.props.children;
   }

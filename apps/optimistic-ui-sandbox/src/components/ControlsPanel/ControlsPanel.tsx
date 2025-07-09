@@ -1,10 +1,9 @@
-import styles from './ControlsPanel.module.css';
-import { Box } from '@react-lab-mono/ui';
-import { Button } from '@react-lab-mono/ui';
-import { CategorySelect } from '../CategorySelect/CategorySelect';
-import { SimulationControls } from '../SimulationControls/SimulationControls';
-import { Typography } from '../Typography';
-import { useControlsPanelStore } from '../../stores/useControlsPanelStore';
+import styles from "./ControlsPanel.module.css";
+import { Box, Button } from "@react-lab-mono/ui";
+import { CategorySelect } from "../CategorySelect/CategorySelect";
+import { SimulationControls } from "../SimulationControls/SimulationControls";
+import { Typography } from "@react-lab-mono/ui";
+import { useControlsPanelStore } from "../../stores/useControlsPanelStore";
 
 export const ControlsPanel = () => {
   const resetSimulations = useControlsPanelStore(

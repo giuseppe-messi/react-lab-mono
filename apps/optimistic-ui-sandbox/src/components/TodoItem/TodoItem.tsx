@@ -1,8 +1,6 @@
 import styles from "./TodoItem.module.css";
 import { Checkbox } from "@react-lab-mono/ui";
-import { CloseIcon } from "../CloseIcon/CloseIcon";
-import { EmojiIcon } from "../EmojiIcon";
-import { InputText } from "../InputText";
+import { CloseIcon, EmojiIcon, InputText } from "@react-lab-mono/ui";
 import { useEffect, useRef } from "react";
 
 import { useTodosStore, type Todo } from "../../stores/useTodosStore";

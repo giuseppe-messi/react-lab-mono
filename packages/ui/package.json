@@ -6,13 +6,13 @@
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
-    }
+      "require": "./dist/index.cjs.js"
+    },
+    "./index.d.ts": "./dist/index.d.ts"
   },
   "scripts": {
     "build": "vite build",
-    "dev": "vite --watch",
+    "dev": "vite",
     "lint": "eslint . --max-warnings 0",
     "clean": "rm -rf .turbo node_modules dist"
   },
@@ -32,7 +32,8 @@
     "react": "^19.1.0"
   },
   "dependencies": {
-    "styled-components": "^6.1.19"
+    "nanoid": "^5.1.5",
+    "zustand": "^5.0.5"
   },
   "publishConfig": {
     "access": "public"

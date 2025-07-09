@@ -1,7 +1,10 @@
-import styles from "./Toast.module.css";
-import { Typography } from "../Typography";
 import { useEffect, useState } from "react";
-import { useToastersStore, type IToast } from "../../stores/useToastersStore";
+import { Typography } from "../Typography";
+import {
+  useToastersStore,
+  type IToast
+} from "../../stores/useToastersStore/useToastersStore";
+import styles from "./Toast.module.css";
 
 type ToastProps = IToast & {
   delay?: number;
@@ -18,7 +21,9 @@ export const Toast = ({ text, type, id, delay = 2000 }: ToastProps) => {
   const deQueueToast = useToastersStore((state) => state.deQueueToast);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setDismiss(true), delay);
+    const timeout = setTimeout(() => {
+      setDismiss(true);
+    }, delay);
 
     return () => {
       clearTimeout(timeout);

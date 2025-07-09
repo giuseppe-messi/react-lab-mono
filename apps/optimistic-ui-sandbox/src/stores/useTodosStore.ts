@@ -6,7 +6,7 @@ import {
 } from "./useControlsPanelStore";
 import { nanoid } from "nanoid";
 import { subscribeWithSelector } from "zustand/middleware";
-import { useToastersStore } from "./useToastersStore";
+import { useToastersStore } from "@react-lab-mono/ui";
 
 export const TODOS_STORE_KEY = "todos-storage";
 

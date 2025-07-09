@@ -1,5 +1,5 @@
-import styles from "./CloseIcon.module.css";
 import type { HTMLAttributes } from "react";
+import styles from "./CloseIcon.module.css";
 
 type CloseIconProps = HTMLAttributes<HTMLDivElement> & {
   onClose: () => void;

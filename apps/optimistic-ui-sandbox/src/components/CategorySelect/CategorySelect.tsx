@@ -1,4 +1,4 @@
-import { Select } from "../Select";
+import { Select } from "@react-lab-mono/ui";
 import { useCallback } from "react";
 import { useShallow } from "zustand/shallow";
 import {
