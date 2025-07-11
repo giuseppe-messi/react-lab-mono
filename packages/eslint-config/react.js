@@ -46,8 +46,10 @@ module.exports = {
     "react/function-component-definition": "off",
 
     // not restriction between type and interface
-    "@typescript-eslint/consistent-type-definitions": "off"
+    "@typescript-eslint/consistent-type-definitions": "off",
 
-    // "@typescript-eslint/no-unsafe-assignment": "off"
+    "@typescript-eslint/no-unsafe-argument": "off",
+
+    "@typescript-eslint/no-unsafe-member-access": "off"
   }
 };

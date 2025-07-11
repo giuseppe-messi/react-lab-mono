@@ -29,8 +29,12 @@ so every component import reflects changes instantly during development. */
     fs: {
       // this lets Vite serve files from outside your app root
       allow: [
+        // your app
+        path.resolve(__dirname),
+        // your ui package
         path.resolve(__dirname, "../../packages/ui"),
-        path.resolve(__dirname)
+        // your monorepo root (so ../../node_modules is in bounds)
+        path.resolve(__dirname, "../..")
       ]
     }
   },
