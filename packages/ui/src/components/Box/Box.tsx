@@ -1,23 +1,23 @@
+import { clsx } from "clsx";
 import styles from "./box.module.css";
+
+export const TestLocators = {
+  box: "box"
+};
 
 type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
-type BoxProps = {
+export type BoxProps = {
   size?: Size;
   className?: string;
   children: React.ReactNode;
 };
 
-const paddingMap: Record<Size, string> = {
-  xs: styles.xs,
-  sm: styles.sm,
-  md: styles.md,
-  lg: styles.lg,
-  xl: styles.xl
-};
-
 export const Box = ({ size = "md", className = "", children }: BoxProps) => (
-  <div className={`${styles.box} ${paddingMap[size]} ${className}`}>
+  <div
+    className={clsx(styles.box, styles[size], className)}
+    data-testid={TestLocators.box}
+  >
     {children}
   </div>
 );
