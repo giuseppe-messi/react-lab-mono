@@ -2,7 +2,7 @@ import styles from "./button.module.css";
 
 type ButtonSize = "sm" | "md" | "lg";
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick?: () => void;
   text: string;
   size?: ButtonSize;
@@ -31,20 +31,18 @@ export const Button = ({
   text,
   size = "md",
   ...props
-}: ButtonProps) => {
-  return (
-    <button
-      className={styles.button}
-      onClick={onClick}
-      style={{
-        padding: paddingMap[size],
-        fontSize: fontSizeMap[size],
-        fontWeight: fontWeightMap[size]
-      }}
-      type="button"
-      {...props}
-    >
-      {text}
-    </button>
-  );
-};
+}: ButtonProps) => (
+  <button
+    className={styles.button}
+    onClick={onClick}
+    style={{
+      padding: paddingMap[size],
+      fontSize: fontSizeMap[size],
+      fontWeight: fontWeightMap[size]
+    }}
+    type="button"
+    {...props}
+  >
+    {text}
+  </button>
+);
