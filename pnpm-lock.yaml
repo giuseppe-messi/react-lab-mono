@@ -85,12 +85,36 @@ importers:
         specifier: ^5.0.5
         version: 5.0.6(@types/react@19.1.8)(react@19.1.0)
     devDependencies:
+      '@axe-core/react':
+        specifier: ^4.10.2
+        version: 4.10.2
       '@eslint/js':
         specifier: ^9.25.0
         version: 9.30.1
       '@react-lab-mono/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@repo/jest-config':
+        specifier: workspace:*
+        version: link:../../packages/jest-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      '@testing-library/jest-dom':
+        specifier: ^6.6.3
+        version: 6.6.3
+      '@testing-library/react':
+        specifier: ^16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.1.6)(@types/react@19.1.8)(react-dom@19.1.0)(react@19.1.0)
+      '@testing-library/user-event':
+        specifier: ^14.6.1
+        version: 14.6.1(@testing-library/dom@10.4.0)
+      '@types/jest':
+        specifier: ^30.0.0
+        version: 30.0.0
+      '@types/jest-axe':
+        specifier: ^3.5.9
+        version: 3.5.9
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.8
@@ -115,6 +139,21 @@ importers:
       globals:
         specifier: ^16.0.0
         version: 16.3.0
+      identity-obj-proxy:
+        specifier: ^3.0.0
+        version: 3.0.0
+      jest:
+        specifier: ^30.0.4
+        version: 30.0.4
+      jest-axe:
+        specifier: ^10.0.0
+        version: 10.0.0
+      jest-environment-jsdom:
+        specifier: ^30.0.4
+        version: 30.0.4
+      ts-jest:
+        specifier: ^29.4.0
+        version: 29.4.0(@babel/core@7.28.0)(jest@30.0.4)(typescript@5.8.3)
       typescript:
         specifier: ~5.8.3
         version: 5.8.3
@@ -143,6 +182,21 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0(eslint@8.57.1)(typescript@5.8.3)
 
+  packages/jest-config:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@testing-library/jest-dom':
+        specifier: ^6.6.3
+        version: 6.6.3
+      '@types/jest-axe':
+        specifier: ^3.5.9
+        version: 3.5.9
+      jest-axe:
+        specifier: ^10.0.0
+        version: 10.0.0
+
   packages/typescript-config: {}
 
   packages/ui:
@@ -166,6 +220,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@repo/jest-config':
+        specifier: workspace:*
+        version: link:../jest-config
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -2632,6 +2689,29 @@ packages:
       react-dom: 19.1.0(react@19.1.0)
     dev: true
 
+  /@testing-library/react@16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.1.6)(@types/react@19.1.8)(react-dom@19.1.0)(react@19.1.0):
+    resolution: {integrity: sha512-kFSyxiEDwv1WLl2fgsq6pPBbw5aWKrsY2/noi1Id0TK0UParSF62oFQFGHXIyaG4pp2tEub/Zlel+fjjZILDsw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@testing-library/dom': ^10.0.0
+      '@types/react': ^18.0.0 || ^19.0.0
+      '@types/react-dom': ^18.0.0 || ^19.0.0
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.27.6
+      '@testing-library/dom': 10.4.0
+      '@types/react': 19.1.8
+      '@types/react-dom': 19.1.6(@types/react@19.1.8)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+    dev: true
+
   /@testing-library/user-event@14.6.1(@testing-library/dom@10.4.0):
     resolution: {integrity: sha512-vq7fv0rnt+QTXgPxr5Hjc210p6YKq2kmdziLgnsZGgLJ9e6VAShx1pACLuRjd/AS/sr7phAR58OIIpf0LlmQNw==}
     engines: {node: '>=12', npm: '>=6'}
@@ -2689,7 +2769,7 @@ packages:
   /@types/concat-stream@2.0.3:
     resolution: {integrity: sha512-3qe4oQAPNwVNwK4C9c8u+VJqv9kez+2MR4qJpoPFfXtgxxif1QbFusvXzK0/Wra2VX07smostI2VMmJNSpZjuQ==}
     dependencies:
-      '@types/node': 22.16.2
+      '@types/node': 24.0.13
     dev: true
 
   /@types/debug@4.1.12:
@@ -9224,6 +9304,47 @@ packages:
       semver: 7.7.2
       type-fest: 4.41.0
       typescript: 5.5.4
+      yargs-parser: 21.1.1
+    dev: true
+
+  /ts-jest@29.4.0(@babel/core@7.28.0)(jest@30.0.4)(typescript@5.8.3):
+    resolution: {integrity: sha512-d423TJMnJGu80/eSgfQ5w/R+0zFJvdtTxwtF9KzFFunOpSeD+79lHJQIiAhluJoyGRbvj9NZJsl9WjCUo0ND7Q==}
+    engines: {node: ^14.15.0 || ^16.10.0 || ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@babel/core': '>=7.0.0-beta.0 <8'
+      '@jest/transform': ^29.0.0 || ^30.0.0
+      '@jest/types': ^29.0.0 || ^30.0.0
+      babel-jest: ^29.0.0 || ^30.0.0
+      esbuild: '*'
+      jest: ^29.0.0 || ^30.0.0
+      jest-util: ^29.0.0 || ^30.0.0
+      typescript: '>=4.3 <6'
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      '@jest/transform':
+        optional: true
+      '@jest/types':
+        optional: true
+      babel-jest:
+        optional: true
+      esbuild:
+        optional: true
+      jest-util:
+        optional: true
+    dependencies:
+      '@babel/core': 7.28.0
+      bs-logger: 0.2.6
+      ejs: 3.1.10
+      fast-json-stable-stringify: 2.1.0
+      jest: 30.0.4
+      json5: 2.2.3
+      lodash.memoize: 4.1.2
+      make-error: 1.3.6
+      semver: 7.7.2
+      type-fest: 4.41.0
+      typescript: 5.8.3
       yargs-parser: 21.1.1
     dev: true
 
