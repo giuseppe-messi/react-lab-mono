@@ -69,9 +69,6 @@ importers:
 
   apps/optimistic-ui-sandbox:
     dependencies:
-      nanoid:
-        specifier: ^5.1.5
-        version: 5.1.5
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -204,9 +201,6 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      nanoid:
-        specifier: ^5.1.5
-        version: 5.1.5
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -7703,12 +7697,6 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
-
-  /nanoid@5.1.5:
-    resolution: {integrity: sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==}
-    engines: {node: ^18 || >=20}
-    hasBin: true
-    dev: false
 
   /napi-postinstall@0.3.0:
     resolution: {integrity: sha512-M7NqKyhODKV1gRLdkwE7pDsZP2/SC2a2vHkOYh9MCpKMbWVfyVfUw5MaH83Fv6XMjxr5jryUp3IDDL9rlxsTeA==}
