@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
+import { render, screen } from "@testing-library/react";
 import type { BoxProps } from "./Box";
 import { Box, TestLocators } from "./Box";
 import styles from "./box.module.css";

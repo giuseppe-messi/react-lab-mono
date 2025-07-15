@@ -21,7 +21,10 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    // Include the type definitions
+    "types": ["@testing-library/jest-dom", "@testing-library/react"]
   },
   "include": ["src"]
 }

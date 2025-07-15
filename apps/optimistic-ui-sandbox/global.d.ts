@@ -1,5 +1,4 @@
-/// <reference types="jest" />
-/// <reference types="@testing-library/react" />
+// Include Jest DOM’s custom matchers
 /// <reference types="@testing-library/jest-dom" />
 
 // Tell TypeScript to treat *.module.css imports as modules,

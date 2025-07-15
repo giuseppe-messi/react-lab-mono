@@ -1,15 +1,12 @@
 {
-  "extends": "./tsconfig.app.json",
   "compilerOptions": {
     // allow TS to emit `require(...)` instead of raw `import ...` for CJS
     "verbatimModuleSyntax": false,
     // ensures default‐interop if ever needed
     "esModuleInterop": true,
-    // (not strictly required, but explicit)
-    "types": ["jest", "@testing-library/jest-dom", "@testing-library/react"]
-  },
-  "include": [
-    "src", // your app + tests
-    "global.d.ts" // your CSS-module + jest-dom refs
-  ]
+    // use bundler-style resolution for locating modules
+    "moduleResolution": "bundler",
+    // compile JSX using the React automatic runtime
+    "jsx": "react-jsx"
+  }
 }
