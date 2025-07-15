@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { nanoid } from "nanoid";
+import { generateUUID } from "../../helpers/generateUUID/generateUUID";
 
 export type ToastType = "sucess" | "error" | "warning";
 
@@ -19,7 +19,7 @@ export const useToastersStore = create<StateProps>()((set) => ({
   toastQueue: [],
   enQueueToast: (type: ToastType, text: string) => {
     set((state) => ({
-      toastQueue: [{ id: nanoid(), type, text }, ...state.toastQueue]
+      toastQueue: [{ id: generateUUID(), type, text }, ...state.toastQueue]
     }));
   },
   deQueueToast: (id: string) => {

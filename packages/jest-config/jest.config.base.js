@@ -1,10 +1,12 @@
+const path = require("path");
+
 module.exports = {
   preset: "ts-jest",
 
   // a DOM-like environment so you can render React components
   testEnvironment: "jsdom",
   // automatically include your RTL + axe setup
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  setupFilesAfterEnv: [require.resolve(path.join(__dirname, "jest.setup.ts"))],
   // stub out CSS modules
   moduleNameMapper: {
     "\\.module\\.css$": "identity-obj-proxy"

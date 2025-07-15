@@ -4,9 +4,8 @@ import {
   maxLatencyRandomValue,
   useControlsPanelStore
 } from "./useControlsPanelStore";
-import { nanoid } from "nanoid";
 import { subscribeWithSelector } from "zustand/middleware";
-import { useToastersStore } from "@react-lab-mono/ui";
+import { generateUUID, useToastersStore } from "@react-lab-mono/ui";
 
 export const TODOS_STORE_KEY = "todos-storage";
 
@@ -139,7 +138,7 @@ export const useTodosStore = create<StateProps>()(
       },
 
       addTodo: (label) => {
-        const newTodoId = nanoid();
+        const newTodoId = generateUUID();
         doAction({
           set,
           work: () => {
