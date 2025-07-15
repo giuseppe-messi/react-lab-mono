@@ -1,9 +1,8 @@
 import { create } from "zustand";
 import { HttpError } from "../utils/HttpError";
-import { nanoid } from "nanoid";
 import { subscribeWithSelector } from "zustand/middleware";
 import { useControlsPanelStore } from "./useControlsPanelStore";
-import { useToastersStore } from "@react-lab-mono/ui";
+import { generateUUID, useToastersStore } from "@react-lab-mono/ui";
 
 export const NOTES_STORE_KEY = "notes-storage";
 
@@ -132,7 +131,7 @@ export const useNotesStore = create<StateProps>()(
       },
 
       addNote: (text) => {
-        const newNoteId = nanoid();
+        const newNoteId = generateUUID();
         doAction({
           set,
           work: () => {

@@ -1,5 +1,5 @@
+import { generateUUID } from "@react-lab-mono/ui";
 import { create } from "zustand";
-import { nanoid } from "nanoid";
 import { persist } from "zustand/middleware";
 
 const CATEGORY_STORE_KEY = "category-storage";
@@ -20,10 +20,20 @@ type Delay = {
 };
 
 export const categoryOptions: Category[] = [
-  { id: nanoid(), label: "todos", value: "todos", disabled: false },
-  { id: nanoid(), label: "notes", value: "notes", disabled: false },
-  { id: nanoid(), label: "bookmarks", value: "bookmarks", disabled: true },
-  { id: nanoid(), label: "contacts", value: "contacts", disabled: true }
+  { id: generateUUID(), label: "todos", value: "todos", disabled: false },
+  { id: generateUUID(), label: "notes", value: "notes", disabled: false },
+  {
+    id: generateUUID(),
+    label: "bookmarks",
+    value: "bookmarks",
+    disabled: true
+  },
+  {
+    id: generateUUID(),
+    label: "contacts",
+    value: "contacts",
+    disabled: true
+  }
 ];
 
 export const delayOptions: Delay[] = [
