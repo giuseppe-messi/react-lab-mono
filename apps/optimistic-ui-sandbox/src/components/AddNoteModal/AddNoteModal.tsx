@@ -1,9 +1,8 @@
-import styles from "./AddNoteModal.module.css";
-import { Button, Modal } from "@react-lab-mono/ui";
-import { TextArea } from "@react-lab-mono/ui";
+import { Button, Modal, TextArea } from "@react-lab-mono/ui";
 import { useEffect } from "react";
+import styles from "./AddNoteModal.module.css";
 
-type AddTodoModalProps = {
+export type AddTodoModalProps = {
   showModal: boolean;
   valueRef: React.RefObject<HTMLTextAreaElement | null>;
   handleAddNote: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -23,19 +22,19 @@ export const AddNoteModal = ({
   }, [showModal, valueRef]);
 
   return (
-    <Modal title="New Note" showModal={showModal} onClose={handleHideModal}>
+    <Modal onClose={handleHideModal} showModal={showModal} title="New Note">
       <form className={styles.modalForm} onSubmit={handleAddNote}>
         <TextArea
-          ref={valueRef}
-          name="new note"
           id="new-note"
+          name="new note"
           placeholder="Enter some text"
+          ref={valueRef}
           required
         />
-
+        <img src="cvcvcv" />
         <div className={styles.modalActions}>
-          <Button type="submit" text="Add" />
-          <Button text="Close" onClick={handleHideModal} />
+          <Button text="Add" type="submit" />
+          <Button onClick={handleHideModal} text="Close" />
         </div>
       </form>
     </Modal>

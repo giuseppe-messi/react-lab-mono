@@ -13,11 +13,14 @@ export type BoxProps = {
   children: React.ReactNode;
 };
 
-export const Box = ({ size = "md", className = "", children }: BoxProps) => (
-  <div
-    className={clsx(styles.box, styles[size], className)}
-    data-testid={TestLocators.box}
-  >
-    {children}
-  </div>
-);
+export const Box = ({ size = "md", className = "", children }: BoxProps) => {
+  return (
+    <div
+      className={clsx(styles.box, styles[size], className)}
+      data-testid={TestLocators.box}
+    >
+      <img src="" />
+      {children}
+    </div>
+  );
+};
