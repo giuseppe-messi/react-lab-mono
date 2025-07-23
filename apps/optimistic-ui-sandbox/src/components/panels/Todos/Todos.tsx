@@ -1,16 +1,14 @@
-import styles from "./Todos.module.css";
-import { AddTodoModal } from "../../AddTodoModal/AddTodoModal";
-import { Box } from "@react-lab-mono/ui";
-import { Button } from "@react-lab-mono/ui";
+import { Box, Button, LoadingSpinner, Typography } from "@react-lab-mono/ui";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useShallow } from "zustand/shallow";
 import { FilterTodos } from "../../FilterTodos/FilterTodos";
-import { LoadingSpinner, Typography } from "@react-lab-mono/ui";
 import {
   selectFilteredTodos,
   useTodosStore
 } from "../../../stores/useTodosStore";
 import { TodosList } from "../../TodosList/TodosList";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useShallow } from "zustand/shallow";
+import { AddTodoModal } from "../../AddTodoModal/AddTodoModal";
+import styles from "./Todos.module.css";
 
 export const Todos = () => {
   const filteredTodos = useTodosStore(useShallow(selectFilteredTodos));
@@ -43,7 +41,9 @@ export const Todos = () => {
     [addTodo]
   );
 
-  const handleHideModal = useCallback(() => setShowModal(false), []);
+  const handleHideModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
 
   return (
     <Box className={styles.container}>
@@ -55,20 +55,26 @@ export const Todos = () => {
         <>
           <Box className={styles.header}>
             <Typography type="body">Add a new todo</Typography>
-            <Button size="sm" onClick={() => setShowModal(true)} text="Add" />
+            <Button
+              onClick={() => {
+                setShowModal(true);
+              }}
+              size="sm"
+              text="Add"
+            />
           </Box>
 
           <AddTodoModal
-            showModal={showModal}
-            valueRef={valueRef}
             handleAddTodo={handleAddTodo}
             handleHideModal={handleHideModal}
+            showModal={showModal}
+            valueRef={valueRef}
           />
 
           <FilterTodos />
           <TodosList todos={filteredTodos} />
 
-          <Typography type="body" className={styles.total}>
+          <Typography className={styles.total} type="body">
             Total todos: {totalCount}
           </Typography>
         </>

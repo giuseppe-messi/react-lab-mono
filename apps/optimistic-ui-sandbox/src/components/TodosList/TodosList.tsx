@@ -1,9 +1,9 @@
-import styles from "./TodosList.module.css";
 import { LoadingSpinner } from "@react-lab-mono/ui";
-import { TodoItem } from "../TodoItem/TodoItem";
 import { useCallback, useState } from "react";
 import { useShallow } from "zustand/shallow";
+import { TodoItem } from "../TodoItem/TodoItem";
 import { useTodosStore, type Todo } from "../../stores/useTodosStore";
+import styles from "./TodosList.module.css";
 
 type TodosListProps = {
   todos: Todo[];
@@ -19,7 +19,9 @@ export const TodosList = ({ todos }: TodosListProps) => {
     ])
   );
 
-  const handleEditingId = useCallback((id: string) => setEditingId(id), []);
+  const handleEditingId = useCallback((id: string) => {
+    setEditingId(id);
+  }, []);
 
   const handleUpdateTodo = useCallback(
     (id: string, label: string) => {
@@ -33,15 +35,15 @@ export const TodosList = ({ todos }: TodosListProps) => {
     <ul className={styles.todoList}>
       {todos.map((todo) => (
         <TodoItem
-          key={todo.id}
-          todo={todo}
           editingId={editingId}
-          onEditingId={handleEditingId}
+          key={todo.id}
           onDeleteTodo={deleteTodo}
+          onEditingId={handleEditingId}
           onUpdateTodo={handleUpdateTodo}
+          todo={todo}
         />
       ))}
-      {isLoading && <LoadingSpinner />}
+      {isLoading ? <LoadingSpinner /> : null}
     </ul>
   );
 };

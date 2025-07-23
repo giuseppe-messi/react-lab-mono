@@ -1,9 +1,9 @@
-import styles from "./NotesList.module.css";
 import { LoadingSpinner } from "@react-lab-mono/ui";
-import { NoteItem } from "../NoteItem/NoteItem";
 import { useCallback, useState } from "react";
 import { useShallow } from "zustand/shallow";
+import { NoteItem } from "../NoteItem/NoteItem";
 import { useNotesStore, type Note } from "../../stores/useNotesStore";
+import styles from "./NotesList.module.css";
 
 type NotesListProps = {
   notes: Note[];
@@ -19,7 +19,9 @@ export const NotesList = ({ notes }: NotesListProps) => {
     ])
   );
 
-  const handleEditingId = useCallback((id: string) => setEditingId(id), []);
+  const handleEditingId = useCallback((id: string) => {
+    setEditingId(id);
+  }, []);
 
   const handleUpdateNote = useCallback(
     (id: string, text: string) => {
@@ -33,15 +35,15 @@ export const NotesList = ({ notes }: NotesListProps) => {
     <ul className={styles.noteList}>
       {notes.map((note) => (
         <NoteItem
+          editingId={editingId}
           key={note.id}
           note={note}
-          editingId={editingId}
-          onEditingId={handleEditingId}
           onDeleteNote={deleteNote}
+          onEditingId={handleEditingId}
           onUpdateNote={handleUpdateNote}
         />
       ))}
-      {isLoading && <LoadingSpinner />}
+      {isLoading ? <LoadingSpinner /> : null}
     </ul>
   );
 };

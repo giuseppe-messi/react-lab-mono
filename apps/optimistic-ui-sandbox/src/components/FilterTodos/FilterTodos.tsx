@@ -1,11 +1,11 @@
 import { RadioGroup } from "@react-lab-mono/ui";
 import { useShallow } from "zustand/shallow";
+import { useCallback, type ChangeEvent } from "react";
 import {
   todoFilters,
   useTodosStore,
   type TodoFilterType
 } from "../../stores/useTodosStore";
-import { useCallback, type ChangeEvent } from "react";
 
 export const FilterTodos = () => {
   const [filter, setFilter] = useTodosStore(
@@ -13,12 +13,13 @@ export const FilterTodos = () => {
   );
 
   const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) =>
-      setFilter(e.target.value as TodoFilterType),
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFilter(e.target.value as TodoFilterType);
+    },
     [setFilter]
   );
 
   return (
-    <RadioGroup items={todoFilters} selected={filter} onChange={handleChange} />
+    <RadioGroup items={todoFilters} onChange={handleChange} selected={filter} />
   );
 };

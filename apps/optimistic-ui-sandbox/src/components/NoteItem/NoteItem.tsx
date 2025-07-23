@@ -1,9 +1,13 @@
-import styles from "./NoteItem.module.css";
 import { CloseIcon, EmojiIcon } from "@react-lab-mono/ui";
 import { useEffect, useRef } from "react";
 import { useNotesStore, type Note } from "../../stores/useNotesStore";
+import styles from "./NoteItem.module.css";
 
-type NoteItemProps = {
+export const TestLocators = {
+  noteItem: "noteItem"
+};
+
+export type NoteItemProps = {
   note: Note;
   editingId: string;
   onEditingId: (id: string) => void;
@@ -34,18 +38,23 @@ export const NoteItem = ({
   };
 
   return (
-    <li key={note.id} className={styles.noteListItem} tabIndex={0}>
+    <li
+      className={styles.noteListItem}
+      data-testid={TestLocators.noteItem}
+      key={note.id}
+      tabIndex={0}
+    >
       {editingId === note.id ? (
         <textarea
-          ref={textRef}
-          name="note"
-          id="new-note"
-          placeholder="Enter some text"
           aria-label="Edit note label"
-          required
           className={styles.textarea}
           defaultValue={note.text}
-        ></textarea>
+          id="new-note"
+          name="note"
+          placeholder="Enter some text"
+          ref={textRef}
+          required
+        />
       ) : (
         <span
           className={`${styles.noteListLabel} ${note.done ? styles.done : ""}`}
@@ -57,30 +66,38 @@ export const NoteItem = ({
       <div className={styles.iconsBox}>
         {editingId === note.id ? (
           <EmojiIcon
-            type="check"
-            onClick={() => handleUpdate(note.id)}
+            onClick={() => {
+              handleUpdate(note.id);
+            }}
             role="button"
+            type="check"
           />
         ) : (
           <EmojiIcon
-            type="edit"
-            onClick={() => onEditingId(note.id)}
             className={styles.editIcon}
+            onClick={() => {
+              onEditingId(note.id);
+            }}
             role="button"
+            type="edit"
           />
         )}
 
         <input
-          type="checkbox"
           checked={note.done}
           name="is note done?"
-          onChange={() => toggleNoteDone(note.id)}
+          onChange={() => {
+            toggleNoteDone(note.id);
+          }}
           style={{ cursor: "pointer" }}
+          type="checkbox"
         />
 
         <CloseIcon
           aria-label={`delete ${note.text}`}
-          onClose={() => onDeleteNote(note.id)}
+          onClose={() => {
+            onDeleteNote(note.id);
+          }}
           role="button"
         />
       </div>

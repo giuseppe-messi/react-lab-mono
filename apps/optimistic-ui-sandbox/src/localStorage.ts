@@ -1,5 +1,5 @@
-import { NOTES_STORE_KEY, useNotesStore } from "./stores/useNotesStore";
 import { shallow } from "zustand/shallow";
+import { NOTES_STORE_KEY, useNotesStore } from "./stores/useNotesStore";
 import { TODOS_STORE_KEY, useTodosStore } from "./stores/useTodosStore";
 
 // Hydrate from localStorages

@@ -64,11 +64,18 @@ export const useControlsPanelStore = create<StateProps>()(
       category: "todos",
       mockLatency: null,
       mockError: false,
-      setCategory: (newCategory) => set({ category: newCategory }),
-      setMockLatency: (value) => set({ mockLatency: value }),
-      toggleMockError: () =>
-        set((state) => ({ ...state, mockError: !state.mockError })),
-      resetSimulations: () => set({ mockError: false, mockLatency: null })
+      setCategory: (newCategory) => {
+        set({ category: newCategory });
+      },
+      setMockLatency: (value) => {
+        set({ mockLatency: value });
+      },
+      toggleMockError: () => {
+        set((state) => ({ ...state, mockError: !state.mockError }));
+      },
+      resetSimulations: () => {
+        set({ mockError: false, mockLatency: null });
+      }
     }),
     {
       name: CATEGORY_STORE_KEY

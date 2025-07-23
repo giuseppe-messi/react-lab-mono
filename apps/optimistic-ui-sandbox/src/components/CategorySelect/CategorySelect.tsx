@@ -13,23 +13,24 @@ export const CategorySelect = () => {
   );
 
   const handleSelect = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) =>
-      setCategory(e.target.value as CategoryOption),
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setCategory(e.target.value as CategoryOption);
+    },
     [setCategory]
   );
 
   return (
     <Select
-      name="category-select"
-      labelText="Choose a category:"
-      options={categoryOptions}
-      value={category}
-      onChange={handleSelect}
-      getOptionValue={(option) => option.value}
-      getOptionLabel={(option) => option.label}
-      getOptionId={(option) => option.id}
       getOptionDisabled={(option) => option.disabled}
+      getOptionId={(option) => option.id}
+      getOptionLabel={(option) => option.label}
+      getOptionValue={(option) => option.value}
+      labelText="Choose a category:"
+      name="category-select"
+      onChange={handleSelect}
+      options={categoryOptions}
       placeholder="Select an option"
+      value={category}
     />
   );
 };

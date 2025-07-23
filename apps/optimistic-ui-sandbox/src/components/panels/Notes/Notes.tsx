@@ -1,16 +1,14 @@
-import styles from "./Notes.module.css";
-import { AddNoteModal } from "../../AddNoteModal/AddNoteModal";
-import { Box } from "@react-lab-mono/ui";
-import { Button } from "@react-lab-mono/ui";
+import { Box, Button, LoadingSpinner, Typography } from "@react-lab-mono/ui";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useShallow } from "zustand/shallow";
 import { FilterNotes } from "../../FilterNotes/FilterNotes";
-import { LoadingSpinner, Typography } from "@react-lab-mono/ui";
 import { NotesList } from "../../NotesList/NotesList";
 import {
   selectFilteredNotes,
   useNotesStore
 } from "../../../stores/useNotesStore";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useShallow } from "zustand/shallow";
+import { AddNoteModal } from "../../AddNoteModal/AddNoteModal";
+import styles from "./Notes.module.css";
 
 export const Notes = () => {
   const filteredNotes = useNotesStore(useShallow(selectFilteredNotes));
@@ -43,7 +41,9 @@ export const Notes = () => {
     [addNote]
   );
 
-  const handleHideModal = useCallback(() => setShowModal(false), []);
+  const handleHideModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
 
   return (
     <Box className={styles.container}>
@@ -55,20 +55,26 @@ export const Notes = () => {
         <>
           <Box className={styles.header}>
             <Typography type="body">Add a new Note</Typography>
-            <Button size="sm" onClick={() => setShowModal(true)} text="Add" />
+            <Button
+              onClick={() => {
+                setShowModal(true);
+              }}
+              size="sm"
+              text="Add"
+            />
           </Box>
 
           <AddNoteModal
-            showModal={showModal}
-            valueRef={valueRef}
             handleAddNote={handleAddNote}
             handleHideModal={handleHideModal}
+            showModal={showModal}
+            valueRef={valueRef}
           />
 
           <FilterNotes />
           <NotesList notes={filteredNotes} />
 
-          <Typography type="body" className={styles.total}>
+          <Typography className={styles.total} type="body">
             Total notes: {totalCount}
           </Typography>
         </>

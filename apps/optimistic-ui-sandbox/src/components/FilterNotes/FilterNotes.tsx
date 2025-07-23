@@ -1,11 +1,11 @@
 import { RadioGroup } from "@react-lab-mono/ui";
 import { useShallow } from "zustand/shallow";
+import { useCallback, type ChangeEvent } from "react";
 import {
   noteFilters,
   useNotesStore,
   type NoteFilterType
 } from "../../stores/useNotesStore";
-import { useCallback, type ChangeEvent } from "react";
 
 export const FilterNotes = () => {
   const [filter, setFilter] = useNotesStore(
@@ -13,12 +13,13 @@ export const FilterNotes = () => {
   );
 
   const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) =>
-      setFilter(e.target.value as NoteFilterType),
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFilter(e.target.value as NoteFilterType);
+    },
     [setFilter]
   );
 
   return (
-    <RadioGroup items={noteFilters} selected={filter} onChange={handleChange} />
+    <RadioGroup items={noteFilters} onChange={handleChange} selected={filter} />
   );
 };

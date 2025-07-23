@@ -31,7 +31,6 @@ export const AddNoteModal = ({
           ref={valueRef}
           required
         />
-        <img src="cvcvcv" />
         <div className={styles.modalActions}>
           <Button text="Add" type="submit" />
           <Button onClick={handleHideModal} text="Close" />

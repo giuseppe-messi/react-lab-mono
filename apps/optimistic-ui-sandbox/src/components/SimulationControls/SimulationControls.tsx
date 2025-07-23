@@ -1,6 +1,4 @@
-import styles from "./SimulationControls.module.css";
-import { Checkbox } from "@react-lab-mono/ui";
-import { EmojiIcon, Select } from "@react-lab-mono/ui";
+import { Checkbox, EmojiIcon, Select } from "@react-lab-mono/ui";
 import { useShallow } from "zustand/shallow";
 import {
   defaultLatency,
@@ -8,6 +6,7 @@ import {
   useControlsPanelStore,
   type LatencyDelay
 } from "../../stores/useControlsPanelStore";
+import styles from "./SimulationControls.module.css";
 
 export const SimulationControls = () => {
   const [mockLatency, mockError, setMockLatency, toggleMockError] =
@@ -24,36 +23,40 @@ export const SimulationControls = () => {
     <div className={styles.container}>
       <div className={styles.latencyBox}>
         <Checkbox
-          name="simulate-latency"
+          checked={Boolean(mockLatency)}
           labelText={
             <>
               Latency <EmojiIcon type="lightning" />
             </>
           }
-          checked={!!mockLatency}
-          onChange={() => setMockLatency(mockLatency ? null : defaultLatency)}
+          name="simulate-latency"
+          onChange={() => {
+            setMockLatency(mockLatency ? null : defaultLatency);
+          }}
         />
-        {!!mockLatency && (
+        {mockLatency !== null && (
           <Select
-            name="latency-delay"
-            options={delayOptions}
-            value={mockLatency}
-            getOptionValue={(option) => option.value}
-            getOptionLabel={(option) => option.label}
             getOptionId={(option) => option.id}
-            onChange={(e) => setMockLatency(e.target.value as LatencyDelay)}
+            getOptionLabel={(option) => option.label}
+            getOptionValue={(option) => option.value}
+            name="latency-delay"
+            onChange={(e) => {
+              setMockLatency(e.target.value as LatencyDelay);
+            }}
+            options={delayOptions}
             placeholder="Select an delay"
+            value={mockLatency}
           />
         )}
       </div>
       <Checkbox
-        name="simulate-error"
+        checked={mockError}
         labelText={
           <>
             Error <EmojiIcon type="alert" />
           </>
         }
-        checked={mockError}
+        name="simulate-error"
         onChange={toggleMockError}
       />
     </div>

@@ -1,9 +1,7 @@
-import styles from "./TodoItem.module.css";
-import { Checkbox } from "@react-lab-mono/ui";
-import { CloseIcon, EmojiIcon, InputText } from "@react-lab-mono/ui";
+import { Checkbox, CloseIcon, EmojiIcon, InputText } from "@react-lab-mono/ui";
 import { useEffect, useRef } from "react";
-
 import { useTodosStore, type Todo } from "../../stores/useTodosStore";
+import styles from "./TodoItem.module.css";
 
 type TodoItemProps = {
   todo: Todo;
@@ -36,14 +34,14 @@ export const TodoItem = ({
   };
 
   return (
-    <li key={todo.id} className={styles.todoListItem} tabIndex={0}>
+    <li className={styles.todoListItem} key={todo.id} tabIndex={0}>
       {editingId === todo.id ? (
         <InputText
-          ref={textInputRef}
-          id={`edit todo ${todo.id}`}
-          name="edit todo"
           className={styles.input}
           defaultValue={todo.label}
+          id={`edit todo ${todo.id}`}
+          name="edit todo"
+          ref={textInputRef}
         />
       ) : (
         <span
@@ -56,28 +54,36 @@ export const TodoItem = ({
       <div className={styles.iconsBox}>
         {editingId === todo.id ? (
           <EmojiIcon
-            type="check"
-            onClick={() => handleUpdate(todo.id)}
+            onClick={() => {
+              handleUpdate(todo.id);
+            }}
             role="button"
+            type="check"
           />
         ) : (
           <EmojiIcon
-            type="edit"
-            onClick={() => onEditingId(todo.id)}
             className={styles.editIcon}
+            onClick={() => {
+              onEditingId(todo.id);
+            }}
             role="button"
+            type="edit"
           />
         )}
 
         <Checkbox
-          name="is todo done?"
           checked={todo.done}
-          onChange={() => toggleTodoDone(todo.id)}
+          name="is todo done?"
+          onChange={() => {
+            toggleTodoDone(todo.id);
+          }}
         />
 
         <CloseIcon
           aria-label={`delete ${todo.label}`}
-          onClose={() => onDeleteTodo(todo.id)}
+          onClose={() => {
+            onDeleteTodo(todo.id);
+          }}
           role="button"
         />
       </div>

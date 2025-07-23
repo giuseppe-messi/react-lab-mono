@@ -19,7 +19,6 @@ export const Box = ({ size = "md", className = "", children }: BoxProps) => {
       className={clsx(styles.box, styles[size], className)}
       data-testid={TestLocators.box}
     >
-      <img src="" />
       {children}
     </div>
   );

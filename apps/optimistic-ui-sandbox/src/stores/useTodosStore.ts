@@ -1,11 +1,11 @@
 import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
+import { generateUUID, useToastersStore } from "@react-lab-mono/ui";
 import { HttpError } from "../utils/HttpError";
 import {
   maxLatencyRandomValue,
   useControlsPanelStore
 } from "./useControlsPanelStore";
-import { subscribeWithSelector } from "zustand/middleware";
-import { generateUUID, useToastersStore } from "@react-lab-mono/ui";
 
 export const TODOS_STORE_KEY = "todos-storage";
 
@@ -62,7 +62,7 @@ const simulateApiControls = async () => {
   }
 };
 
-type doActionMethodParams = {
+type DoActionMethodParams = {
   set: (
     partial:
       | StateProps
@@ -86,7 +86,7 @@ const doAction = async ({
   onError,
   rollback,
   onFinally
-}: doActionMethodParams) => {
+}: DoActionMethodParams) => {
   set({ error: null });
   try {
     work();
@@ -104,142 +104,169 @@ const doAction = async ({
 
 let todosSnap: Todo[] | null = null;
 
-const enQueueErrorToast = (text: string) =>
+const enQueueErrorToast = (text: string) => {
   useToastersStore.getState().enQueueToast("error", text);
+};
 
-const enQueueSucessToast = (text: string) =>
+const enQueueSucessToast = (text: string) => {
   useToastersStore.getState().enQueueToast("sucess", text);
+};
 
 export const useTodosStore = create<StateProps>()(
-  subscribeWithSelector((set, get, api) => {
-    api.subscribe(
-      (state) => state?.todos ?? [],
-      (todos) => set({ totalCount: todos.length })
-    );
+  subscribeWithSelector((set, get) => ({
+    todos: [],
+    totalCount: 0,
+    isLoading: false,
+    error: null,
+    filter: "all",
 
-    return {
-      todos: [],
-      totalCount: 0,
-      isLoading: false,
-      error: null,
-      filter: "all",
+    getTodos: () => {
+      set({ isLoading: true, error: null });
 
-      getTodos: async () => {
-        set({ isLoading: true, error: null });
-
-        doAction({
-          set,
-          work: () => set((state) => ({ ...state, ...getStateFromStore() })),
-          api: () => simulateApiControls(),
-          onError: () =>
-            enQueueErrorToast("Something went wrong fetching the todos!"),
-          onFinally: () => set({ isLoading: false })
-        });
-      },
-
-      addTodo: (label) => {
-        const newTodoId = generateUUID();
-        doAction({
-          set,
-          work: () => {
-            set((state) => ({
-              todos: [...state.todos, { id: newTodoId, done: false, label }]
-            }));
-          },
-          api: () => simulateApiControls(),
-          onSucess: () => enQueueSucessToast("Todo added successfully!"),
-          onError: () =>
-            enQueueErrorToast("Something went wrong! Todo not added!"),
-          rollback: () =>
-            set((state) => ({
-              todos: state.todos.filter((todo) => todo.id !== newTodoId)
-            }))
-        });
-      },
-
-      deleteTodo: (id) => {
-        const { todos } = get();
-
-        if (!todosSnap) {
-          todosSnap = todos;
+      void doAction({
+        set,
+        work: () => {
+          set((state) => ({ ...state, ...getStateFromStore() }));
+        },
+        api: () => simulateApiControls(),
+        onError: () => {
+          enQueueErrorToast("Something went wrong fetching the todos!");
+        },
+        onFinally: () => {
+          set({ isLoading: false });
         }
+      });
+    },
 
-        doAction({
-          set,
-          work: () => {
-            set((state) => ({
-              todos: state.todos.filter((todo) => todo.id !== id)
-            }));
-          },
-          api: () => simulateApiControls(),
-          onSucess: () => {
-            enQueueSucessToast("Todo deleted successfully!");
-            todosSnap = null;
-          },
-          onError: () =>
-            enQueueErrorToast("Something went wrong! Todo not deleted!"),
-          rollback: () => {
-            if (todosSnap) {
-              set({
-                todos: todosSnap
-              });
-              todosSnap = null;
-            }
-          }
-        });
-      },
-
-      editTodoLabel: (id, label) => {
-        const { todos } = get();
-        const index = todos.findIndex((t) => t.id === id);
-        const currentTodo = todos[index];
-
-        const editTodo = (label: string) =>
+    addTodo: (label) => {
+      const newTodoId = generateUUID();
+      void doAction({
+        set,
+        work: () => {
           set((state) => ({
-            todos: state.todos.map((todo) =>
-              todo.id === id ? { ...todo, label: label } : todo
-            )
+            todos: [...state.todos, { id: newTodoId, done: false, label }]
           }));
-
-        doAction({
-          set,
-          work: () => editTodo(label),
-          api: () => simulateApiControls(),
-          onSucess: () => enQueueSucessToast("Todo edited successfully!"),
-          onError: () =>
-            enQueueErrorToast("Something went wrong! Todo not edited!"),
-          rollback: () => editTodo(currentTodo.label)
-        });
-      },
-
-      toggleTodoDone: (id) => {
-        const editTodo = () =>
+        },
+        api: () => simulateApiControls(),
+        onSucess: () => {
+          enQueueSucessToast("Todo added successfully!");
+        },
+        onError: () => {
+          enQueueErrorToast("Something went wrong! Todo not added!");
+        },
+        rollback: () => {
           set((state) => ({
-            todos: state.todos.map((todo) =>
-              todo.id === id ? { ...todo, done: !todo.done } : todo
-            )
+            todos: state.todos.filter((todo) => todo.id !== newTodoId)
           }));
+        }
+      });
+    },
 
-        doAction({
-          set,
-          work: () => editTodo(),
-          api: () => simulateApiControls(),
-          onSucess: () =>
-            enQueueSucessToast("Todo status was changed successfully!"),
-          onError: () =>
-            enQueueErrorToast(
-              "Something went wrong! Todo status wasn't changed!"
-            ),
-          rollback: () => editTodo()
-        });
-      },
-      setFilter: (filter) => {
-        set({
-          filter
-        });
+    deleteTodo: (id) => {
+      const { todos } = get();
+
+      if (!todosSnap) {
+        todosSnap = todos;
       }
-    };
-  })
+
+      void doAction({
+        set,
+        work: () => {
+          set((state) => ({
+            todos: state.todos.filter((todo) => todo.id !== id)
+          }));
+        },
+        api: () => simulateApiControls(),
+        onSucess: () => {
+          enQueueSucessToast("Todo deleted successfully!");
+          todosSnap = null;
+        },
+        onError: () => {
+          enQueueErrorToast("Something went wrong! Todo not deleted!");
+        },
+        rollback: () => {
+          if (todosSnap) {
+            set({
+              todos: todosSnap
+            });
+            todosSnap = null;
+          }
+        }
+      });
+    },
+
+    editTodoLabel: (id, label) => {
+      const { todos } = get();
+      const index = todos.findIndex((t) => t.id === id);
+      const currentTodo = todos[index];
+
+      const editTodo = (label: string) => {
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id ? { ...todo, label } : todo
+          )
+        }));
+      };
+
+      void doAction({
+        set,
+        work: () => {
+          editTodo(label);
+        },
+        api: () => simulateApiControls(),
+        onSucess: () => {
+          enQueueSucessToast("Todo edited successfully!");
+        },
+        onError: () => {
+          enQueueErrorToast("Something went wrong! Todo not edited!");
+        },
+        rollback: () => {
+          editTodo(currentTodo.label);
+        }
+      });
+    },
+
+    toggleTodoDone: (id) => {
+      const editTodo = () => {
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id ? { ...todo, done: !todo.done } : todo
+          )
+        }));
+      };
+
+      void doAction({
+        set,
+        work: () => {
+          editTodo();
+        },
+        api: () => simulateApiControls(),
+        onSucess: () => {
+          enQueueSucessToast("Todo status was changed successfully!");
+        },
+        onError: () => {
+          enQueueErrorToast(
+            "Something went wrong! Todo status wasn't changed!"
+          );
+        },
+        rollback: () => {
+          editTodo();
+        }
+      });
+    },
+    setFilter: (filter) => {
+      set({
+        filter
+      });
+    }
+  }))
+);
+
+useTodosStore.subscribe(
+  (state) => state.todos,
+  (todos) => {
+    useTodosStore.setState({ totalCount: todos.length });
+  }
 );
 
 export const selectFilteredTodos = (state: StateProps) => {

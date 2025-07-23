@@ -1,9 +1,8 @@
-import styles from "./ControlsPanel.module.css";
-import { Box, Button } from "@react-lab-mono/ui";
+import { Box, Button, Typography } from "@react-lab-mono/ui";
 import { CategorySelect } from "../CategorySelect/CategorySelect";
 import { SimulationControls } from "../SimulationControls/SimulationControls";
-import { Typography } from "@react-lab-mono/ui";
 import { useControlsPanelStore } from "../../stores/useControlsPanelStore";
+import styles from "./ControlsPanel.module.css";
 
 export const ControlsPanel = () => {
   const resetSimulations = useControlsPanelStore(
@@ -11,19 +10,19 @@ export const ControlsPanel = () => {
   );
 
   return (
-    <aside className={styles.container} aria-label="Controls Panel">
+    <aside aria-label="Controls Panel" className={styles.container}>
       <Box>
         <Typography type="h2">Controls Panel</Typography>
         <Box className={styles.innerBox}>
           <CategorySelect />
           <SimulationControls />
           <Button
-            text="Reset data"
-            size="sm"
-            type="button"
-            name="reset-data"
             aria-label="Reset all data to initial state"
+            name="reset-data"
             onClick={resetSimulations}
+            size="sm"
+            text="Reset data"
+            type="button"
           />
         </Box>
       </Box>

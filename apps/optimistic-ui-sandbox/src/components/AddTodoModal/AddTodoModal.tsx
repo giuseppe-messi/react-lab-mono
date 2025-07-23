@@ -1,9 +1,8 @@
-import styles from "./AddTodoModal.module.css";
-import { Button } from "@react-lab-mono/ui";
-import { InputText, Modal } from "@react-lab-mono/ui";
+import { Button, InputText, Modal } from "@react-lab-mono/ui";
 import { useEffect } from "react";
+import styles from "./AddTodoModal.module.css";
 
-type AddTodoModalProps = {
+export type AddTodoModalProps = {
   showModal: boolean;
   valueRef: React.RefObject<HTMLInputElement | null>;
   handleAddTodo: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -23,18 +22,18 @@ export const AddTodoModal = ({
   }, [showModal, valueRef]);
 
   return (
-    <Modal title="New Todo" showModal={showModal} onClose={handleHideModal}>
+    <Modal onClose={handleHideModal} showModal={showModal} title="New Todo">
       <form className={styles.modalForm} onSubmit={handleAddTodo}>
         <InputText
-          ref={valueRef}
           id="new-todo"
           name="todo input"
           placeholder="Enter todo label"
+          ref={valueRef}
           required
         />
         <div className={styles.modalActions}>
-          <Button type="submit" text="Add" />
-          <Button text="Close" onClick={handleHideModal} />
+          <Button text="Add" type="submit" />
+          <Button onClick={handleHideModal} text="Close" />
         </div>
       </form>
     </Modal>
