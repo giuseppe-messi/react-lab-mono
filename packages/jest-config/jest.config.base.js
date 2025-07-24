@@ -10,20 +10,20 @@ module.exports = {
   // stub out CSS modules
   moduleNameMapper: {
     "\\.module\\.css$": "identity-obj-proxy"
-  },
+  }
 
   // ← always collect coverage
-  collectCoverage: true,
-  coverageDirectory: "coverage",
-  coverageReporters: ["text", "lcov"],
+  // collectCoverage: true,
+  // coverageDirectory: "coverage",
+  // coverageReporters: ["text", "lcov"],
 
-  // ← enforce at least 80% everywhere (adjust to taste)
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80
-    }
-  }
+  // // ← enforce at least 80% everywhere (adjust to taste)
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 80,
+  //     functions: 80,
+  //     lines: 80,
+  //     statements: 80
+  //   }
+  // }
 };

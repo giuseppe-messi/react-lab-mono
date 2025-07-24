@@ -1,6 +1,5 @@
-import { render, renderHook, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { useNotesStore, type NotesStore } from "../../stores/useNotesStore";
+import { render, screen } from "@testing-library/react";
+import { type NotesStore } from "../../stores/useNotesStore";
 import { NoteItem, TestLocators, type NoteItemProps } from "./NoteItem";
 
 const mockToggleNoteDone = jest.fn();
@@ -37,16 +36,5 @@ describe("NoteItem component", () => {
   it("renders NoteItem without errors", () => {
     renderComponent();
     expect(screen.getByTestId(TestLocators.noteItem)).toBeInTheDocument();
-  });
-
-  it.only("checks toggleNoteDone is called and 'done' state changed when 'done' checkbox is checked", async () => {
-    renderComponent();
-    console.log(screen.debug());
-
-    // const { result } = renderHook(() => useNotesStore());
-
-    // console.log("🚀 ~ it ~ result:", result);
-    await userEvent.click(screen.getByRole("checkbox"));
-    // expect(mockToggleNoteDone).toHaveBeenCalledWith("mockId");
   });
 });
