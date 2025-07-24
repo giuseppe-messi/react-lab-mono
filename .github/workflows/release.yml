@@ -18,8 +18,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-        fetch-depth: 0 # full git history
-        persist-credentials: true # keep GITHUB_TOKEN configured
 
       - name: Setup Node.js & pnpm
         uses: pnpm/action-setup@v2
