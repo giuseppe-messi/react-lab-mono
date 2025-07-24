@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
-import type { ButtonProps } from "./Button";
-import { Button } from "./Button";
+import type { ButtonProps } from "./Button-temp";
+import { Button } from "./Button-temp";
 
 const defaultProps: ButtonProps = {
   text: "MockText"
