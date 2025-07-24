@@ -33,7 +33,7 @@ describe("Button component", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("should apply corrent padding style depending on size prop", () => {
+  it("should apply corrent padding style depending on size prop.", () => {
     const { rerender } = renderBox();
     expect(screen.getByTestId(TestLocators.box)).toHaveClass(
       styles.box,

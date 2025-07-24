@@ -6,6 +6,5 @@
   "linked": [],
   "access": "public",
   "updateInternalDependencies": "patch",
-  "baseBranch": "development",
-  "ignore": ["docs"]
+  "baseBranch": "development"
 }
