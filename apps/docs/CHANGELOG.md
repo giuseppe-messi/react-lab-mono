@@ -1,5 +1,12 @@
 # docs
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @react-lab-mono/ui@1.5.0
+
 ## 0.0.4
 
 ### Patch Changes

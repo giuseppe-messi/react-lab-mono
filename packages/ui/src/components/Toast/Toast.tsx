@@ -16,7 +16,7 @@ const typeMap: Record<IToast["type"], string> = {
   warning: styles.warning
 };
 
-export const Toast = ({ text, type, id, delay = 2000 }: ToastProps) => {
+export const Toast = ({ text, type, id, delay = 3000 }: ToastProps) => {
   const [dismiss, setDismiss] = useState(false);
   const deQueueToast = useToastersStore((state) => state.deQueueToast);
 
