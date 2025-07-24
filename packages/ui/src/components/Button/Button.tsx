@@ -1,48 +1,38 @@
+import clsx from "clsx";
 import styles from "./button.module.css";
 
-type ButtonSize = "sm" | "md" | "lg";
+type Size = "sm" | "md" | "lg";
+type FillMode = "full" | "outline";
+type Variant = "default" | "success" | "warning" | "error";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick?: () => void;
   text: string;
-  size?: ButtonSize;
-};
-
-const paddingMap: Record<ButtonSize, string> = {
-  sm: "4px 8px",
-  md: "8px 16px",
-  lg: "12px 24px"
-};
-
-const fontSizeMap: Record<ButtonSize, string> = {
-  sm: "1rem",
-  md: "1rem",
-  lg: "1.25rem"
-};
-
-const fontWeightMap: Record<ButtonSize, React.CSSProperties["fontWeight"]> = {
-  sm: 300,
-  md: "normal",
-  lg: "normal"
+  size?: Size;
+  fillMode?: FillMode;
+  variant?: Variant;
 };
 
 export const Button = ({
   onClick,
   text,
   size = "md",
+  fillMode = "full",
+  variant = "default",
   ...props
-}: ButtonProps) => (
-  <button
-    className={styles.button}
-    onClick={onClick}
-    style={{
-      padding: paddingMap[size],
-      fontSize: fontSizeMap[size],
-      fontWeight: fontWeightMap[size]
-    }}
-    type="button"
-    {...props}
-  >
-    {text}
-  </button>
-);
+}: ButtonProps) => {
+  const sizeStyle = styles[`size--${size}`];
+  const fillModeStyle = styles[`fillMode--${fillMode}`];
+  const variantStyle = styles[`variant--${variant}`];
+
+  return (
+    <button
+      className={clsx(styles.button, sizeStyle, fillModeStyle, variantStyle)}
+      onClick={onClick}
+      type="button"
+      {...props}
+    >
+      {text}
+    </button>
+  );
+};

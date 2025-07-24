@@ -20,9 +20,7 @@ export const ControlsPanel = () => {
             aria-label="Reset all data to initial state"
             name="reset-data"
             onClick={resetSimulations}
-            size="sm"
             text="Reset data"
-            type="button"
           />
         </Box>
       </Box>
