@@ -1,5 +1,15 @@
 # @react-lab-mono/ui
 
+## 2.0.0
+
+### Major Changes
+
+- 435c0b4: extended button and more
+
+### Minor Changes
+
+- package increase
+
 ## 1.5.0
 
 ### Minor Changes
