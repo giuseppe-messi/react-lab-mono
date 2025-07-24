@@ -1,1 +1,1 @@
-export * from "./Button-temp";
+export * from "./Button";
