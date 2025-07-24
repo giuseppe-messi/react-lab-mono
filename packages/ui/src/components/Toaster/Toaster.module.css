@@ -1,5 +1,6 @@
 .container {
-  position: absolute;
+  position: fixed;
   top: var(--space-md);
   right: var(--space-md);
+  z-index: 9;
 }
