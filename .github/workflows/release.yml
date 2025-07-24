@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
 
       - name: Setup Node.js & pnpm
         uses: pnpm/action-setup@v2
@@ -27,15 +30,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Build & Publish UI package
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          # Commit straight back to main instead of opening a PR
-          publish: pnpm release
-          branch: main
+      - name: Build & publish UI package
+        run: pnpm release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Send a Slack notification if a publish happens
