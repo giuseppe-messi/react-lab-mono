@@ -1,12 +1,12 @@
 import * as React from "react";
 
-type FallbackRenderProps = {
+export type FallbackProps = {
   onClearError: () => void;
 };
 
 type Props = {
   children?: React.ReactNode;
-  fallbackRender: ({ onClearError }: FallbackRenderProps) => React.ReactNode;
+  fallback: React.ComponentType<FallbackProps>;
 };
 
 export class ErrorBoundary extends React.Component<Props> {
@@ -26,7 +26,8 @@ export class ErrorBoundary extends React.Component<Props> {
 
   render() {
     if (this.state.hasError) {
-      return this.props.fallbackRender({ onClearError: this.reset });
+      const Fallback = this.props.fallback;
+      return <Fallback onClearError={this.reset} />;
     }
     return this.props.children;
   }

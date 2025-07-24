@@ -22,21 +22,19 @@ export function RadioGroup({
         className={styles.inputsBox}
         role="radiogroup"
       >
-        {items.map((item) => {
-          return (
-            <div aria-checked={selected === item} key={item} role="radio">
-              <input
-                checked={selected === item}
-                id={item}
-                name={item}
-                onChange={onChange}
-                type="radio"
-                value={item}
-              />
-              <label htmlFor={item}>{item}</label>
-            </div>
-          );
-        })}
+        {items.map((item) => (
+          <div key={item}>
+            <input
+              checked={selected === item}
+              id={item}
+              name={item}
+              onChange={onChange}
+              type="radio"
+              value={item}
+            />
+            <label htmlFor={item}>{item}</label>
+          </div>
+        ))}
       </div>
     </Box>
   );
