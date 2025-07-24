@@ -1,5 +1,11 @@
 # @react-lab-mono/ui
 
+## 1.4.0
+
+### Minor Changes
+
+- 8a9a941: upgrading package
+
 ## 1.3.0
 
 ### Minor Changes
