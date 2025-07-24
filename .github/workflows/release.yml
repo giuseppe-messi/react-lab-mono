@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        fetch-depth: 0 # full git history
+        persist-credentials: true # keep GITHUB_TOKEN configured
 
       - name: Setup Node.js & pnpm
         uses: pnpm/action-setup@v2
@@ -27,14 +29,13 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Create Release Pull Request or Publish to npm
+      - name: Build & Publish UI package
         id: changesets
         uses: changesets/action@v1
         with:
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          # Build & publish your UI package; skip creating a version‐bump PR
+          # Commit straight back to main instead of opening a PR
           publish: pnpm release
-          skip-release-pr: true
+          branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
