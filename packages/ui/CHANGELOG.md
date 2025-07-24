@@ -1,5 +1,11 @@
 # @react-lab-mono/ui
 
+## 1.5.0
+
+### Minor Changes
+
+- longer Toast delay change
+
 ## 1.4.0
 
 ### Minor Changes
