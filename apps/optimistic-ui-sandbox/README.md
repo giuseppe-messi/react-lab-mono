@@ -1,54 +1,30 @@
-# React + TypeScript + Vite
+# Optimistic UI Sandbox
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This isn’t your typical boring todo app.
 
-Currently, two official plugins are available:
+It features a built-in **Controls Panel** where you can simulate **network latency** and trigger **server errors** to see how the app behaves under stress. Every interaction uses **optimistic UI updates**, so changes appear instantly while "background operations complete", just like in real-world apps.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+There’s **no real API**, everything is **fully mocked**, including delays and failures, to simulate realistic network conditions.
 
-## Expanding the ESLint configuration
+A hands-on playground to explore how a real UI should behave when things go wrong, from slow responses to failed requests
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## ✨ Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Optimistic UI** updates for todos and notes
+- Built with React, TypeScript and **Zustand**
+- **Control Panel** to simulate:
+  - Artificial network **latency**
+  - Randomized **server errors**
+- Graceful **error handling** and recovery flows
+- **Unit + integration tests** using **Jest** and **React Testing Library**
+- Fully typed with **TypeScript**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 📁 Project Location
+
+This app lives in the [`apps/optimistic-ui-sandbox`](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox) directory of the [`react-lab-mono`](https://github.com/giuseppe-messi/react-lab-mono) monorepo.
+
+---
