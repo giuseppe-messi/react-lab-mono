@@ -1,6 +1,6 @@
 {
   "name": "@react-lab-mono/ui",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "sideEffects": false,
   "license": "MIT",
   "exports": {
@@ -12,7 +12,9 @@
   },
   "files": [
     "dist",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "README.md",
+    "LICENCE"
   ],
   "scripts": {
     "build": "vite build",
