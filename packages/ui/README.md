@@ -4,21 +4,19 @@ A self-contained, production-ready React component library built with TypeScript
 
 ## ✨ Features
 
-- ⚛️ Built with **React + TypeScript**
-- 🎨 **Theme-ready** with CSS variables
-- 💅 Styled using **CSS Modules**
-- ♿️ Accessible-first components
-- 🧪 Tested with **Jest** and **React Testing Library**
-- 📦 Fully typed, tree-shakeable, and ready for consumption in any React project
+- Built with **React + TypeScript**
+- **Theme-ready** with CSS variables
+- Styled using **CSS Modules**
+- Accessible-first components
+- Tested with **Jest** and **React Testing Library**
+- Fully typed, tree-shakeable, and ready for consumption in any React project
 
 ## 📦 Installation
 
 ```bash
 pnpm add @react-lab-mono/ui
-# or
-npm install @react-lab-mono/ui
-# or
-yarn add @react-lab-mono/ui
+
+# or whichever package managers you use
 ```
 
 ## 🚀 Usage
