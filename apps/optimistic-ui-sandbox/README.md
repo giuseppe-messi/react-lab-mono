@@ -23,6 +23,8 @@ A hands-on playground to explore how a real UI should behave when things go wron
 
 ---
 
+**Checkout the live demo**: [Optimistic UI Sandbox](https://startling-shortbread-4b5781.netlify.app/)
+
 ## 📁 Project Location
 
 This app lives in the [`apps/optimistic-ui-sandbox`](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox) directory of the [`react-lab-mono`](https://github.com/giuseppe-messi/react-lab-mono) monorepo.
