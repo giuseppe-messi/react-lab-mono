@@ -57,6 +57,15 @@ VARIABLES:
   --secondary-color: var(--color-light-white);
 }
 
+.variant--white {
+  --main-color: var(--color-light-white);
+  --secondary-color: var(--color-light-white);
+}
+.variant--white:hover {
+  --main-color: var(--color-light-white);
+  --secondary-color: var(--color-primary);
+}
+
 .variant--success {
   --main-color: var(--color-light-green);
   --secondary-color: white;

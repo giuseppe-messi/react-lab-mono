@@ -15,7 +15,6 @@ export * from "./components/InputText";
 export * from "./components/Toast";
 export * from "./components/Toaster";
 export * from "./components/ErrorBoundary";
-export * from "./components/ErrorPage";
 
 /* hooks */
 export * from "./hooks/useAutoComplete";
@@ -28,3 +27,6 @@ export * from "./stores/useToastersStore";
 
 /* helpers */
 export * from "./helpers/generateUUID";
+
+/* theme */
+export * from "./theme";

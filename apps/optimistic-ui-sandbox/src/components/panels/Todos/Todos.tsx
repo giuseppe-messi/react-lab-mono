@@ -60,8 +60,9 @@ export const Todos = () => {
                 setShowModal(true);
               }}
               size="sm"
-              text="Add"
-            />
+            >
+              Add
+            </Button>
           </Box>
 
           <AddTodoModal

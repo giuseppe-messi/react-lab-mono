@@ -25,7 +25,7 @@ pnpm add @react-lab-mono/ui
 import { Button } from '@react-lab-mono/ui';
 
 export function App() {
-  return <Button text="Click me" />;
+  return <Button>Click me</Button>;
 }
 ```
 

@@ -60,8 +60,9 @@ export const Notes = () => {
                 setShowModal(true);
               }}
               size="sm"
-              text="Add"
-            />
+            >
+              Add
+            </Button>
           </Box>
 
           <AddNoteModal
