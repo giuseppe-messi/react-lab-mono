@@ -1,4 +1,5 @@
-import { Button } from "@react-lab-mono/ui";
+import type { Size, FillMode, Variant } from "@react-lab-mono/ui";
+import { Button, FILLMODES, SIZES, VARIANTS } from "@react-lab-mono/ui";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof Button> = {
@@ -6,7 +7,15 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     size: {
       control: { type: "radio" },
-      options: ["sm", "md", "lg"]
+      options: SIZES as readonly Size[]
+    },
+    fillMode: {
+      control: { type: "radio" },
+      options: FILLMODES as readonly FillMode[]
+    },
+    variant: {
+      control: { type: "radio" },
+      options: VARIANTS as readonly Variant[]
     }
   }
 };
