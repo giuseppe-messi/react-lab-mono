@@ -3,11 +3,10 @@ import styles from "./button.module.css";
 
 type Size = "sm" | "md" | "lg";
 type FillMode = "full" | "outline";
-type Variant = "default" | "success" | "warning" | "error";
+type Variant = "default" | "success" | "warning" | "error" | "white";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick?: () => void;
-  text: string;
   size?: Size;
   fillMode?: FillMode;
   variant?: Variant;
@@ -15,24 +14,29 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export const Button = ({
   onClick,
-  text,
   size = "md",
   fillMode = "full",
   variant = "default",
+  children,
+  className,
   ...props
 }: ButtonProps) => {
-  const sizeStyle = styles[`size--${size}`];
-  const fillModeStyle = styles[`fillMode--${fillMode}`];
-  const variantStyle = styles[`variant--${variant}`];
+  const combinedClassName = clsx(
+    styles.button,
+    styles[`size--${size}`],
+    styles[`fillMode--${fillMode}`],
+    styles[`variant--${variant}`],
+    className
+  );
 
   return (
     <button
-      className={clsx(styles.button, sizeStyle, fillModeStyle, variantStyle)}
+      className={combinedClassName}
       onClick={onClick}
       type="button"
       {...props}
     >
-      {text}
+      {children}
     </button>
   );
 };

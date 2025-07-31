@@ -32,8 +32,8 @@ export const AddTodoModal = ({
           required
         />
         <div className={styles.modalActions}>
-          <Button text="Add" type="submit" />
-          <Button onClick={handleHideModal} text="Close" />
+          <Button type="submit">Add</Button>
+          <Button onClick={handleHideModal}>Close</Button>
         </div>
       </form>
     </Modal>
