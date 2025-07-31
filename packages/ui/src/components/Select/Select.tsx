@@ -1,6 +1,6 @@
 import styles from "./Select.module.css";
 
-type SelectProps<T> = React.SelectHTMLAttributes<HTMLSelectElement> & {
+export type SelectProps<T> = React.SelectHTMLAttributes<HTMLSelectElement> & {
   name: string;
   labelText?: string;
   options: T[];

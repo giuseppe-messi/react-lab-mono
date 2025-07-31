@@ -1,9 +1,20 @@
 import clsx from "clsx";
 import styles from "./button.module.css";
 
-type Size = "sm" | "md" | "lg";
-type FillMode = "full" | "outline";
-type Variant = "default" | "success" | "warning" | "error" | "white";
+export const SIZES = ["sm", "md", "lg"] as const;
+export type Size = (typeof SIZES)[number];
+
+export const FILLMODES = ["full", "outline"] as const;
+export type FillMode = (typeof FILLMODES)[number];
+
+export const VARIANTS = [
+  "default",
+  "success",
+  "warning",
+  "error",
+  "white"
+] as const;
+export type Variant = (typeof VARIANTS)[number];
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick?: () => void;
