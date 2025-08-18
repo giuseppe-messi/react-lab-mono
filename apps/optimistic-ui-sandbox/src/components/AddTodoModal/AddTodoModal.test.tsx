@@ -1,4 +1,3 @@
-// TODO: come back to a11y test fix
 import { render } from "@testing-library/react";
 import { AddTodoModal, type AddTodoModalProps } from "./AddTodoModal";
 

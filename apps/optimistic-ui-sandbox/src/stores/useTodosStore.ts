@@ -30,7 +30,7 @@ export type Todo = {
   done: boolean;
 };
 
-type StateProps = {
+export type TodosStore = {
   todos: Todo[];
   totalCount: number;
   isLoading: boolean;
@@ -65,9 +65,9 @@ const simulateApiControls = async () => {
 type DoActionMethodParams = {
   set: (
     partial:
-      | StateProps
-      | Partial<StateProps>
-      | ((state: StateProps) => StateProps | Partial<StateProps>),
+      | TodosStore
+      | Partial<TodosStore>
+      | ((state: TodosStore) => TodosStore | Partial<TodosStore>),
     replace?: false
   ) => void;
   work: () => void;
@@ -112,7 +112,7 @@ const enQueueSucessToast = (text: string) => {
   useToastersStore.getState().enQueueToast("sucess", text);
 };
 
-export const useTodosStore = create<StateProps>()(
+export const useTodosStore = create<TodosStore>()(
   subscribeWithSelector((set, get) => ({
     todos: [],
     totalCount: 0,
@@ -269,7 +269,7 @@ useTodosStore.subscribe(
   }
 );
 
-export const selectFilteredTodos = (state: StateProps) => {
+export const selectFilteredTodos = (state: TodosStore) => {
   const { todos, filter } = state;
   if (filter === "active") return todos.filter((t) => !t.done);
   if (filter === "completed") return todos.filter((t) => t.done);

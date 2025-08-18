@@ -48,7 +48,7 @@ export type LatencyDelay = "500" | "1000" | "2000" | "3000" | "random";
 export const defaultLatency: LatencyDelay = "2000";
 export const maxLatencyRandomValue = 5000;
 
-type StateProps = {
+export type ControlPanelStore = {
   category: CategoryOption;
   mockLatency: LatencyDelay | null;
   mockError: boolean;
@@ -58,7 +58,7 @@ type StateProps = {
   resetSimulations: () => void;
 };
 
-export const useControlsPanelStore = create<StateProps>()(
+export const useControlsPanelStore = create<ControlPanelStore>()(
   persist(
     (set) => ({
       category: "todos",
