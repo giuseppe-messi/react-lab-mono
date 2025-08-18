@@ -5,7 +5,7 @@ import App from "./App";
 it("should render App without a11y violations", async () => {
   let container: HTMLElement;
 
-  await act(async () => {
+  act(() => {
     // mount & let any effects run
     const result = render(<App />);
     container = result.container;
