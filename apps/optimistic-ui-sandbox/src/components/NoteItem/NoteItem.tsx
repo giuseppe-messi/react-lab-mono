@@ -4,7 +4,10 @@ import { useNotesStore, type Note } from "../../stores/useNotesStore";
 import styles from "./NoteItem.module.css";
 
 export const TestLocators = {
-  noteItem: "noteItem"
+  noteItem: "noteItem",
+  editIcon: "editIcon",
+  checkIcon: "checkIcon",
+  deleteIcon: "deleteIcon"
 };
 
 export type NoteItemProps = {
@@ -66,6 +69,7 @@ export const NoteItem = ({
       <div className={styles.iconsBox}>
         {editingId === note.id ? (
           <EmojiIcon
+            data-testid={TestLocators.checkIcon}
             onClick={() => {
               handleUpdate(note.id);
             }}
@@ -75,6 +79,7 @@ export const NoteItem = ({
         ) : (
           <EmojiIcon
             className={styles.editIcon}
+            data-testid={TestLocators.editIcon}
             onClick={() => {
               onEditingId(note.id);
             }}
@@ -95,6 +100,7 @@ export const NoteItem = ({
 
         <CloseIcon
           aria-label={`delete ${note.text}`}
+          data-testid={TestLocators.deleteIcon}
           onClose={() => {
             onDeleteNote(note.id);
           }}

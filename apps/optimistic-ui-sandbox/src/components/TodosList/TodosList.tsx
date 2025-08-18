@@ -5,7 +5,7 @@ import { TodoItem } from "../TodoItem/TodoItem";
 import { useTodosStore, type Todo } from "../../stores/useTodosStore";
 import styles from "./TodosList.module.css";
 
-type TodosListProps = {
+export type TodosListProps = {
   todos: Todo[];
 };
 

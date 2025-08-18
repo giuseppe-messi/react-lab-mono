@@ -5,7 +5,7 @@ import { NoteItem } from "../NoteItem/NoteItem";
 import { useNotesStore, type Note } from "../../stores/useNotesStore";
 import styles from "./NotesList.module.css";
 
-type NotesListProps = {
+export type NotesListProps = {
   notes: Note[];
 };
 
