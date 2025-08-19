@@ -19,6 +19,8 @@ A hands-on playground to explore how a real UI should behave when things go wron
   - Randomized **server errors**
 - Graceful **error handling** and recovery flows
 - **Unit + integration tests** using **Jest** and **React Testing Library**
+- **Test coverage**: **100%**
+  ![Test coverage screenshot](./assets/test-coverage.png)
 - Fully typed with **TypeScript**
 
 ---
