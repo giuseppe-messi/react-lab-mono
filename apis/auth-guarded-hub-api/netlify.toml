@@ -1,0 +1,5 @@
+[functions]
+# Where your serverless functions live (relative to repo root)
+directory = "functions"
+# Ensures proper bundling for Node deps like Prisma
+node_bundler = "esbuild"
