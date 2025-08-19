@@ -14,6 +14,7 @@ export const hydrateAndSubscribe = () => {
       console.warn("Invalid data in localStorage, resetting store");
     }
   }
+
   // Todos store subscribe to changes
   useTodosStore.subscribe(
     (state) => ({ todos: state.todos, filter: state.filter }),
@@ -33,6 +34,7 @@ export const hydrateAndSubscribe = () => {
       console.warn("Invalid data in localStorage, resetting store");
     }
   }
+
   // Notes store subscribe to changes
   useNotesStore.subscribe(
     (state) => ({ notes: state.notes, filter: state.filter }),
