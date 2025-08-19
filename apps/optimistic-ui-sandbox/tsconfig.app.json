@@ -24,7 +24,11 @@
     "noUncheckedSideEffectImports": true,
 
     // Include the type definitions
-    "types": ["@testing-library/jest-dom", "@testing-library/react"]
+    "types": [
+      "@testing-library/jest-dom",
+      "@testing-library/react",
+      "@types/node"
+    ]
   },
   "include": ["src"]
 }
