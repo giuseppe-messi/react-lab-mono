@@ -12,3 +12,5 @@ server/dist
 public/dist
 storybook-static/
 coverage
+# Local Netlify folder
+.netlify
