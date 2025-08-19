@@ -27,6 +27,7 @@ Every project is backed by unit and integration tests using Jest and React Testi
    - **Mocked Data Fetching & API Integration**: mocking + optimistic UI
    - **Testing**: Jest & React Testing Library
    - **Core JavaScript & Web Fundamentals**: async/await, Promises, modules and more
+   - **Test coverage**: 100%
    - **Checkout the repo**: [apps/optimistic-ui-sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)
    - **Live demo**: [Optimistic UI Sandbox](https://startling-shortbread-4b5781.netlify.app/)
 
