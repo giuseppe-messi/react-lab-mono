@@ -1,43 +1,43 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ErrorBoundary, type FallbackProps } from "@react-lab-mono/ui";
+import { ErrorPage } from "./pages/ErrorPage";
+import { lazy, Suspense } from "react";
+import { Layout } from "./Layout";
+import { AuthProvider } from "./contexts/AuthContext";
+
+const Home = lazy(() => import("./pages/Home/Home"));
+const About = lazy(() => import("./pages/About/About"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const Login = lazy(() => import("./pages/Login/Login"));
+const Register = lazy(() => import("./pages/Register/Register"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
+
+const ErrorPageFallback = ({ onClearError }: FallbackProps) => (
+  <ErrorPage onClearError={onClearError} />
+);
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  const [test, setText] = useState("");
-
-  useEffect(() => {
-    fetch("/api/health")
-      .then((data) => data.json())
-      .then((data) => setText(data.time));
-  }, []);
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <h2>{test}</h2>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ErrorBoundary fallback={ErrorPageFallback}>
+      <AuthProvider>
+        <Router>
+          <Suspense fallback={<div className="loading">Loading...</div>}>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </Suspense>
+        </Router>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
