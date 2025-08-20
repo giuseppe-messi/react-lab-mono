@@ -5,11 +5,3 @@ directory = "functions"
 
 # Ensures proper bundling for Node deps like Prisma
 node_bundler = "esbuild"
-
-
-[[redirects]]
-
-from = "/api/*"
-to = "https://auth-guarded-hub-api.netlify.app/.netlify/functions/:splat"
-status = 200
-force = true
