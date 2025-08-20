@@ -1,0 +1,11 @@
+.nav {
+  background-color: var(--color-primary);
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav .siteList {
+  display: flex;
+  gap: var(--space-md);
+}
