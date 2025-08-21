@@ -6,7 +6,7 @@ It features a built-in **Controls Panel** where you can simulate **network laten
 
 There’s **no real API**, everything is **fully mocked**, including delays and failures, to simulate realistic network conditions.
 
-A hands-on playground to explore how a real UI should behave when things go wrong, from slow responses to failed requests
+A hands-on playground to explore how a real UI should behave when things go wrong, from slow responses to failed requests.
 
 ---
 
