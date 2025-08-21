@@ -11,6 +11,13 @@ node_bundler = "esbuild"
 
 # dev & prod: FE calls /api/*, Netlify maps to functions
 from = "/api/*"
-to = "/netlify/functions/:splat"
+to = "/.netlify/functions/:splat"
 status = 200
 force = true
+
+
+# SPA fallback
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
