@@ -21,7 +21,13 @@ Inside [apps/](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps) 
 
 Every project is backed by unit and integration tests using Jest and React Testing Library. I also automate linting, formatting, and type-checking using ESLint and TypeScript configuration files.
 
-1. **[Optimistic UI Sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)**
+
+1. **[Storybook](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)** ( 🧪 Work In Progress )
+
+   - **Checkout the repo**: [apps/docs](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)
+   - **Live demo**: [Packages UI Storybook](https://storybook-package-ui.netlify.app/?path=/docs/button--docs)
+
+2. **[Optimistic UI Sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)**
 
    - **State Management**: Zustand
    - **Mocked Data Fetching & API Integration**: mocking + optimistic UI
@@ -29,19 +35,19 @@ Every project is backed by unit and integration tests using Jest and React Testi
    - **Core JavaScript & Web Fundamentals**: async/await, Promises, modules and more
    - **Test coverage**: 100%
    - **Checkout the repo**: [apps/optimistic-ui-sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)
-   - **Live demo**: [Optimistic UI Sandbox](https://startling-shortbread-4b5781.netlify.app/)
+   - **Live demo**: [Optimistic UI Sandbox](https://optimistic-ui-sandbox.netlify.app/)
 
-2. **Auth-Guarded Docs & SSR** ( ❌ Coming Soon )
+3. **Auth-Guarded Docs & SSR** ( ❌ Coming Soon )
    - **Routing & Navigation**: nested MDX routes, JWT-based admin guards
    - **Data Fetching & API Integration**: SSG for public docs, SSR for protected pages
    - **Type Safety** & **React Fundamentals**: functional components, hooks, strict TS
    - **Build Tools & Workflow**: Next.js configuration, SSR/SSG pipeline
-3. **PWA Cache Demo** ( ❌ Coming Soon )
+4. **PWA Cache Demo** ( ❌ Coming Soon )
    - **Core JS/Web Fundamentals**: Service Workers, IndexedDB via localForage, Web APIs
    - **Data Fetching & API Integration**: fetch + runtime caching (Workbox)
    - **Accessibility**: offline state banner, progressive enhancement
    - **Build Tools & Workflow**: Vite PWA template, manifest.json
-4. **Cross-Platform UI** ( ❌ Coming Soon )
+5. **Cross-Platform UI** ( ❌ Coming Soon )
    - **React Fundamentals** & **Type Safety**: JSX, props & state, TypeScript
    - **Styling & Theming**: shared design-system tokens across web & native
    - **Component Architecture**: code-sharing via React Native Web
