@@ -5,3 +5,12 @@ directory = "netlify/functions"
 
 # Ensures proper bundling for Node deps like Prisma
 node_bundler = "esbuild"
+
+
+[[redirects]]
+
+# dev & prod: FE calls /api/*, Netlify maps to functions
+from = "/api/*"
+to = "/netlify/functions/:splat"
+status = 200
+force = true
