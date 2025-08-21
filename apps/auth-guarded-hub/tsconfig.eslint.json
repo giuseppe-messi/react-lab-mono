@@ -18,6 +18,6 @@
     "noUnusedParameters": false,
     "preserveWatchOutput": true
   },
-  "include": ["src", "global.d.ts"],
+  "include": ["src", "global.d.ts", "functions"],
   "exclude": ["dist", "build", "node_modules"]
 }

@@ -19,6 +19,7 @@
   justify-content: flex-end;
   margin-top: var(--space-md);
   width: 170px;
+  justify-content: center;
 }
 
 .formActions button {
