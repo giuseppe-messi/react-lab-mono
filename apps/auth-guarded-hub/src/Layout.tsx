@@ -1,0 +1,13 @@
+import { Outlet } from "react-router-dom";
+import { Toaster } from "@react-lab-mono/ui";
+import { Nav } from "./components/Nav";
+
+export const Layout = () => (
+  <>
+    <Nav />
+    <main className="main">
+      <Outlet />
+    </main>
+    <Toaster />
+  </>
+);

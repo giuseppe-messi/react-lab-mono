@@ -1,0 +1,9 @@
+.container {
+  text-align: center;
+  padding-top: var(--space-xl);
+  color: var(--color-light-white);
+}
+
+.container > h2 {
+  margin-bottom: var(--space-lg);
+}

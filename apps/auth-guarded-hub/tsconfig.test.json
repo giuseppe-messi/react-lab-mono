@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    // allow TS to emit `require(...)` instead of raw `import ...` for CJS
+    "verbatimModuleSyntax": false,
+    // ensures default‐interop if ever needed
+    "esModuleInterop": true,
+    // use bundler-style resolution for locating modules
+    "moduleResolution": "bundler",
+    // compile JSX using the React automatic runtime
+    "jsx": "react-jsx"
+  }
+}
