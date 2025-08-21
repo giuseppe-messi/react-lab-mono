@@ -25,7 +25,7 @@ A hands-on playground to explore how a real UI should behave when things go wron
 
 ---
 
-**Checkout the live demo**: [Optimistic UI Sandbox](https://startling-shortbread-4b5781.netlify.app/)
+**Checkout the live demo**: [Optimistic UI Sandbox](https://optimistic-ui-sandbox.netlify.app/)
 
 ## 📁 Project Location
 
