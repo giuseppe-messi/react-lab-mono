@@ -1,35 +1,67 @@
 import { NavLink } from "react-router-dom";
+import { LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
+import axios from "axios";
+// import { useCreateUser } from "../../hooks/useCreateUser";
+import { useState } from "react";
 import styles from "./Register.module.css";
 
 const Register = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // const { createUser, isLoading, user } = useCreateUser();
+  const { enQueueToast } = useToastersStore();
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log("🚀 ~ isLoading:", isLoading);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const fd = new FormData(e.currentTarget);
 
-    console.log("🚀 ~ data:", data);
+    const input = {
+      name: String(fd.get("name")),
+      lastname: String(fd.get("lastname")),
+      email: String(fd.get("email")),
+      password: String(fd.get("password"))
+    };
 
-    // onSubmit?.(data);
-    // Example:
-    // await fetch("/api/register", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(data),
-    // });
+    try {
+      setIsLoading(true);
+      await axios.post("/api/users", input);
+      enQueueToast("sucess", "Successfully registered!");
+    } catch (err) {
+      console.error(err);
+      enQueueToast("error", "Registration failed");
+    } finally {
+      setIsLoading(false);
+    }
+
+    // try {
+    //   await createUser(input);
+
+    //   enQueueToast("sucess", "Successfully registered!");
+    // } catch {
+    //   enQueueToast("error", "Registration failed");
+    // }
   };
 
   return (
-    <form className={styles.registerForm} onSubmit={handleSubmit}>
+    <form
+      className={styles.registerForm}
+      onSubmit={(e) => void handleSubmit(e)}
+    >
       <h2>Register</h2>
 
-      <label htmlFor="reg-name">Name</label>
-      <input id="reg-name" name="name" required type="text" />
+      <label htmlFor="name">Name</label>
+      <input id="name" name="name" required type="text" />
 
-      <label htmlFor="reg-email">Email</label>
-      <input id="reg-email" name="email" required type="email" />
+      <label htmlFor="lastname">Last Name</label>
+      <input id="lastname" name="lastname" required type="text" />
 
-      <label htmlFor="reg-password">Password</label>
+      <label htmlFor="email">Email</label>
+      <input id="email" name="email" required type="email" />
+
+      <label htmlFor="password">Password</label>
       <input
-        id="reg-password"
+        id="password"
         minLength={8}
         name="password"
         required
@@ -37,8 +69,14 @@ const Register = () => {
       />
 
       <div className={styles.formActions}>
-        <button type="submit">Create account</button>
-        <button type="reset">Clear</button>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <button type="submit">Create account</button>
+            <button type="reset">Clear</button>
+          </>
+        )}
       </div>
       <p>
         Already registered? <NavLink to="/login">Login</NavLink>

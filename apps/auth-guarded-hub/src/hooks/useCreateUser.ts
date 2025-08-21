@@ -1,5 +1,6 @@
-import axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import type { AxiosError } from "axios";
+import axios from "axios";
+import { useCallback, useState } from "react";
 
 export interface CreateUserInput {
   name: string;
@@ -8,43 +9,30 @@ export interface CreateUserInput {
   password: string;
 }
 
-export const useCreateUser = ({
-  name,
-  lastname,
-  email,
-  password
-}: CreateUserInput) => {
+export const useCreateUser = () => {
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<AxiosError | null>(null);
 
-  useEffect(() => {
-    const createUser = async () => {
-      setIsLoading(true);
-      setError(null);
+  const createUser = useCallback(async (input: CreateUserInput) => {
+    setIsLoading(true);
+    setError(null);
 
-      try {
-        const { data } = await axios.post("/api/users", {
-          name,
-          lastname,
-          email,
-          password
-        });
+    try {
+      const { data } = await axios.post("/api/users", input);
 
-        setUser(data);
-      } catch (err) {
-        console.error(err);
-        setError(err as AxiosError);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    createUser();
-  }, [name, lastname, email, password]);
+      setUser(data);
+    } catch (err) {
+      console.error(err);
+      setError(err as AxiosError);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return {
     user,
+    createUser,
     isLoading,
     error
   };
