@@ -1,6 +1,7 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { prisma } from "../../prisma"; // <-- use the singleton
+import { createSession, setCookieHeader } from "./lib/session";
 
 const CreateUser = z.object({
   name: z.string(),
@@ -36,7 +37,7 @@ export default async (req: Request) => {
 
       if (exists)
         return Response.json(
-          { error: "Email already registered" },
+          { message: "This email already exists! Try logging in!" },
           { status: 409 }
         );
 
@@ -44,6 +45,8 @@ export default async (req: Request) => {
       const user = await prisma.user.create({
         data: { name, lastname, email, passwordHash }
       });
+
+      const { token } = await createSession(user);
 
       return Response.json(
         {
@@ -53,7 +56,10 @@ export default async (req: Request) => {
           email: user.email,
           createdAt: user.createdAt.toISOString()
         },
-        { status: 201 }
+        {
+          status: 201,
+          headers: { "Set-Cookie": setCookieHeader(token) } // HttpOnly cookie
+        }
       );
     }
 

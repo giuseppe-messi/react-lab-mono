@@ -1,16 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
+import type { AxiosError } from "axios";
 import axios from "axios";
-// import { useCreateUser } from "../../hooks/useCreateUser";
 import { useState } from "react";
+import { useAuthSetContext } from "../../contexts/AuthContext";
 import styles from "./Register.module.css";
 
 const Register = () => {
-  // const { createUser, isLoading, user } = useCreateUser();
   const { enQueueToast } = useToastersStore();
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log("🚀 ~ isLoading:", isLoading);
+  const navigate = useNavigate();
+  const setUser = useAuthSetContext()?.setUser;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,22 +25,21 @@ const Register = () => {
 
     try {
       setIsLoading(true);
-      await axios.post("/api/users", input);
+      const { data } = await axios.post("/api/users", input);
       enQueueToast("sucess", "Successfully registered!");
+      void navigate("/");
+      setUser?.(data);
     } catch (err) {
-      console.error(err);
-      enQueueToast("error", "Registration failed");
+      let errorMessage = "Registration failed!";
+
+      if (axios.isAxiosError(err)) {
+        errorMessage = err.response?.data?.message ?? errorMessage;
+      }
+
+      enQueueToast("error", errorMessage);
     } finally {
       setIsLoading(false);
     }
-
-    // try {
-    //   await createUser(input);
-
-    //   enQueueToast("sucess", "Successfully registered!");
-    // } catch {
-    //   enQueueToast("error", "Registration failed");
-    // }
   };
 
   return (
