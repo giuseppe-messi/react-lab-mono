@@ -1,6 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
-import type { AxiosError } from "axios";
 import axios from "axios";
 import { useState } from "react";
 import { useAuthSetContext } from "../../contexts/AuthContext";
