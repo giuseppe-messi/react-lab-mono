@@ -1,4 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useToastersStore } from "@react-lab-mono/ui";
+import { useAuth, useAuthSetContext } from "../contexts/AuthContext";
 import styles from "./Nav.module.css";
 
 const navItems = [
@@ -8,6 +11,27 @@ const navItems = [
 ];
 
 export const Nav = () => {
+  const user = useAuth();
+
+  console.log("🚀 ~ user:", user);
+
+  const setUser = useAuthSetContext()?.setUser;
+  const { enQueueToast } = useToastersStore();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await axios
+      .post("api/logout")
+      .then(() => {
+        enQueueToast("sucess", "Successfully logged out!");
+        setUser?.(null);
+        void navigate("/");
+      })
+      .catch(() => {
+        enQueueToast("error", "Error loggin out!");
+      });
+  };
+
   return (
     <nav className={styles.nav}>
       <ul className={styles.siteList}>
@@ -17,9 +41,17 @@ export const Nav = () => {
           </NavLink>
         ))}
       </ul>
-      <ul>
-        <NavLink to="login">Login</NavLink>
-        {/* <NavLink to="register">Register</NavLink> */}
+      <ul style={{ color: "white" }}>
+        {user ? (
+          <>
+            <p>Hi {user.name}!</p>
+            <button onClick={handleLogout} type="button">
+              Logout
+            </button>
+          </>
+        ) : (
+          <NavLink to="login">Sign In</NavLink>
+        )}
       </ul>
     </nav>
   );
