@@ -26,6 +26,11 @@ export const createSession = async (user: User) => {
   const now = new Date();
   const expiresAt = new Date(now.getTime() + SESSION_TTL_SEC * 1000);
 
+  // TEMP: prove what's undefined in prod
+  console.log("has session model?", "session" in (prisma as any));
+
+  console.log("🚀 ~ prisma:", prisma);
+
   await prisma.session.create({
     data: {
       secretHash,
