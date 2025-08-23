@@ -30,11 +30,15 @@ Every project is backed by unit and integration tests using Jest and React Testi
    - **Checkout the repo**: [apps/optimistic-ui-sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)
    - **Live demo**: [Optimistic UI Sandbox](https://startling-shortbread-4b5781.netlify.app/)
 
-2. **Auth-Guarded Docs & SSR** ( ❌ Coming Soon )
-   - **Routing & Navigation**: nested MDX routes, JWT-based admin guards
-   - **Data Fetching & API Integration**: SSG for public docs, SSR for protected pages
-   - **Type Safety** & **React Fundamentals**: functional components, hooks, strict TS
-   - **Build Tools & Workflow**: Next.js configuration, SSR/SSG pipeline
+2. **[Auth-Guarded Hub](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/auth-guarded-hub)** ( 🧪 Work In Progress )
+
+   - **Full-Stack Setup**: React (Vite) frontend + backend API built with Netlify Functions and Prisma/Postgres
+   - **Database & Schema**: Prisma migrations managing a Postgres schema, deployed automatically on Netlify
+   - **Routing & Guards**: React Router with protected routes, admin access enforced via session/JWT guards
+   - **Type Safety & Best Practices**: Strict TypeScript across frontend & backend, context-based auth provider, reusable hooks
+   - **Checkout the repo**: [apps/auth-guarded-hub/](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/auth-guarded-hub)
+   - **Live demo**: [Auth-Guarded Hub](https://auth-guarded-hub.netlify.app/)
+
 3. **PWA Cache Demo** ( ❌ Coming Soon )
    - **Core JS/Web Fundamentals**: Service Workers, IndexedDB via localForage, Web APIs
    - **Data Fetching & API Integration**: fetch + runtime caching (Workbox)
