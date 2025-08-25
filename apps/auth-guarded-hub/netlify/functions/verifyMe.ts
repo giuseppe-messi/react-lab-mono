@@ -20,6 +20,7 @@ export default async (req: Request) => {
     {
       id: session.user.id,
       name: session.user.name,
+      lastname: session.user.lastname,
       email: session.user.email
     },
     { status: 200 }

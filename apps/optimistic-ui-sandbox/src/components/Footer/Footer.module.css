@@ -1,7 +1,7 @@
 footer {
   padding: var(--space-sm);
   text-align: right;
-  color: var(--color-light-white);
+  color: var(--color-white);
   font-size: small;
   flex: 0 0 auto;
 }

@@ -8,11 +8,11 @@ const config = {
   stories: ["../stories/*.stories.tsx", "../stories/**/*.stories.tsx"],
   addons: [
     getAbsolutePath("@storybook/addon-links"),
-    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-essentials")
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
-    options: {},
+    options: {}
   },
 
   core: {},
@@ -26,16 +26,16 @@ const config = {
         alias: [
           {
             find: "ui",
-            replacement: resolve(__dirname, "../../../packages/ui/"),
-          },
-        ],
-      },
+            replacement: resolve(__dirname, "../../../packages/ui/")
+          }
+        ]
+      }
     };
   },
 
   docs: {
-    autodocs: true,
-  },
+    autodocs: true
+  }
 };
 
 export default config;

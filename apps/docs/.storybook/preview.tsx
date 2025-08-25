@@ -6,7 +6,11 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <ThemeProvider global>
-        <div>
+        <div
+          style={{
+            fontFamily: "var(--font-family)"
+          }}
+        >
           <Story />
         </div>
       </ThemeProvider>

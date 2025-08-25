@@ -1,81 +1,105 @@
 /* 
-VARIABLES:
---main-color
---secondary-color
+
+IMPORTANT:
+
+--> Expects a theme to exist (e.g. in :root or theme scopes) and have the following global variables set:
+
+   --color-primary, 
+   --color-white, 
+   --color-light-red, 
+   --color-light-green, 
+   --color-light-yellow, 
+   --app-radius
+
 */
 
 .button {
   cursor: pointer;
-  transition: border-color 0.25s, background-color 0.25s, color 0.25s;
   border-radius: var(--app-radius);
-
   background-color: var(--main-color);
   color: var(--secondary-color);
   border: 1px solid var(--main-color);
+  width: auto;
+  transition: border-color 0.25s, background-color 0.25s, color 0.25s;
 }
 
-/* size */
-.size--sm {
+.fullWidth {
+  width: 100%;
+}
+
+/********* SIZE *********/
+
+.button[data-size="sm"] {
   padding: 4px 8px;
   font-size: 1rem;
   font-weight: 300;
 }
 
-.size--md {
+.button[data-size="md"] {
   padding: 8px 16px;
   font-size: 1rem;
   font-weight: normal;
 }
 
-.size--lg {
+.button[data-size="lg"] {
   padding: 12px 24px;
   font-size: 1.25rem;
   font-weight: normal;
 }
 
-/* fillMode */
-.fillMode--outline {
+/********* FILLMODE *********/
+
+.button[data-fill-mode="outline"] {
   background-color: transparent;
   color: var(--main-color);
   border: 1px solid var(--main-color);
 }
 
-.fillMode--outline.button:hover {
+.button[data-fill-mode="outline"]:hover {
   background-color: var(--main-color);
   color: var(--secondary-color);
 }
 
-.fillMode--full.button:hover {
+.button[data-fill-mode="full"]:hover {
   opacity: 0.9;
   /* default colors already set on .button */
 }
 
-/* variant */
-.variant--default {
+/********* VARIANT *********/
+
+.button[data-variant="default"] {
   --main-color: var(--color-primary);
-  --secondary-color: var(--color-light-white);
+  --secondary-color: var(--color-white);
 }
 
-.variant--white {
-  --main-color: var(--color-light-white);
-  --secondary-color: var(--color-light-white);
+.button[data-variant="white"] {
+  --main-color: var(--color-white);
+  --secondary-color: var(--color-white);
 }
-.variant--white:hover {
-  --main-color: var(--color-light-white);
+.button[data-variant="white"]:hover {
+  --main-color: var(--color-white);
   --secondary-color: var(--color-primary);
 }
 
-.variant--success {
+.button[data-variant="success"] {
   --main-color: var(--color-light-green);
   --secondary-color: white;
 }
 
-.variant--warning {
+.button[data-variant="warning"] {
   --main-color: var(--color-light-yellow);
   --secondary-color: black;
 }
 
-.variant--error {
+.button[data-variant="error"] {
   --main-color: var(--color-light-red);
   --secondary-color: white;
+}
+
+/********* DISABLED *********/
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }

@@ -28,7 +28,14 @@
       "@testing-library/jest-dom",
       "@testing-library/react",
       "@types/node"
-    ]
+    ],
+
+    // Map @react-lab-mono/ui imports to the local source (not node_modules)
+    // so TypeScript type-checks against live code. Mirrors the Vite alias.
+    "paths": {
+      "@react-lab-mono/ui": ["../../packages/ui/src/index.ts"],
+      "@react-lab-mono/ui/*": ["../../packages/ui/src/*"]
+    }
   },
   "include": ["src"]
 }

@@ -1,6 +1,6 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useToastersStore } from "@react-lab-mono/ui";
+import { Button, useToastersStore } from "@react-lab-mono/ui";
 import { useAuth, useAuthSetContext } from "../contexts/AuthContext";
 import styles from "./Nav.module.css";
 
@@ -12,12 +12,10 @@ const navItems = [
 
 export const Nav = () => {
   const user = useAuth();
-
-  console.log("🚀 ~ user:", user);
-
   const setUser = useAuthSetContext()?.setUser;
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await axios
@@ -41,18 +39,27 @@ export const Nav = () => {
           </NavLink>
         ))}
       </ul>
-      <ul style={{ color: "white" }}>
+      <div className={styles.userNameBox}>
         {user ? (
           <>
             <p>Hi {user.name}!</p>
-            <button onClick={handleLogout} type="button">
+            <Button
+              fillMode="outline"
+              onClick={handleLogout}
+              size="sm"
+              variant="white"
+            >
               Logout
-            </button>
+            </Button>
           </>
         ) : (
-          <NavLink to="login">Sign In</NavLink>
+          <NavLink state={{ from: location }} to="login">
+            <Button fillMode="outline" size="sm" variant="white">
+              Sign In
+            </Button>
+          </NavLink>
         )}
-      </ul>
+      </div>
     </nav>
   );
 };
