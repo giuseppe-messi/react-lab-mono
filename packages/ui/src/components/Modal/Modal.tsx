@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { useRef, type ReactNode } from "react";
-import { CloseIcon } from "../CloseIcon/CloseIcon";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import styles from "./Modal.module.css";
 
@@ -28,7 +28,11 @@ export const Modal = ({ title, showModal, onClose, children }: ModalProps) => {
             >
               <div className={styles.modal} ref={nodeRef} tabIndex={-1}>
                 {onClose ? (
-                  <CloseIcon className={styles.closeIcon} onClose={onClose} />
+                  <XMarkIcon
+                    className={styles.xIcon}
+                    onClick={onClose}
+                    role="button"
+                  />
                 ) : null}
                 <header>
                   <h2>{title}</h2>

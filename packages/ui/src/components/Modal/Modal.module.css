@@ -27,8 +27,11 @@
   z-index: 1000;
 }
 
-.closeIcon {
+.xIcon {
   position: absolute;
-  top: 0;
+  top: 6px;
   right: 10px;
+  color: var(--color-light-red);
+  cursor: pointer;
+  width: 28px;
 }

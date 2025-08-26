@@ -17,7 +17,7 @@ const meta: Meta<typeof InputText> = {
     docs: {
       description: {
         component:
-          "A simple `InputText` component. <br><br>\
+          "⚠️ **Work in Progress**!  This component's story is not ready! <br><br> A simple `InputText` component. <br><br>\
         Use the controls below to change the values and see how the InputText’s appearance adapts."
       },
       source: {

@@ -14,7 +14,7 @@ const meta: Meta<typeof LoadingSpinner> = {
     docs: {
       description: {
         component:
-          "A `LoadingSpinner` component used to show progress/loading state in the UI. <br><br>\
+          "⚠️ **Work in Progress**!  This component's story is not ready! <br><br> A `LoadingSpinner` component used to show progress/loading state in the UI. <br><br>\
           Use the controls below to change the values and see how the button’s appearance adapts."
       },
       source: {

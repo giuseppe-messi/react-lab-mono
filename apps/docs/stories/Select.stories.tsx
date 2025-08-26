@@ -21,6 +21,14 @@ const options = [
 
 const meta: Meta<typeof Select> = {
   component: Select,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "⚠️ **Work in Progress**!  This component's story is not ready!"
+      }
+    }
+  },
   argTypes: {
     // size: {
     //   control: { type: "radio" },

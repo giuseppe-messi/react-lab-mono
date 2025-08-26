@@ -6,24 +6,18 @@ interface RadioGroupProps {
   items: string[];
   selected: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
 }
 
-export function RadioGroup({
-  items,
-  selected,
-  onChange,
-  className
-}: RadioGroupProps) {
+export function RadioGroup({ items, selected, onChange }: RadioGroupProps) {
   return (
-    <Box className={`${className} ${styles.card}`}>
+    <Box className={styles.card}>
       <div
         aria-label="Filter todos"
         className={styles.inputsBox}
         role="radiogroup"
       >
         {items.map((item) => (
-          <div key={item}>
+          <div className={styles.inputBox} key={item}>
             <input
               checked={selected === item}
               id={item}

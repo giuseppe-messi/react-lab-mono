@@ -4,8 +4,6 @@ import styles from "./Profile.module.css";
 const Profile = () => {
   const user = useAuth();
 
-  console.log("🚀 ~ Profile ~ user:", user);
-
   return (
     <div className="container">
       <header className="hero">

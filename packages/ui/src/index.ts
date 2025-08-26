@@ -10,7 +10,6 @@ export * from "./components/RadioGroup";
 export * from "./components/Select";
 export * from "./components/TextArea";
 export * from "./components/Typography";
-export * from "./components/CloseIcon";
 export * from "./components/InputText";
 export * from "./components/Toast";
 export * from "./components/Toaster";

@@ -35,6 +35,13 @@
   gap: 4px;
 }
 
+.xIcon {
+  color: var(--color-light-red);
+  cursor: pointer;
+  width: 28px;
+  display: flex;
+}
+
 .textarea {
   width: 100%;
   max-width: 590px;
