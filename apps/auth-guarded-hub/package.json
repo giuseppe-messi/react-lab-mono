@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "clean": "rimraf node_modules .turbo dist build .cache",
     "lint": "eslint .",
     "preview": "vite preview",
     "postinstall": "prisma generate",
