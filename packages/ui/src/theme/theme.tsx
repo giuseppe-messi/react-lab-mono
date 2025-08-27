@@ -6,7 +6,7 @@ export interface Theme {
   // Core colors
   colorPrimary: string;
   colorSecondary: string;
-  colorLightWhite: string;
+  colorWhite: string;
   colorLightRed: string;
   colorLightGreen: string;
   colorLightYellow: string;
@@ -42,7 +42,7 @@ export interface Theme {
 const defaultTheme: Theme = {
   colorPrimary: "#242424",
   colorSecondary: "#468faf",
-  colorLightWhite: "#f8f8ff",
+  colorWhite: "#f8f8ff",
   colorLightRed: "#e15151",
   colorLightGreen: "#48bb78",
   colorLightYellow: "#e1c051",
@@ -73,7 +73,7 @@ const defaultTheme: Theme = {
 const toCssVars = (theme: Theme): Record<string, string> => ({
   "--color-primary": theme.colorPrimary,
   "--color-secondary": theme.colorSecondary,
-  "--color-light-white": theme.colorLightWhite,
+  "--color-white": theme.colorWhite,
   "--color-light-red": theme.colorLightRed,
   "--color-light-green": theme.colorLightGreen,
   "--color-light-yellow": theme.colorLightYellow,

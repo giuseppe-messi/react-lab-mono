@@ -1,5 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import { useState } from "react";
 import axios from "axios";
 import { useAuthSetContext } from "../../contexts/AuthContext";
@@ -9,6 +9,7 @@ const Login = () => {
   const { enQueueToast } = useToastersStore();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const refresh = useAuthSetContext()?.refresh;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +26,7 @@ const Login = () => {
       await axios.post("/api/login", input);
       enQueueToast("sucess", "Successfully logged in!");
       refresh?.(true);
-      void navigate("/");
+      void navigate(location.state.from ?? "/");
     } catch (err) {
       let errorMessage = "Login failed!";
 
@@ -49,11 +50,18 @@ const Login = () => {
       <input id="password" name="password" required type="password" />
 
       {isLoading ? (
-        <LoadingSpinner />
+        // as also refine button and a input package
+        // clean up styling and theme - centralize a button and a input
+
+        <LoadingSpinner size="md" />
       ) : (
         <div className={styles.formActions}>
-          <button type="submit">Log in</button>
-          <button type="reset">Clear</button>
+          <Button fillMode="outline" size="sm" type="submit">
+            Log in
+          </Button>
+          <Button fillMode="outline" size="sm" type="reset" variant="white">
+            Clear
+          </Button>
         </div>
       )}
 

@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import styles from "./button.module.css";
 
-export const SIZES = ["sm", "md", "lg"] as const;
-export type Size = (typeof SIZES)[number];
+export const BUTTON_SIZES = ["sm", "md", "lg"] as const;
+export type ButtonSize = (typeof BUTTON_SIZES)[number];
 
 export const FILLMODES = ["full", "outline"] as const;
 export type FillMode = (typeof FILLMODES)[number];
@@ -17,34 +17,31 @@ export const VARIANTS = [
 export type Variant = (typeof VARIANTS)[number];
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  onClick?: () => void;
-  size?: Size;
+  size?: ButtonSize;
   fillMode?: FillMode;
   variant?: Variant;
+  fullWidth?: boolean;
 };
 
 export const Button = ({
-  onClick,
   size = "md",
   fillMode = "full",
   variant = "default",
   children,
   className,
+  fullWidth = false,
+  type = "button",
   ...props
 }: ButtonProps) => {
-  const combinedClassName = clsx(
-    styles.button,
-    styles[`size--${size}`],
-    styles[`fillMode--${fillMode}`],
-    styles[`variant--${variant}`],
-    className
-  );
+  const classes = clsx(styles.button, fullWidth && styles.fullWidth, className);
 
   return (
     <button
-      className={combinedClassName}
-      onClick={onClick}
-      type="button"
+      className={classes}
+      data-fill-mode={fillMode}
+      data-size={size}
+      data-variant={variant}
+      type={type}
       {...props}
     >
       {children}

@@ -3,9 +3,16 @@
   padding: var(--space-md);
   display: flex;
   justify-content: space-between;
+  color: var(--color-white);
 }
 
 .nav .siteList {
   display: flex;
   gap: var(--space-md);
+}
+
+.userNameBox {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
 }

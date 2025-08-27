@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--color-light-white);
+  background-color: var(--color-white);
   border-radius: 12px;
   box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
   position: fixed;
@@ -27,8 +27,11 @@
   z-index: 1000;
 }
 
-.closeIcon {
+.xIcon {
   position: absolute;
-  top: 0;
+  top: 6px;
   right: 10px;
+  color: var(--color-light-red);
+  cursor: pointer;
+  width: 28px;
 }

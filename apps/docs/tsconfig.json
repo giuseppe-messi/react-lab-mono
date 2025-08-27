@@ -1,5 +1,14 @@
 {
   "extends": "@repo/typescript-config/react-app.json",
   "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
+  "exclude": ["dist", "build", "node_modules"],
+
+  "compilerOptions": {
+    "baseUrl": "..",
+    // Mirror the app's paths so Storybook sees the live source types
+    "paths": {
+      "@react-lab-mono/ui": ["../packages/ui/src/index.ts"],
+      "@react-lab-mono/ui/*": ["../packages/ui/src/*"]
+    }
+  }
 }

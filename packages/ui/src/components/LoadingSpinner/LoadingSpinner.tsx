@@ -1,13 +1,14 @@
 import styles from "./LoadingSpinner.module.css";
 
-type Size = "sm" | "md" | "lg";
+export const LOADING_SPINNER_SIZES = ["sm", "md", "lg"] as const;
+export type LoadingSpinnerSize = (typeof LOADING_SPINNER_SIZES)[number];
 
 interface LoadingSpinnerProps {
-  size?: Size;
+  size?: LoadingSpinnerSize;
   color?: string;
 }
 
-const sizeMap: Record<Size, number> = {
+const sizeMap: Record<LoadingSpinnerSize, number> = {
   sm: 24,
   md: 36,
   lg: 60

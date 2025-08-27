@@ -34,12 +34,19 @@
   gap: 4px;
 }
 
-.input {
-  width: 88%;
+.checkbox {
+  margin-left: 2px;
 }
 
-.editIcon {
-  margin-bottom: -2px;
+.xIcon {
+  color: var(--color-light-red);
+  cursor: pointer;
+  width: 28px;
+  display: flex;
+}
+
+.input {
+  width: 96%;
 }
 
 .done {

@@ -1,5 +1,6 @@
-import { CloseIcon, EmojiIcon } from "@react-lab-mono/ui";
+import { Checkbox, EmojiIcon } from "@react-lab-mono/ui";
 import { useEffect, useRef } from "react";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 import { useNotesStore, type Note } from "../../stores/useNotesStore";
 import styles from "./NoteItem.module.css";
 
@@ -88,20 +89,19 @@ export const NoteItem = ({
           />
         )}
 
-        <input
+        <Checkbox
           checked={note.done}
           name="is note done?"
           onChange={() => {
             toggleNoteDone(note.id);
           }}
-          style={{ cursor: "pointer" }}
-          type="checkbox"
         />
 
-        <CloseIcon
+        <XMarkIcon
           aria-label={`delete ${note.text}`}
+          className={styles.xIcon}
           data-testid={TestLocators.deleteIcon}
-          onClose={() => {
+          onClick={() => {
             onDeleteNote(note.id);
           }}
           role="button"

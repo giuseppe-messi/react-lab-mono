@@ -1,5 +1,6 @@
-import { Checkbox, CloseIcon, EmojiIcon, InputText } from "@react-lab-mono/ui";
+import { Checkbox, EmojiIcon, InputText } from "@react-lab-mono/ui";
 import { useEffect, useRef } from "react";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 import { useTodosStore, type Todo } from "../../stores/useTodosStore";
 import styles from "./TodoItem.module.css";
 
@@ -75,7 +76,6 @@ export const TodoItem = ({
           />
         ) : (
           <EmojiIcon
-            className={styles.editIcon}
             data-testid={TestLocators.editIcon}
             onClick={() => {
               onEditingId(todo.id);
@@ -87,16 +87,18 @@ export const TodoItem = ({
 
         <Checkbox
           checked={todo.done}
+          className={styles.checkbox}
           name="is todo done?"
           onChange={() => {
             toggleTodoDone(todo.id);
           }}
         />
 
-        <CloseIcon
+        <XMarkIcon
           aria-label={`delete ${todo.label}`}
+          className={styles.xIcon}
           data-testid={TestLocators.deleteIcon}
-          onClose={() => {
+          onClick={() => {
             onDeleteTodo(todo.id);
           }}
           role="button"
