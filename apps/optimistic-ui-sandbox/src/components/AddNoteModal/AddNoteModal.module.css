@@ -10,4 +10,6 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+  width: 200px;
+  margin: auto;
 }

@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex: 1;
-  background-color: var(--color-light-white);
+  background-color: var(--color-white);
   color: black;
 }
 

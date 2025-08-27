@@ -6,4 +6,6 @@ import { TextEncoder } from "util";
 expect.extend(toHaveNoViolations);
 
 // polyfill TextEncoder, should be bundled with jsdom, but it's not with current version
-global.TextEncoder = TextEncoder;
+if (!global.TextEncoder) {
+  global.TextEncoder = TextEncoder as unknown as typeof globalThis.TextEncoder;
+}

@@ -24,7 +24,7 @@ export const SimulationControls = () => {
       <div className={styles.latencyBox}>
         <Checkbox
           checked={Boolean(mockLatency)}
-          labelText={
+          label={
             <>
               Latency <EmojiIcon type="lightning" />
             </>
@@ -51,7 +51,7 @@ export const SimulationControls = () => {
       </div>
       <Checkbox
         checked={mockError}
-        labelText={
+        label={
           <>
             Error <EmojiIcon type="alert" />
           </>

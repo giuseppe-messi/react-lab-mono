@@ -54,7 +54,7 @@ describe("NoteItem component", () => {
 
   it("calls toggleNoteDone when the checkbox is checked on and off", async () => {
     renderComponent();
-    const checkbox = screen.getByRole("checkbox");
+    const checkbox = screen.getByRole("switch");
     await userEvent.click(checkbox);
 
     expect(mockToggleNoteDone).toHaveBeenCalled();

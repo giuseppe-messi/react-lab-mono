@@ -14,6 +14,14 @@
 
 .inputsBox input {
   cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.inputBox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 @media (max-width: 400px) {
