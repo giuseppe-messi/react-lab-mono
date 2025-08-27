@@ -50,8 +50,7 @@ const Login = () => {
       <input id="password" name="password" required type="password" />
 
       {isLoading ? (
-        // as also refine button and a input package
-        // clean up styling and theme - centralize a button and a input
+        // TODO: clean up styling and theme - centralize a button and a input
 
         <LoadingSpinner size="md" />
       ) : (

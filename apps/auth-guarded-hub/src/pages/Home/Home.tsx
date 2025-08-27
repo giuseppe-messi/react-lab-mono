@@ -1,7 +1,7 @@
 import { useAuth } from "../../contexts/AuthContext";
 import styles from "./Home.module.css";
 
-export default function Home() {
+const Home = () => {
   const user = useAuth();
 
   return (
@@ -93,4 +93,6 @@ export default function Home() {
       </section>
     </div>
   );
-}
+};
+
+export default Home;
