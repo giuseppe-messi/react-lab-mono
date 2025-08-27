@@ -20,7 +20,7 @@
     "build": "vite build",
     "dev": "vite",
     "lint": "eslint . --max-warnings 0",
-    "clean": "rm -rf .turbo node_modules dist",
+    "clean": "rimraf node_modules .turbo dist build .cache",
     "test": "jest",
     "test:watch": "jest --watch",
     "coverage": "jest --coverage"
