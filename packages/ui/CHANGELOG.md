@@ -1,5 +1,11 @@
 # @react-lab-mono/ui
 
+## 2.5.0
+
+### Minor Changes
+
+- modal changes
+
 ## 2.4.0
 
 ### Minor Changes

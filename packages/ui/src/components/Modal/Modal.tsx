@@ -1,6 +1,7 @@
 import { createPortal } from "react-dom";
 import { useRef, type ReactNode } from "react";
 import { XMarkIcon } from "@heroicons/react/16/solid";
+import clsx from "clsx";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import styles from "./Modal.module.css";
 
@@ -9,9 +10,16 @@ type ModalProps = {
   showModal: boolean;
   onClose?: () => void;
   children: ReactNode;
+  className?: string;
 };
 
-export const Modal = ({ title, showModal, onClose, children }: ModalProps) => {
+export const Modal = ({
+  title,
+  showModal,
+  onClose,
+  className,
+  children
+}: ModalProps) => {
   const nodeRef = useRef(null);
   useOnClickOutside(nodeRef, () => onClose?.());
 
@@ -26,7 +34,11 @@ export const Modal = ({ title, showModal, onClose, children }: ModalProps) => {
               className={styles.overlay}
               role="dialog"
             >
-              <div className={styles.modal} ref={nodeRef} tabIndex={-1}>
+              <div
+                className={clsx(className, styles.modal)}
+                ref={nodeRef}
+                tabIndex={-1}
+              >
                 {onClose ? (
                   <XMarkIcon
                     className={styles.xIcon}
