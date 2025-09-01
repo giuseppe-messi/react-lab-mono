@@ -34,7 +34,7 @@ export const Nav = () => {
     <nav className={styles.nav}>
       <ul className={styles.siteList}>
         {navItems.map((i) => (
-          <NavLink key={i.label} to={i.to}>
+          <NavLink className="slide" key={i.label} to={i.to}>
             {i.label}
           </NavLink>
         ))}
@@ -43,18 +43,13 @@ export const Nav = () => {
         {user ? (
           <>
             <p>Hi {user.name}!</p>
-            <Button
-              fillMode="outline"
-              onClick={handleLogout}
-              size="sm"
-              variant="white"
-            >
+            <Button fillMode="outline" onClick={handleLogout} variant="white">
               Logout
             </Button>
           </>
         ) : (
           <NavLink state={{ from: location }} to="login">
-            <Button fillMode="outline" size="sm" variant="white">
+            <Button fillMode="outline" variant="white">
               Sign In
             </Button>
           </NavLink>

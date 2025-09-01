@@ -30,7 +30,3 @@
   margin-top: var(--space-md);
   width: 170px;
 }
-
-a:hover {
-  color: var(--color-primary);
-}
