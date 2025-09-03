@@ -57,6 +57,9 @@ pnpm prisma migrate dev --name <change>
 # Applies existing migrations to the DB
 pnpm prisma migrate deploy
 
+# To seed the DB via prisma/seed.ts file
+npx tsx prisma/seed.ts
+
 # Run locally
 npx netlify dev
 
