@@ -63,6 +63,12 @@ export default async (req: Request) => {
       );
     }
 
+    case "PUT": {
+      const json = await req.json().catch(() => null);
+
+      console.log("🚀 ~ json:", json);
+    }
+
     default:
       return new Response("Method Not Allowed", {
         status: 405,

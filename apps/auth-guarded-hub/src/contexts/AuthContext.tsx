@@ -1,16 +1,19 @@
 import axios from "axios";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
   type ReactNode
 } from "react";
+import type { Plan } from "../interfaces/tier";
 
 export type User = {
   name: string;
   lastname: string;
   email: string;
+  tier: Plan;
   password: string;
 };
 
@@ -26,12 +29,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
 
-  const refresh = (mounted?: boolean) =>
-    void axios
-      .get("/api/verifyMe")
-      .then((res) => mounted && setUser(res.data))
-      .catch(() => mounted && setUser(null))
-      .finally(() => mounted && setReady(true));
+  const refresh = useCallback(
+    (mounted?: boolean) =>
+      void axios
+        .get("/api/verifyMe")
+        .then((res) => mounted && setUser(res.data))
+        .catch(() => mounted && setUser(null))
+        .finally(() => mounted && setReady(true)),
+    []
+  );
 
   useEffect(() => {
     let mounted = true;
@@ -40,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [refresh]);
 
   if (!ready) return null;
 

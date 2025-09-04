@@ -7,17 +7,27 @@ export default async (req: Request) => {
 
   const tier = await getUserTier(req);
 
-  const blocks = await prisma.restrictedContentBlock.findMany({
-    where: { pageSlug: slug, minTier: { lte: tier } },
-    orderBy: { order: "asc" },
+  console.log("🚀 ~ tier:", tier);
+
+  const blocks = await prisma.restrictedBlock.findMany({
+    where: { pageSlug: slug, minTier: { lte: tier } }, // lte: less than or equal to the user’s tier
+    orderBy: [{ section: "asc" }, { minTier: "asc" }],
     select: {
+      id: true,
+      section: true,
       payload: true,
       minTier: true
     }
   });
 
+  // Group by slot so easier for the client
+  const slots: Record<string, typeof blocks> = {};
+
+  for (const b of blocks) (slots[b.section] ??= []).push(b);
+
+  console.log("🚀 ~ slots:", slots);
   return Response.json(
-    { slug, blocks },
+    { slug, slots },
     {
       headers: {
         "Cache-Control": "no-store" // HTTP caching directive

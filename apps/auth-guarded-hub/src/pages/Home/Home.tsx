@@ -1,8 +1,23 @@
+import { useEffect, useMemo } from "react";
+import clsx from "clsx";
+import { LoadingSpinner } from "@react-lab-mono/ui";
 import { useAuth } from "../../contexts/AuthContext";
+import { useRestrictedPageInfo } from "../../store/useRestrictedPageInfo";
+import { tierMap } from "../../helpers/tierMap";
 import styles from "./Home.module.css";
 
 const Home = () => {
   const user = useAuth();
+
+  console.log("🚀 ~ user:", user);
+
+  const { setContent, content, isLoading } = useRestrictedPageInfo();
+  const homeInfo = useMemo(() => content?.slots["home-info"], [content]);
+
+  useEffect(() => {
+    if (homeInfo) return;
+    setContent("home");
+  }, [setContent, user, homeInfo]);
 
   return (
     <div className="container">
@@ -14,6 +29,44 @@ const Home = () => {
           Neon Postgres.
         </p>
       </header>
+
+      <section className="card">
+        <h2 className={styles.h2}>Home Info</h2>
+
+        {isLoading ? (
+          <LoadingSpinner size="sm" />
+        ) : (
+          <div className={styles.homeInfoWrapper}>
+            {homeInfo?.map((p) => (
+              <div
+                className={clsx(
+                  styles.homeInfoBox,
+                  styles[`homeInfoBox-${tierMap[p.minTier].className}`]
+                )}
+                key={p.id}
+              >
+                <h3>{p.payload.heading}</h3>
+                <p>{p.payload.text}</p>
+              </div>
+            ))}
+          </div>
+        )}
+        {user?.tier !== "PRO" && (
+          <div className={styles.homeInfoBox}>
+            <p>
+              You are on a {user?.tier} plan! <br /> Your missing out on some
+              great content! Upgrade your plan!
+            </p>
+          </div>
+        )}
+
+        <p className="lead">
+          This project showcases a production-style auth flow that keeps
+          sensitive tokens off the client. The UI is a small, readable codebase
+          that demonstrates how I approach structure, accessibility, state, and
+          “real app” concerns without the noise.
+        </p>
+      </section>
 
       <section className="card">
         {user ? (

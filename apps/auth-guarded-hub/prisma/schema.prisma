@@ -42,21 +42,14 @@ model Session {
   @@index([expiresAt])
 }
 
-model RestrictedContentPage {
-  slug       String                     @id
-  blocks     RestrictedContentBlock[]
-  updatedAt  DateTime                   @updatedAt
-}
+model RestrictedBlock {
+  id        String   @id @default(cuid())
+  pageSlug  String                  // e.g. "home", "profile"
+  section   String                  // e.g. "hero", "sidebar.cta"
+  payload   Json                    // the actual content
+  minTier   Int      @default(1)    // 0=PUBLIC, 1=FREE, 2=BASIC, 3=PRO
+  updatedAt DateTime @updatedAt
 
-model RestrictedContentBlock {
-  id         String                      @id @default(cuid())
-  pageSlug   String
-  page       RestrictedContentPage       @relation(fields: [pageSlug], references: [slug], onDelete: Cascade)
-  order      Int                         @default(0)
-  type       String
-  payload    Json
-  minTier    Int                         @default(1)   // 0=PUBLIC, 1=FREE, 2=BASIC, 3=PRO
-  updatedAt  DateTime                    @updatedAt
-
-  @@index([pageSlug, minTier, order])
+  @@index([pageSlug, section, minTier])
+  @@unique([pageSlug, section, minTier])    
 }

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ErrorBoundary, type FallbackProps } from "@react-lab-mono/ui";
+import { ErrorBoundary, Toaster, type FallbackProps } from "@react-lab-mono/ui";
 import { lazy, Suspense } from "react";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Layout } from "./Layout";
@@ -36,6 +36,7 @@ function App() {
             </Routes>
           </Suspense>
         </Router>
+        <Toaster />
       </AuthProvider>
     </ErrorBoundary>
   );
