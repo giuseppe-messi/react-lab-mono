@@ -1,4 +1,4 @@
-import { PLAN_TIER, PUBLIC_TIER } from "../interfaces/tier";
+import { PLAN_TIER, PUBLIC_TIER } from "../interfaces/plan";
 
 type TierInfo = {
   label: string;
@@ -6,8 +6,8 @@ type TierInfo = {
 };
 
 export const tierMap: Record<number, TierInfo> = {
-  [PUBLIC_TIER]: { label: "Public", className: "public-tier" },
-  [PLAN_TIER.FREE]: { label: "Free", className: "free-tier" },
-  [PLAN_TIER.BASIC]: { label: "Basic", className: "basic-tier" },
-  [PLAN_TIER.PRO]: { label: "Pro", className: "pro-tier" }
+  [PUBLIC_TIER]: { label: "Public", className: "public-plan" },
+  [PLAN_TIER.FREE]: { label: "Free", className: "free-plan" },
+  [PLAN_TIER.BASIC]: { label: "Basic", className: "basic-plan" },
+  [PLAN_TIER.PRO]: { label: "Pro", className: "pro-plan" }
 };

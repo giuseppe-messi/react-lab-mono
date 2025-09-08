@@ -1,54 +1,31 @@
-import axios from "axios";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode
-} from "react";
-import type { Plan } from "../interfaces/tier";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import type { Plan } from "../interfaces/plan";
+import { useGetApi } from "../hooks/useGetApi";
+import { ROUTE } from "../api/routes";
 
 export type User = {
   name: string;
   lastname: string;
   email: string;
-  tier: Plan;
+  plan: Plan;
   password: string;
 };
 
-type AuthSetActions = {
+type SetAuthActions = {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  refresh: (mounted?: boolean) => void;
+  refresh: () => Promise<void>;
 };
 
 const AuthContext = createContext<User | null>(null);
-const AuthSetContext = createContext<AuthSetActions | null>(null);
+const AuthSetContext = createContext<SetAuthActions | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [ready, setReady] = useState(false);
 
-  const refresh = useCallback(
-    (mounted?: boolean) =>
-      void axios
-        .get("/api/verifyMe")
-        .then((res) => mounted && setUser(res.data))
-        .catch(() => mounted && setUser(null))
-        .finally(() => mounted && setReady(true)),
-    []
-  );
-
-  useEffect(() => {
-    let mounted = true;
-
-    refresh(mounted);
-    return () => {
-      mounted = false;
-    };
-  }, [refresh]);
-
-  if (!ready) return null;
+  const { refresh } = useGetApi<User>({
+    url: ROUTE.verifyMe,
+    onSuccess: setUser
+  });
 
   return (
     <AuthContext value={user}>
@@ -59,4 +36,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => useContext(AuthContext);
 
-export const useAuthSetContext = () => useContext(AuthSetContext);
+export const useSetAuthContext = () => useContext(AuthSetContext);

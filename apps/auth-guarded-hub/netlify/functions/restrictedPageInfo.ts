@@ -5,18 +5,18 @@ export default async (req: Request) => {
   const url = new URL(req.url);
   const slug = url.searchParams.get("slug") ?? "";
 
-  const tier = await getUserTier(req);
+  const plan = await getUserTier(req);
 
-  console.log("🚀 ~ tier:", tier);
+  console.log("🚀 ~ plan:", plan);
 
   const blocks = await prisma.restrictedBlock.findMany({
-    where: { pageSlug: slug, minTier: { lte: tier } }, // lte: less than or equal to the user’s tier
-    orderBy: [{ section: "asc" }, { minTier: "asc" }],
+    where: { pageSlug: slug, plan: { lte: plan } }, // lte: less than or equal to the user’s plan
+    orderBy: [{ section: "asc" }, { plan: "asc" }],
     select: {
       id: true,
       section: true,
       payload: true,
-      minTier: true
+      plan: true
     }
   });
 

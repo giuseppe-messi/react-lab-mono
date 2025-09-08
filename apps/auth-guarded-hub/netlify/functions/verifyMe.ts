@@ -22,7 +22,7 @@ export default async (req: Request) => {
       name: session.user.name,
       lastname: session.user.lastname,
       email: session.user.email,
-      tier: session.user.plan
+      plan: session.user.plan
     },
     { status: 200 }
   );

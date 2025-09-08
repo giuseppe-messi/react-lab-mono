@@ -2,7 +2,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import { useState } from "react";
 import axios from "axios";
-import { useAuthSetContext } from "../../contexts/AuthContext";
+import { useSetAuthContext } from "../../contexts/AuthContext";
 import { useRestrictedPageInfo } from "../../store/useRestrictedPageInfo";
 import styles from "./Login.module.css";
 
@@ -11,7 +11,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const refresh = useAuthSetContext()?.refresh;
+  const refresh = useSetAuthContext()?.refresh;
   const { clearContent } = useRestrictedPageInfo();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ const Login = () => {
       await axios.post("/api/login", input);
       enQueueToast("sucess", "Successfully logged in!");
       clearContent();
-      refresh?.(true);
+      refresh?.();
       void navigate(location.state.from ?? "/");
     } catch (err) {
       let errorMessage = "Login failed!";

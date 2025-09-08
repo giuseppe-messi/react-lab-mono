@@ -47,9 +47,9 @@ model RestrictedBlock {
   pageSlug  String                  // e.g. "home", "profile"
   section   String                  // e.g. "hero", "sidebar.cta"
   payload   Json                    // the actual content
-  minTier   Int      @default(1)    // 0=PUBLIC, 1=FREE, 2=BASIC, 3=PRO
+  plan   Int      @default(1)    // 0=PUBLIC, 1=FREE, 2=BASIC, 3=PRO
   updatedAt DateTime @updatedAt
 
-  @@index([pageSlug, section, minTier])
-  @@unique([pageSlug, section, minTier])    
+  @@index([pageSlug, section, plan])
+  @@unique([pageSlug, section, plan])    
 }

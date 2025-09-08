@@ -1,23 +1,23 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import clsx from "clsx";
 import { LoadingSpinner } from "@react-lab-mono/ui";
-import { useAuth } from "../../contexts/AuthContext";
-import { useRestrictedPageInfo } from "../../store/useRestrictedPageInfo";
+import { useAuth, type User } from "../../contexts/AuthContext";
+import { type PagePayload } from "../../store/useRestrictedPageInfo";
 import { tierMap } from "../../helpers/tierMap";
+import { useGetApi } from "../../hooks/useGetApi";
+import { ROUTE } from "../../api/routes";
 import styles from "./Home.module.css";
 
 const Home = () => {
   const user = useAuth();
 
-  console.log("🚀 ~ user:", user);
+  const { data, isLoading } = useGetApi<PagePayload>({
+    url: ROUTE.restrictedPageInfo,
+    params: useMemo(() => ({ slug: "home" }), []),
+    dependsOn: useMemo(() => [user], [user])
+  });
 
-  const { setContent, content, isLoading } = useRestrictedPageInfo();
-  const homeInfo = useMemo(() => content?.slots["home-info"], [content]);
-
-  useEffect(() => {
-    if (homeInfo) return;
-    setContent("home");
-  }, [setContent, user, homeInfo]);
+  const homeInfo = useMemo(() => data?.slots["home-info"], [data]);
 
   return (
     <div className="container">
@@ -41,7 +41,7 @@ const Home = () => {
               <div
                 className={clsx(
                   styles.homeInfoBox,
-                  styles[`homeInfoBox-${tierMap[p.minTier].className}`]
+                  styles[`homeInfoBox-${tierMap[p.plan].className}`]
                 )}
                 key={p.id}
               >
@@ -51,10 +51,10 @@ const Home = () => {
             ))}
           </div>
         )}
-        {user?.tier !== "PRO" && (
+        {user?.plan !== "PRO" && (
           <div className={styles.homeInfoBox}>
             <p>
-              You are on a {user?.tier} plan! <br /> Your missing out on some
+              You are on a {user?.plan} plan! <br /> Your missing out on some
               great content! Upgrade your plan!
             </p>
           </div>

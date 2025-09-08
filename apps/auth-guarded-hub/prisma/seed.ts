@@ -8,52 +8,42 @@ await prisma.restrictedBlock.createMany({
       pageSlug: "home",
       section: "home-info",
       payload: {
-        heading: "(Public user tier)",
-        text: "Anyone can see this text (no authorization required)!"
+        heading: "Public",
+        text: "Anyone can see this text, this is public, no authorization required!"
       },
-      minTier: 0
+      plan: 0
     },
 
     {
       pageSlug: "home",
       section: "home-info",
       payload: {
-        heading: "(Free user tier)",
+        heading: "Free plan",
         text: "Visible to all logged-in users! If you are seing this, that means you are authenticated!"
       },
-      minTier: 1
+      plan: 1
     },
 
     {
       pageSlug: "home",
       section: "home-info",
       payload: {
-        heading: "(Basic user tier)",
-        text: "Only users with tier up to Basic can view this! Your have a Basic subscription!"
+        heading: "Basic plan",
+        text: "Only users with a Basic plan can view this! You are a Basic subscriber!"
       },
-      minTier: 2
+      plan: 2
     },
 
     {
       pageSlug: "home",
       section: "home-info",
       payload: {
-        heading: "(Pro user tier)",
-        text: "Only users with tier up to Pro can view this! Your have a Pro subscription!"
+        heading: "Pro plan",
+        text: "Only users with a Pro plan can view this! You are a Pro subscriber!"
       },
-      minTier: 3
+      plan: 3
     }
 
     /* Home page --> section 'home-main-content' */
-
-    // {
-    //   pageSlug: "home",
-    //   section: "home-main-content",
-    //   payload: {
-    //     heading: "(Public user tier)",
-    //     text: "Anyone can see this text (no authorization required)!"
-    //   },
-    //   minTier: 0
-    // }
   ]
 });

@@ -38,20 +38,20 @@
   justify-content: space-evenly;
 }
 
-.homeInfoBox-public-tier {
+.homeInfoBox-public-plan {
   color: #c97f12;
   background-color: #ffeed7;
 }
 
-.homeInfoBox-free-tier {
+.homeInfoBox-free-plan {
   color: #2c8691;
   background-color: #d7f2ff;
 }
 
-.homeInfoBox-basic-tier {
+.homeInfoBox-basic-plan {
   color: #7259d1;
 }
 
-.homeInfoBox-pro-tier {
+.homeInfoBox-pro-plan {
   color: #c3435a;
 }

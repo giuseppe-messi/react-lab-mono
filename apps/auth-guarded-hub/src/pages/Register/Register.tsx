@@ -2,14 +2,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import axios from "axios";
 import { useState } from "react";
-import { useAuthSetContext } from "../../contexts/AuthContext";
+import { useSetAuthContext } from "../../contexts/AuthContext";
 import styles from "./Register.module.css";
 
 const Register = () => {
   const { enQueueToast } = useToastersStore();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const setUser = useAuthSetContext()?.setUser;
+  const setUser = useSetAuthContext()?.setUser;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

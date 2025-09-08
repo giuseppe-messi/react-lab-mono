@@ -1,8 +1,9 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, useToastersStore } from "@react-lab-mono/ui";
-import { useAuth, useAuthSetContext } from "../contexts/AuthContext";
-import { useRestrictedPageInfo } from "../store/useRestrictedPageInfo";
+import { useAuth, useSetAuthContext } from "../contexts/AuthContext";
+// import { useRestrictedPageInfo } from "../store/useRestrictedPageInfo";
+import { ROUTE } from "../api/routes";
 import styles from "./Nav.module.css";
 
 const navItems = [
@@ -13,24 +14,23 @@ const navItems = [
 
 export const Nav = () => {
   const user = useAuth();
-  const setUser = useAuthSetContext()?.setUser;
+  const setAuth = useSetAuthContext();
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
-  const { clearContent } = useRestrictedPageInfo();
+  // const { clearContent } = useRestrictedPageInfo();
   const location = useLocation();
 
   const handleLogout = async () => {
-    await axios
-      .post("api/logout")
-      .then(() => {
-        enQueueToast("sucess", "Successfully logged out!");
-        clearContent();
-        setUser?.(null);
-        void navigate("/");
-      })
-      .catch(() => {
-        enQueueToast("error", "Error loggin out!");
-      });
+    try {
+      await axios.post(ROUTE.logout);
+      enQueueToast("sucess", "Successfully logged out!");
+      // clearContent();
+      setAuth?.setUser(null);
+      await setAuth?.refresh();
+      void navigate("/");
+    } catch {
+      enQueueToast("error", "Error loggin out!");
+    }
   };
 
   return (
