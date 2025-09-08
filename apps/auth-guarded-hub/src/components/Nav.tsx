@@ -2,8 +2,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, useToastersStore } from "@react-lab-mono/ui";
 import { useAuth, useSetAuthContext } from "../contexts/AuthContext";
-// import { useRestrictedPageInfo } from "../store/useRestrictedPageInfo";
-import { ROUTE } from "../api/routes";
+import { ROUTES } from "../api/routes";
 import styles from "./Nav.module.css";
 
 const navItems = [
@@ -17,14 +16,12 @@ export const Nav = () => {
   const setAuth = useSetAuthContext();
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
-  // const { clearContent } = useRestrictedPageInfo();
   const location = useLocation();
 
   const handleLogout = async () => {
     try {
-      await axios.post(ROUTE.logout);
+      await axios.post(ROUTES.LOGOUT);
       enQueueToast("sucess", "Successfully logged out!");
-      // clearContent();
       setAuth?.setUser(null);
       await setAuth?.refresh();
       void navigate("/");

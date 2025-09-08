@@ -1,20 +1,20 @@
 import { useMemo } from "react";
 import clsx from "clsx";
 import { LoadingSpinner } from "@react-lab-mono/ui";
-import { useAuth, type User } from "../../contexts/AuthContext";
-import { type PagePayload } from "../../store/useRestrictedPageInfo";
+import { useAuth } from "../../contexts/AuthContext";
 import { tierMap } from "../../helpers/tierMap";
-import { useGetApi } from "../../hooks/useGetApi";
-import { ROUTE } from "../../api/routes";
+import { useFetch } from "../../hooks/useFetch";
+import { ROUTES, type RouteKey } from "../../api/routes";
 import styles from "./Home.module.css";
+import type { PagePayload } from "../../interfaces/pageContent";
 
 const Home = () => {
   const user = useAuth();
 
-  const { data, isLoading } = useGetApi<PagePayload>({
-    url: ROUTE.restrictedPageInfo,
+  const { data, isLoading } = useFetch<PagePayload>({
+    url: ROUTES.RESTRICTED_PAGE_INFO as RouteKey,
     params: useMemo(() => ({ slug: "home" }), []),
-    dependsOn: useMemo(() => [user], [user])
+    cacheKey: user ? `${user?.email}-${user?.plan}` : "public"
   });
 
   const homeInfo = useMemo(() => data?.slots["home-info"], [data]);

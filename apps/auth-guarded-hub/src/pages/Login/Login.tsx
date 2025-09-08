@@ -3,44 +3,74 @@ import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import { useState } from "react";
 import axios from "axios";
 import { useSetAuthContext } from "../../contexts/AuthContext";
-import { useRestrictedPageInfo } from "../../store/useRestrictedPageInfo";
 import styles from "./Login.module.css";
+import { ROUTES, type RouteKey } from "../../api/routes";
+import { usePost } from "../../hooks/usePost";
 
 const Login = () => {
   const { enQueueToast } = useToastersStore();
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const refresh = useSetAuthContext()?.refresh;
-  const { clearContent } = useRestrictedPageInfo();
+  const { mutate, isLoading, error } = usePost({
+    url: ROUTES.LOGIN as RouteKey
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
 
-    const input = {
+    const formData = {
       email: String(fd.get("email")),
       password: String(fd.get("password"))
     };
 
-    try {
-      setIsLoading(true);
-      await axios.post("/api/login", input);
-      enQueueToast("sucess", "Successfully logged in!");
-      clearContent();
-      refresh?.();
-      void navigate(location.state.from ?? "/");
-    } catch (err) {
-      let errorMessage = "Login failed!";
+    await mutate(formData);
+    enQueueToast("sucess", "Successfully logged in!");
+    refresh?.();
+    void navigate(location.state.from ?? "/");
 
-      if (axios.isAxiosError(err)) {
-        errorMessage = err.response?.data?.message ?? errorMessage;
-      }
-      enQueueToast("error", errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
+    // try {
+    //   await mutate(formData);
+    //   enQueueToast("sucess", "Successfully logged in!");
+    //   refresh?.();
+    //   void navigate(location.state.from ?? "/");
+    // } catch (err) {
+    //   let errorMessage = "Login failed!";
+
+    //   if (axios.isAxiosError(err)) {
+    //     errorMessage = err.response?.data?.message ?? errorMessage;
+    //   }
+    //   enQueueToast("error", errorMessage);
+    // }
   };
+
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const fd = new FormData(e.currentTarget);
+
+  //   const input = {
+  //     email: String(fd.get("email")),
+  //     password: String(fd.get("password"))
+  //   };
+
+  //   try {
+  //     // setIsLoading(true);
+  //     await axios.post("/api/login", input);
+  //     enQueueToast("sucess", "Successfully logged in!");
+  //     refresh?.();
+  //     void navigate(location.state.from ?? "/");
+  //   } catch (err) {
+  //     let errorMessage = "Login failed!";
+
+  //     if (axios.isAxiosError(err)) {
+  //       errorMessage = err.response?.data?.message ?? errorMessage;
+  //     }
+  //     enQueueToast("error", errorMessage);
+  //   } finally {
+  //     // setIsLoading(false);
+  //   }
+  // };
 
   return (
     <form className={styles.loginForm} onSubmit={(e) => void handleSubmit(e)}>

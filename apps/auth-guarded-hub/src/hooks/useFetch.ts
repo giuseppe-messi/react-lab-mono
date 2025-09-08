@@ -1,20 +1,20 @@
 import axios, { isCancel, type AxiosError } from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { RouteKey } from "../api/routes";
 
 const cache = new Map();
 
-export const useGetApi = <T>({
+export const useFetch = <T>({
   url,
   params,
   onSuccess,
-  dependsOn
+  cacheKey
 }: {
-  url: string;
+  url: RouteKey;
   params?: unknown;
   onSuccess?: (data: T) => void;
-  dependsOn?: unknown[];
+  cacheKey?: string;
 }) => {
-  console.log("🚀 ~ cache:", cache);
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>(null);
@@ -36,18 +36,21 @@ export const useGetApi = <T>({
       if (controller.signal.aborted) return;
       setData(res.data);
       onSuccess && onSuccess(res.data);
-      cache.set(JSON.stringify(dependsOn), res.data);
+
+      if (cacheKey) {
+        cache.set(cacheKey, res.data);
+      }
     } catch (err) {
       if (isCancel(err) || controller.signal.aborted) return;
       setError(err as AxiosError);
     } finally {
       if (!controller.signal.aborted) setIsLoading(false);
     }
-  }, [url, onSuccess, params, dependsOn]);
+  }, [url, onSuccess, params, cacheKey]);
 
   useEffect(() => {
-    if (cache.has(JSON.stringify(dependsOn))) {
-      setData(cache.get(JSON.stringify(dependsOn)) as T);
+    if (cache.has(cacheKey)) {
+      setData(cache.get(cacheKey) as T);
       return () => controllerRef.current?.abort();
     }
 
@@ -56,7 +59,7 @@ export const useGetApi = <T>({
     return () => {
       if (controllerRef.current) controllerRef.current.abort();
     };
-  }, [url, load, dependsOn]);
+  }, [url, load, cacheKey]);
 
   return {
     data,

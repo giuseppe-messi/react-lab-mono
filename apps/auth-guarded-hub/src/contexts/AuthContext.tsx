@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { Plan } from "../interfaces/plan";
-import { useGetApi } from "../hooks/useGetApi";
-import { ROUTE } from "../api/routes";
+import { useFetch } from "../hooks/useFetch";
+import { ROUTES, type RouteKey } from "../api/routes";
 
 export type User = {
   name: string;
@@ -22,8 +22,8 @@ const AuthSetContext = createContext<SetAuthActions | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const { refresh } = useGetApi<User>({
-    url: ROUTE.verifyMe,
+  const { refresh } = useFetch<User>({
+    url: ROUTES.VERIFY_ME as RouteKey,
     onSuccess: setUser
   });
 
