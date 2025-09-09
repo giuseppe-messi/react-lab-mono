@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Button, useToastersStore } from "@react-lab-mono/ui";
+import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import { useAuth, useSetAuthContext } from "../contexts/AuthContext";
 import { ROUTES } from "../api/routes";
 import styles from "./Nav.module.css";
@@ -13,6 +13,9 @@ const navItems = [
 
 export const Nav = () => {
   const user = useAuth();
+
+  console.log("🚀 ~ user:", user);
+
   const setAuth = useSetAuthContext();
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
@@ -40,7 +43,8 @@ export const Nav = () => {
         ))}
       </ul>
       <div className={styles.userNameBox}>
-        {user ? (
+        {setAuth?.isLoadingUser ? <LoadingSpinner size="sm" /> : null}
+        {!setAuth?.isLoadingUser && user ? (
           <>
             <p>Hi {user.name}!</p>
             <Button fillMode="outline" onClick={handleLogout} variant="white">

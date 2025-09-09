@@ -5,8 +5,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { tierMap } from "../../helpers/tierMap";
 import { useFetch } from "../../hooks/useFetch";
 import { ROUTES, type RouteKey } from "../../api/routes";
-import styles from "./Home.module.css";
 import type { PagePayload } from "../../interfaces/pageContent";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const user = useAuth();
@@ -14,7 +14,7 @@ const Home = () => {
   const { data, isLoading } = useFetch<PagePayload>({
     url: ROUTES.RESTRICTED_PAGE_INFO as RouteKey,
     params: useMemo(() => ({ slug: "home" }), []),
-    cacheKey: user ? `${user?.email}-${user?.plan}` : "public"
+    cacheKey: user ? `${user.email}-${user.plan}` : "public"
   });
 
   const homeInfo = useMemo(() => data?.slots["home-info"], [data]);
@@ -51,7 +51,7 @@ const Home = () => {
             ))}
           </div>
         )}
-        {user?.plan !== "PRO" && (
+        {user?.plan !== "PRO" && !isLoading && (
           <div className={styles.homeInfoBox}>
             <p>
               You are on a {user?.plan} plan! <br /> Your missing out on some

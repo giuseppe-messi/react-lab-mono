@@ -14,6 +14,7 @@ export type User = {
 type SetAuthActions = {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   refresh: () => Promise<void>;
+  isLoadingUser: boolean;
 };
 
 const AuthContext = createContext<User | null>(null);
@@ -22,14 +23,16 @@ const AuthSetContext = createContext<SetAuthActions | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const { refresh } = useFetch<User>({
+  const { refresh, isLoading: isLoadingUser } = useFetch<User>({
     url: ROUTES.VERIFY_ME as RouteKey,
     onSuccess: setUser
   });
 
   return (
     <AuthContext value={user}>
-      <AuthSetContext value={{ setUser, refresh }}>{children}</AuthSetContext>
+      <AuthSetContext value={{ setUser, refresh, isLoadingUser }}>
+        {children}
+      </AuthSetContext>
     </AuthContext>
   );
 };
