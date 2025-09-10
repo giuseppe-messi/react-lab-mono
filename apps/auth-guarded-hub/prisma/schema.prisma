@@ -10,27 +10,47 @@ datasource db {
   directUrl = env("NETLIFY_DATABASE_URL_UNPOOLED")
 }
 
+enum Plan {
+  PUBLIC
+  FREE
+  BASIC
+  PRO
+}
+
 model User {
-  id           String    @id @default(cuid())
+  id           String       @id @default(cuid())
   name         String
   lastname     String
-  email        String    @unique
+  email        String       @unique
   passwordHash String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   session      Session[]
+  plan         Plan          @default(PUBLIC)
 }
 
 model Session {
-  id           String    @id @default(cuid())
-  secretHash   String    @unique // sha256(secret)
+  id           String       @id @default(cuid())
+  secretHash   String       @unique // sha256(secret)
   userId       String
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime  @default(now())
-  lastUsedAt   DateTime  @default(now())
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime     @default(now())
+  lastUsedAt   DateTime     @default(now())
   expiresAt    DateTime
   revokedAt    DateTime?
 
   @@index([userId])
   @@index([expiresAt])
+}
+
+model RestrictedBlock {
+  id        String   @id @default(cuid())
+  pageSlug  String                  // e.g. "home", "profile"
+  section   String                  // e.g. "hero", "sidebar.cta"
+  payload   Json                    // the actual content
+  plan      Plan     @default(PUBLIC)   
+  updatedAt DateTime @updatedAt
+
+  @@index([pageSlug, section, plan])
+  @@unique([pageSlug, section, plan])    
 }

@@ -7,7 +7,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const About = lazy(() => import("./pages/About/About"));
-const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const Login = lazy(() => import("./pages/Login/Login"));
 const Register = lazy(() => import("./pages/Register/Register"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
@@ -27,7 +26,6 @@ function App() {
               <Route element={<Layout />}>
                 <Route element={<Home />} index />
                 <Route element={<About />} path="about" />
-                <Route element={<Dashboard />} path="dashboard" />
                 <Route element={<Login />} path="login" />
                 <Route element={<Register />} path="register" />
                 <Route element={<Profile />} path="profile" />

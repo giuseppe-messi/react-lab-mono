@@ -1,7 +1,11 @@
+import bcrypt from "bcryptjs";
 import { prisma } from "../../prisma";
 import { getCookie, sha256 } from "./lib/session";
 
 export default async (req: Request) => {
+  if (req.method !== "POST")
+    return new Response("Method Not Allowed", { status: 405 });
+
   const sid = getCookie(req.headers.get("cookie") ?? "");
 
   if (!sid)
@@ -16,14 +20,13 @@ export default async (req: Request) => {
     return Response.json({ message: "Unauthenticated" }, { status: 401 });
   }
 
-  return Response.json(
-    {
-      id: session.user.id,
-      name: session.user.name,
-      lastname: session.user.lastname,
-      email: session.user.email,
-      plan: session.user.plan
-    },
-    { status: 200 }
-  );
+  const { password } = await req.json().catch(() => null);
+
+  const ok = await bcrypt.compare(password, session.user.passwordHash);
+  if (!ok)
+    return Response.json({ message: "Invalid credentials!" }, { status: 401 });
+
+  return new Response(null, {
+    status: 204
+  });
 };

@@ -46,9 +46,11 @@ export const Modal = ({
                     role="button"
                   />
                 ) : null}
-                <header>
-                  <h2>{title}</h2>
-                </header>
+                {Boolean(title) && (
+                  <header>
+                    <h2>{title}</h2>
+                  </header>
+                )}
                 {children}
               </div>
             </div>,

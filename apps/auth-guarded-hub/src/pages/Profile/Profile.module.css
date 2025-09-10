@@ -21,6 +21,15 @@
   background-color: #fafafa;
 }
 
-.profileTable tr:hover td {
-  background-color: #f0f8ff;
+.editBtn {
+  display: block;
+}
+
+.btnBox {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.btnBox > button {
+  width: 80px;
 }

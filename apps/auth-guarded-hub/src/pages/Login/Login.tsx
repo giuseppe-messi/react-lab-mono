@@ -1,42 +1,46 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
-import { useState } from "react";
 import axios from "axios";
-import { useAuthSetContext } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { ROUTES, type RouteKey } from "../../api/routes";
+import { useMutate } from "../../hooks/useMutate";
 import styles from "./Login.module.css";
 
 const Login = () => {
   const { enQueueToast } = useToastersStore();
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const refresh = useAuthSetContext()?.refresh;
+  const auth = useAuth();
+  const refresh = auth?.refresh;
+
+  const { mutate, isLoading } = useMutate({
+    url: ROUTES.LOGIN as RouteKey,
+    type: "post"
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
 
-    const input = {
+    const formData = {
       email: String(fd.get("email")),
       password: String(fd.get("password"))
     };
 
-    try {
-      setIsLoading(true);
-      await axios.post("/api/login", input);
-      enQueueToast("sucess", "Successfully logged in!");
-      refresh?.(true);
-      void navigate(location.state.from ?? "/");
-    } catch (err) {
-      let errorMessage = "Login failed!";
-
-      if (axios.isAxiosError(err)) {
-        errorMessage = err.response?.data?.message ?? errorMessage;
+    await mutate(formData, {
+      onSuccess: () => {
+        enQueueToast("sucess", "Successfully logged in!");
+        void refresh?.();
+        void navigate(location.state.from ?? "/");
+      },
+      onError: (err) => {
+        let errorMessage = "Login failed!";
+        if (axios.isAxiosError(err)) {
+          errorMessage = err.response?.data?.message ?? errorMessage;
+        }
+        enQueueToast("error", errorMessage);
       }
-      enQueueToast("error", errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   return (
@@ -50,8 +54,6 @@ const Login = () => {
       <input id="password" name="password" required type="password" />
 
       {isLoading ? (
-        // TODO: clean up styling and theme - centralize a button and a input
-
         <LoadingSpinner size="md" />
       ) : (
         <div className={styles.formActions}>

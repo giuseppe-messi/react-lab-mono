@@ -1,0 +1,6 @@
+.toasterWrap {
+  top: var(--space-sm);
+  display: inline-table;
+  left: 50%;
+  transform: translateX(-50%);
+}

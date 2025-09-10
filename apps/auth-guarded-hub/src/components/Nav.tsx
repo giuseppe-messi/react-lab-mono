@@ -1,60 +1,67 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Button, useToastersStore } from "@react-lab-mono/ui";
-import { useAuth, useAuthSetContext } from "../contexts/AuthContext";
+import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
+import { useAuth } from "../contexts/AuthContext";
+import { ROUTES, type RouteKey } from "../api/routes";
+import { useMutate } from "../hooks/useMutate";
 import styles from "./Nav.module.css";
 
 const navItems = [
   { label: "Home", to: "/" },
-  { label: "Dashboard", to: "/dashboard" },
+  { label: "About", to: "/about" },
   { label: "Profile", to: "/profile" }
 ];
 
 export const Nav = () => {
-  const user = useAuth();
-  const setUser = useAuthSetContext()?.setUser;
+  const auth = useAuth();
+  const user = auth?.user;
+  const isLoadingUser = auth?.isLoadingUser;
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const { mutate } = useMutate({
+    url: ROUTES.LOGOUT as RouteKey,
+    type: "post"
+  });
 
   const handleLogout = async () => {
-    await axios
-      .post("api/logout")
-      .then(() => {
-        enQueueToast("sucess", "Successfully logged out!");
-        setUser?.(null);
-        void navigate("/");
-      })
-      .catch(() => {
-        enQueueToast("error", "Error loggin out!");
-      });
+    await mutate(
+      {},
+      {
+        onSuccess: () => {
+          enQueueToast("sucess", "Successfully logged out!");
+          auth?.setUser(null);
+          void auth?.refresh();
+          void navigate("/");
+        },
+        onError: () => {
+          enQueueToast("error", "Error loggin out!");
+        }
+      }
+    );
   };
 
   return (
     <nav className={styles.nav}>
       <ul className={styles.siteList}>
         {navItems.map((i) => (
-          <NavLink key={i.label} to={i.to}>
+          <NavLink className="slide" key={i.label} to={i.to}>
             {i.label}
           </NavLink>
         ))}
       </ul>
       <div className={styles.userNameBox}>
-        {user ? (
+        {isLoadingUser ? (
+          <LoadingSpinner size="sm" />
+        ) : user ? (
           <>
             <p>Hi {user.name}!</p>
-            <Button
-              fillMode="outline"
-              onClick={handleLogout}
-              size="sm"
-              variant="white"
-            >
+            <Button fillMode="outline" onClick={handleLogout} variant="white">
               Logout
             </Button>
           </>
         ) : (
           <NavLink state={{ from: location }} to="login">
-            <Button fillMode="outline" size="sm" variant="white">
+            <Button fillMode="outline" variant="white">
               Sign In
             </Button>
           </NavLink>

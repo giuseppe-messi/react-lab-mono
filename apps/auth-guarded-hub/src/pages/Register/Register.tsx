@@ -1,44 +1,50 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import axios from "axios";
-import { useState } from "react";
-import { useAuthSetContext } from "../../contexts/AuthContext";
+import { useAuth, type User } from "../../contexts/AuthContext";
+import { useMutate } from "../../hooks/useMutate";
+import { ROUTES, type RouteKey } from "../../api/routes";
+import { PLAN_TIER, type Plan } from "../../interfaces/plan";
 import styles from "./Register.module.css";
 
 const Register = () => {
   const { enQueueToast } = useToastersStore();
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const setUser = useAuthSetContext()?.setUser;
+  const auth = useAuth();
+  const refresh = auth?.refresh;
+  const setUser = auth?.setUser;
+  const { mutate, isLoading } = useMutate<User>({
+    url: ROUTES.USERS as RouteKey,
+    type: "post"
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
 
-    const input = {
+    const formData = {
       name: String(fd.get("name")),
       lastname: String(fd.get("lastname")),
       email: String(fd.get("email")),
-      password: String(fd.get("password"))
+      password: String(fd.get("password")),
+      plan: String(fd.get("plan")) as Plan
     };
 
-    try {
-      setIsLoading(true);
-      const { data } = await axios.post("/api/users", input);
-      enQueueToast("sucess", "Successfully registered!");
-      void navigate("/");
-      setUser?.(data);
-    } catch (err) {
-      let errorMessage = "Registration failed!";
-
-      if (axios.isAxiosError(err)) {
-        errorMessage = err.response?.data?.message ?? errorMessage;
+    await mutate(formData, {
+      onSuccess: (data) => {
+        enQueueToast("sucess", "Successfully registered!");
+        void navigate("/");
+        setUser?.(data);
+        void refresh?.();
+      },
+      onError: (err) => {
+        let errorMessage = "Registration failed!";
+        if (axios.isAxiosError(err)) {
+          errorMessage = err.response?.data?.message ?? errorMessage;
+        }
+        enQueueToast("error", errorMessage);
       }
-
-      enQueueToast("error", errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
+    });
   };
 
   return (
@@ -65,6 +71,14 @@ const Register = () => {
         required
         type="password"
       />
+
+      <label htmlFor="plan">Plan</label>
+
+      <select defaultValue={PLAN_TIER.FREE} id="plan" name="plan">
+        <option value={PLAN_TIER.FREE}>FREE</option>
+        <option value={PLAN_TIER.BASIC}>BASIC</option>
+        <option value={PLAN_TIER.PRO}>PRO</option>
+      </select>
 
       <div className={styles.formActions}>
         {isLoading ? (
