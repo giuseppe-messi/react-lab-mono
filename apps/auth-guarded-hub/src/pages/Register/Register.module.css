@@ -1,5 +1,5 @@
 .registerForm {
-  background: var(--color-secondary);
+  background: var(--color-white);
   padding: 1em;
   display: flex;
   flex-direction: column;

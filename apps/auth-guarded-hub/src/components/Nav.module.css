@@ -1,5 +1,5 @@
 .nav {
-  background-color: var(--color-primary);
+  background-color: var(--color-red);
   padding: var(--space-md);
   display: flex;
   justify-content: space-between;
