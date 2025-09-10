@@ -25,8 +25,10 @@
 
   /* colors */
   --color-primary: #242424;
-  --color-secondary: #e1c051;
+  --color-primary-rgb: 36 36 36;
+  --color-secondary: #028090;
   --color-white: #f8f8ff;
+  --color-white-bg: #f8f8ff;
   --color-red: #c33c54c7;
   --color-light-red: #e15151;
   --color-light-green: #48bb78;
@@ -56,22 +58,31 @@
 body {
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(177deg, #ffb703b8, #2196f3c7);
+  background: #ccd7c56b;
 }
 
 a {
   font-weight: 500;
   color: var(--color-white);
   text-decoration: inherit;
-  transition: color 0.3s ease;
+  position: relative;
 }
 
-a:hover {
-  color: #ffeb3b;
+a.slide::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
-h1 {
-  font-size: 1.4em;
+a.slide:hover::after {
+  transform: scaleX(1);
 }
 
 .container {

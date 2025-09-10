@@ -1,56 +1,47 @@
-import axios from "axios";
 import {
   createContext,
+  useCallback,
   useContext,
-  useEffect,
+  useMemo,
   useState,
   type ReactNode
 } from "react";
+import type { Plan } from "../interfaces/plan";
+import { useFetch } from "../hooks/useFetch";
+import { ROUTES, type RouteKey } from "../api/routes";
 
 export type User = {
   name: string;
   lastname: string;
   email: string;
-  password: string;
+  plan: Plan;
 };
 
-type AuthSetActions = {
+type AuthValue = {
+  user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  refresh: (mounted?: boolean) => void;
+  refresh: () => Promise<void>;
+  isLoadingUser: boolean;
 };
 
-const AuthContext = createContext<User | null>(null);
-const AuthSetContext = createContext<AuthSetActions | null>(null);
+const AuthContext = createContext<AuthValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [ready, setReady] = useState(false);
 
-  const refresh = (mounted?: boolean) =>
-    void axios
-      .get("/api/verifyMe")
-      .then((res) => mounted && setUser(res.data))
-      .catch(() => mounted && setUser(null))
-      .finally(() => mounted && setReady(true));
+  const { refresh, isLoading: isLoadingUser } = useFetch<User>({
+    url: ROUTES.VERIFY_ME as RouteKey,
+    onSuccess: useCallback((data: User) => {
+      setUser(data);
+    }, [])
+  });
 
-  useEffect(() => {
-    let mounted = true;
-
-    refresh(mounted);
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  if (!ready) return null;
-
-  return (
-    <AuthContext value={user}>
-      <AuthSetContext value={{ setUser, refresh }}>{children}</AuthSetContext>
-    </AuthContext>
+  const authValue = useMemo(
+    () => ({ user, setUser, refresh, isLoadingUser }),
+    [user, refresh, isLoadingUser]
   );
+
+  return <AuthContext value={authValue}>{children}</AuthContext>;
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-export const useAuthSetContext = () => useContext(AuthSetContext);

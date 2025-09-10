@@ -1,8 +1,32 @@
+import { useMemo } from "react";
+import clsx from "clsx";
+import { LoadingSpinner } from "@react-lab-mono/ui";
 import { useAuth } from "../../contexts/AuthContext";
+import { tierMap } from "../../helpers/tierMap";
+import { useFetch } from "../../hooks/useFetch";
+import { ROUTES, type RouteKey } from "../../api/routes";
+import type { PagePayload } from "../../interfaces/pageContent";
+import { PLAN_TIER } from "../../interfaces/plan";
 import styles from "./Home.module.css";
 
 const Home = () => {
-  const user = useAuth();
+  const auth = useAuth();
+  const user = auth?.user;
+  const isLoadingUser = auth?.isLoadingUser;
+
+  const { data, isLoading: isLoadingContent } = useFetch<PagePayload>({
+    url: ROUTES.RESTRICTED_PAGE_INFO as RouteKey,
+    params: useMemo(() => ({ slug: "home" }), []),
+    cacheKey: user ? `${user.email}-${user.plan}` : "public"
+  });
+
+  const homeInfo = useMemo(() => data?.slots["home-info"], [data]);
+  const homeMainContent = useMemo(
+    () => data?.slots["home-main-content"],
+    [data]
+  );
+
+  const isLoading = isLoadingUser || isLoadingContent;
 
   return (
     <div className="container">
@@ -16,80 +40,70 @@ const Home = () => {
       </header>
 
       <section className="card">
-        {user ? (
-          <h2 className={styles.h2}>This content is now visible to view</h2>
-        ) : (
-          <h2 className={styles.h2}>
-            Content only visible to Logged in users!
-          </h2>
+        <h2>Home Info</h2>
+
+        <p>Examples of tiered access content! (inclusive by level)</p>
+
+        {Boolean(isLoading) && <LoadingSpinner size="sm" />}
+
+        {!isLoading && (
+          <>
+            <div className={styles.homeInfoWrapper}>
+              {homeInfo?.map((p) => (
+                <div
+                  className={clsx(
+                    styles.homeInfoBox,
+                    styles[`homeInfoBox-${tierMap[p.plan].className}`]
+                  )}
+                  key={p.id}
+                >
+                  <h3>{p.payload.heading}</h3>
+                  <p>{p.payload.text}</p>
+                </div>
+              ))}
+            </div>
+            {user?.plan !== PLAN_TIER.PRO && (
+              <div className={styles.homeInfoBox}>
+                <p>
+                  You are on a {user?.plan} plan! <br /> Your missing out on
+                  some great content in this section! Upgrade your plan!
+                </p>
+              </div>
+            )}
+          </>
         )}
       </section>
 
       <section className="card">
-        <h2 className={styles.h2}>What this is</h2>
-        <p className="lead">
-          This project showcases a production-style auth flow that keeps
-          sensitive tokens off the client. The UI is a small, readable codebase
-          that demonstrates how I approach structure, accessibility, state, and
-          “real app” concerns without the noise.
-        </p>
-      </section>
+        <h2>Main Content</h2>
 
-      <section className="card">
-        <h2 className={styles.h2}>How to explore</h2>
-        <ul className={styles.list}>
-          <li>
-            Start here on <code>/</code> for the overview.
-          </li>
-          <li>
-            Create an account at <code>/signup</code>, then sign in at{" "}
-            <code>/signin</code>.
-          </li>
-          <li>
-            Visit protected areas like <code>/dashboard</code> and{" "}
-            <code>/account</code>.
-          </li>
-          <li>
-            Use <code>/logout</code> to end the session and return to public
-            pages.
-          </li>
-        </ul>
-        <p className="muted">
-          You won’t see the session token in DevTools — it’s stored in an{" "}
-          <b>HTTP-only</b> cookie so JavaScript cannot access it.
-        </p>
-      </section>
+        {Boolean(isLoading) && <LoadingSpinner size="sm" />}
 
-      <section className="card">
-        <h2 className={styles.h2}>Auth &amp; session model (high-level)</h2>
-        <ul className={styles.list}>
-          <li>
-            <b>Credentials → Server:</b> Sign-in happens on the server (Netlify
-            Function).
-          </li>
-          <li>
-            <b>Password safety:</b> Passwords are hashed with bcrypt and
-            compared server-side.
-          </li>
-          <li>
-            <b>Session creation:</b> Server creates a session (random token,
-            expiry) and sets an <b>HTTP-only, Secure, SameSite=Lax</b> cookie.
-          </li>
-          <li>
-            <b>Auth checks:</b> Protected pages call a small “who am I”
-            endpoint; server validates the cookie against the session and
-            returns user info.
-          </li>
-          <li>
-            <b>Logout:</b> Server deletes the session and instructs the browser
-            to clear the cookie.
-          </li>
-        </ul>
-        <p className="muted">
-          This design avoids storing tokens in <code>localStorage</code> or
-          exposing them to client JS, reducing the blast radius of XSS and
-          common token-leak patterns.
-        </p>
+        {!isLoading && (
+          <>
+            <div className={styles.homeInfoWrapper}>
+              {homeMainContent?.map((p) => (
+                <div
+                  className={clsx(
+                    styles.homeInfoBox,
+                    styles[`homeInfoBox-${tierMap[p.plan].className}`]
+                  )}
+                  key={p.id}
+                >
+                  <p>{p.payload.text}</p>
+                </div>
+              ))}
+            </div>
+            {user?.plan !== PLAN_TIER.PRO && (
+              <div className={styles.homeInfoBox}>
+                <p>
+                  You are on a {user?.plan} plan! <br /> Your missing out on
+                  some great content in this section! Upgrade your plan!
+                </p>
+              </div>
+            )}
+          </>
+        )}
       </section>
     </div>
   );
