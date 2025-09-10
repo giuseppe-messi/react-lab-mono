@@ -2,14 +2,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import axios from "axios";
 import { useState } from "react";
-import { useSetAuthContext } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import styles from "./Register.module.css";
 
 const Register = () => {
   const { enQueueToast } = useToastersStore();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const setUser = useSetAuthContext()?.setUser;
+  // const setUser = useSetAuthContext()?.setUser;
+  const auth = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +28,8 @@ const Register = () => {
       const { data } = await axios.post("/api/users", input);
       enQueueToast("sucess", "Successfully registered!");
       void navigate("/");
-      setUser?.(data);
+      // setUser?.(data);
+      auth?.refresh();
     } catch (err) {
       let errorMessage = "Registration failed!";
 

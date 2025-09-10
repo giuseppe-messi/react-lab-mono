@@ -36,7 +36,6 @@ export const useFetch = <T>({
       if (controller.signal.aborted) return;
       setData(res.data);
       onSuccess && onSuccess(res.data);
-
       if (cacheKey) {
         cache.set(cacheKey, res.data);
       }

@@ -1,7 +1,7 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
-import { useAuth, useSetAuthContext } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import { ROUTES } from "../api/routes";
 import styles from "./Nav.module.css";
 
@@ -12,11 +12,9 @@ const navItems = [
 ];
 
 export const Nav = () => {
-  const user = useAuth();
+  const auth = useAuth();
 
-  console.log("🚀 ~ user:", user);
-
-  const setAuth = useSetAuthContext();
+  // const setAuth = useSetAuthContext();
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,8 +23,8 @@ export const Nav = () => {
     try {
       await axios.post(ROUTES.LOGOUT);
       enQueueToast("sucess", "Successfully logged out!");
-      setAuth?.setUser(null);
-      await setAuth?.refresh();
+      // setAuth?.setUser(null);
+      await auth?.refresh();
       void navigate("/");
     } catch {
       enQueueToast("error", "Error loggin out!");
@@ -43,10 +41,10 @@ export const Nav = () => {
         ))}
       </ul>
       <div className={styles.userNameBox}>
-        {setAuth?.isLoadingUser ? <LoadingSpinner size="sm" /> : null}
-        {!setAuth?.isLoadingUser && user ? (
+        {/* {setAuth?.isLoadingUser ? <LoadingSpinner size="sm" /> : null} */}
+        {!auth?.isLoadingUser && auth?.user ? (
           <>
-            <p>Hi {user.name}!</p>
+            <p>Hi {auth.user.name}!</p>
             <Button fillMode="outline" onClick={handleLogout} variant="white">
               Logout
             </Button>

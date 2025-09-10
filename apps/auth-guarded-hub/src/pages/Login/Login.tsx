@@ -1,6 +1,6 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
-import { useSetAuthContext } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { ROUTES, type RouteKey } from "../../api/routes";
 import { usePost } from "../../hooks/usePost";
 import styles from "./Login.module.css";
@@ -9,7 +9,7 @@ const Login = () => {
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
   const location = useLocation();
-  const refresh = useSetAuthContext()?.refresh;
+  const refresh = useAuth()?.refresh;
   const { mutate, isLoading } = usePost({
     url: ROUTES.LOGIN as RouteKey
   });

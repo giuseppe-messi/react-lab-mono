@@ -2,17 +2,13 @@ import clsx from "clsx";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { Button, useToastersStore } from "@react-lab-mono/ui";
-import {
-  useAuth,
-  useSetAuthContext,
-  type User
-} from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { tierMap } from "../../helpers/tierMap";
 import styles from "./Profile.module.css";
 
 const Profile = () => {
-  const setUser = useSetAuthContext()?.setUser;
-  const user = useAuth();
+  // const setUser = useSetAuth()?.setUser;
+  const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -41,7 +37,8 @@ const Profile = () => {
       setIsLoading(true);
       const { data } = await axios.put("/api/users", input);
       enQueueToast("sucess", "Successfully updated!");
-      setUser?.(data);
+      auth?.refresh();
+      // setUser?.(data);
     } catch (err) {
       let errorMessage = "Update failed!";
 
@@ -83,7 +80,7 @@ const Profile = () => {
         <h1>Profile</h1>
       </header>
 
-      {!user ? (
+      {!auth?.user ? (
         <section className="card">
           <p className={styles.lead}>Login or register to see your profile.</p>
         </section>
@@ -129,40 +126,40 @@ const Profile = () => {
                     <td>
                       {isEditing ? (
                         <input
-                          defaultValue={user.name}
+                          defaultValue={auth.user.name}
                           name="name"
                           type="text"
                         />
                       ) : (
-                        user.name
+                        auth.user.name
                       )}
                     </td>
                     <td>
                       {isEditing ? (
                         <input
-                          defaultValue={user.lastname}
+                          defaultValue={auth.user.lastname}
                           name="lastname"
                           type="text"
                         />
                       ) : (
-                        user.lastname
+                        auth.user.lastname
                       )}
                     </td>
                     <td>
                       {isEditing ? (
                         <input
-                          defaultValue={user.email}
+                          defaultValue={auth.user.email}
                           name="email"
                           type="email"
                         />
                       ) : (
-                        user.email
+                        auth.user.email
                       )}
                     </td>
                     <td>
                       {isEditing ? (
                         <select
-                          defaultValue={user.plan}
+                          defaultValue={auth.user.plan}
                           id="plan"
                           name="plan"
                           ref={planRef}
@@ -172,7 +169,7 @@ const Profile = () => {
                           <option value={3}>PRO</option>
                         </select>
                       ) : (
-                        `${user.plan} Plan`
+                        `${auth.user.plan} Plan`
                       )}
                     </td>
                   </tr>
@@ -185,7 +182,7 @@ const Profile = () => {
             <h2>Settings</h2>
 
             <p>
-              You are currently on a <strong>{user.plan}</strong> plan!
+              You are currently on a <strong>{auth.user.plan}</strong> plan!
             </p>
             <div className={styles.upgradeBox}>
               <p>Upgrade:</p>
