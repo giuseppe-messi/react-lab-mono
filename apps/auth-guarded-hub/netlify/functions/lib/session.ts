@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import type { User } from "@prisma/client";
 import { prisma } from "../../../prisma";
-import { PLAN_TIER, PUBLIC_TIER } from "./tiers";
+import { PLAN_TIER } from "./tiers";
 
 export const COOKIE_NAME = "sid";
 export const SESSION_TTL_SEC = 60 * 60 * 24 * 7; // 7 days
@@ -43,7 +43,7 @@ export const createSession = async (user: User) => {
 export async function getUserTier(req: Request) {
   const sid = getCookie(req.headers.get("cookie") ?? "");
 
-  if (!sid) return PUBLIC_TIER;
+  if (!sid) return PLAN_TIER.PUBLIC;
 
   const session = await prisma.session.findUnique({
     where: { secretHash: sha256(sid) },
@@ -51,13 +51,13 @@ export async function getUserTier(req: Request) {
   });
 
   if (!session || session.expiresAt < new Date() || session.revokedAt)
-    return PUBLIC_TIER;
+    return PLAN_TIER.PUBLIC;
 
   const user = await prisma.user.findUnique({
     where: { id: session.userId },
     select: { plan: true }
   });
-  if (!user) return PUBLIC_TIER;
+  if (!user) return PLAN_TIER.PUBLIC;
 
-  return PLAN_TIER[user.plan] ?? PUBLIC_TIER;
+  return user.plan ?? PLAN_TIER.BASIC;
 }

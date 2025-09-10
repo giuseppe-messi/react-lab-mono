@@ -1,0 +1,9 @@
+.list {
+  margin: var(--space-xs) 0 var(--space-sm) var(--space-lg);
+  line-height: 1.7;
+  list-style: none;
+}
+
+.list li + li {
+  margin-top: var(--space-sm);
+}

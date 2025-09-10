@@ -2,9 +2,18 @@ import axios, { isCancel } from "axios";
 import { useCallback, useRef, useState } from "react";
 import type { RouteKey } from "../api/routes";
 
-export const usePost = <T>({ url }: { url: RouteKey }) => {
+type Type = "post" | "put";
+
+type Props = {
+  url: RouteKey;
+  type: Type;
+};
+
+export const useMutate = <T>({ url, type }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const controllerRef = useRef<AbortController | null>(null);
+
+  const action: Type = type === "post" ? "post" : "put";
 
   const mutate = useCallback(
     async (
@@ -12,7 +21,7 @@ export const usePost = <T>({ url }: { url: RouteKey }) => {
       {
         onSuccess,
         onError
-      }: { onSuccess?: () => void; onError?: () => void } = {}
+      }: { onSuccess?: (res: T) => void; onError?: (err: unknown) => void } = {}
     ) => {
       controllerRef.current?.abort();
       const controller = new AbortController();
@@ -21,15 +30,15 @@ export const usePost = <T>({ url }: { url: RouteKey }) => {
       setIsLoading(true);
 
       try {
-        await axios.post<T>(url, body, {
+        const { data } = await axios[action]<T>(url, body, {
           signal: controller.signal
         });
 
         if (controller.signal.aborted) return;
-        onSuccess && onSuccess();
+        onSuccess && onSuccess(data);
       } catch (err) {
         if (isCancel(err) || controller.signal.aborted) return;
-        onError && onError();
+        onError && onError(err);
       } finally {
         if (!controller.signal.aborted) setIsLoading(false);
       }

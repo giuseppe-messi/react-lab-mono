@@ -1,17 +1,21 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
+import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import { ROUTES, type RouteKey } from "../../api/routes";
-import { usePost } from "../../hooks/usePost";
+import { useMutate } from "../../hooks/useMutate";
 import styles from "./Login.module.css";
 
 const Login = () => {
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
   const location = useLocation();
-  const refresh = useAuth()?.refresh;
-  const { mutate, isLoading } = usePost({
-    url: ROUTES.LOGIN as RouteKey
+  const auth = useAuth();
+  const refresh = auth?.refresh;
+
+  const { mutate, isLoading } = useMutate({
+    url: ROUTES.LOGIN as RouteKey,
+    type: "post"
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,8 +33,12 @@ const Login = () => {
         void refresh?.();
         void navigate(location.state.from ?? "/");
       },
-      onError: () => {
-        enQueueToast("error", "Login failed!");
+      onError: (err) => {
+        let errorMessage = "Login failed!";
+        if (axios.isAxiosError(err)) {
+          errorMessage = err.response?.data?.message ?? errorMessage;
+        }
+        enQueueToast("error", errorMessage);
       }
     });
   };
@@ -46,8 +54,6 @@ const Login = () => {
       <input id="password" name="password" required type="password" />
 
       {isLoading ? (
-        // TODO: clean up styling and theme - centralize a button and a input
-
         <LoadingSpinner size="md" />
       ) : (
         <div className={styles.formActions}>

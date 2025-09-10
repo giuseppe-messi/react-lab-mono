@@ -50,8 +50,10 @@
 
 .homeInfoBox-basic-plan {
   color: #7259d1;
+  background: #e7d7ff;
 }
 
 .homeInfoBox-pro-plan {
   color: #c3435a;
+  background: #ffd7d7;
 }

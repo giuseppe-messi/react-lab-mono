@@ -14,7 +14,8 @@ const CreateUser = z.object({
   name: z.string(),
   lastname: z.string(),
   email: z.email(),
-  password: z.string().min(8)
+  password: z.string().min(8),
+  plan: z.enum(Plan)
 });
 
 // Schema for update
@@ -52,7 +53,7 @@ export default async (req: Request) => {
           { status: 400 }
         );
 
-      const { name, lastname, email, password } = parsed.data;
+      const { name, lastname, email, password, plan } = parsed.data;
 
       const exists = await prisma.user.findUnique({ where: { email } });
 
@@ -64,7 +65,7 @@ export default async (req: Request) => {
 
       const passwordHash = await bcrypt.hash(password, 12);
       const user = await prisma.user.create({
-        data: { name, lastname, email, passwordHash }
+        data: { name, lastname, email, passwordHash, plan }
       });
 
       const { token } = await createSession(user);
@@ -75,6 +76,7 @@ export default async (req: Request) => {
           name: user.name,
           lastname: user.lastname,
           email: user.email,
+          plan: user.plan,
           createdAt: user.createdAt.toISOString()
         },
         {
@@ -104,8 +106,6 @@ export default async (req: Request) => {
       const json = await req.json().catch(() => null);
       const parsed = UpdateUser.safeParse(json);
 
-      console.log("🚀 ~ parsed:", parsed);
-
       if (!parsed.success) {
         return Response.json(
           { error: z.treeifyError(parsed.error) },
@@ -114,16 +114,6 @@ export default async (req: Request) => {
       }
 
       const { name, lastname, email, plan } = parsed.data;
-
-      // const ok = await bcrypt.compare(
-      //   confirmPassword,
-      //   session.user.passwordHash
-      // );
-      // if (!ok)
-      //   return Response.json(
-      //     { message: "Invalid credentials!" },
-      //     { status: 401 }
-      //   );
 
       const id = session.user.id;
 

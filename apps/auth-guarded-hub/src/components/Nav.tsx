@@ -1,34 +1,43 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
 import { useAuth } from "../contexts/AuthContext";
-import { ROUTES } from "../api/routes";
+import { ROUTES, type RouteKey } from "../api/routes";
+import { useMutate } from "../hooks/useMutate";
 import styles from "./Nav.module.css";
 
 const navItems = [
   { label: "Home", to: "/" },
-  { label: "Dashboard", to: "/dashboard" },
+  { label: "About", to: "/about" },
   { label: "Profile", to: "/profile" }
 ];
 
 export const Nav = () => {
   const auth = useAuth();
-
-  // const setAuth = useSetAuthContext();
+  const user = auth?.user;
+  const isLoadingUser = auth?.isLoadingUser;
   const { enQueueToast } = useToastersStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const { mutate } = useMutate({
+    url: ROUTES.LOGOUT as RouteKey,
+    type: "post"
+  });
 
   const handleLogout = async () => {
-    try {
-      await axios.post(ROUTES.LOGOUT);
-      enQueueToast("sucess", "Successfully logged out!");
-      // setAuth?.setUser(null);
-      await auth?.refresh();
-      void navigate("/");
-    } catch {
-      enQueueToast("error", "Error loggin out!");
-    }
+    await mutate(
+      {},
+      {
+        onSuccess: () => {
+          enQueueToast("sucess", "Successfully logged out!");
+          auth?.setUser(null);
+          void auth?.refresh();
+          void navigate("/");
+        },
+        onError: () => {
+          enQueueToast("error", "Error loggin out!");
+        }
+      }
+    );
   };
 
   return (
@@ -41,10 +50,11 @@ export const Nav = () => {
         ))}
       </ul>
       <div className={styles.userNameBox}>
-        {/* {setAuth?.isLoadingUser ? <LoadingSpinner size="sm" /> : null} */}
-        {!auth?.isLoadingUser && auth?.user ? (
+        {isLoadingUser ? (
+          <LoadingSpinner size="sm" />
+        ) : user ? (
           <>
-            <p>Hi {auth.user.name}!</p>
+            <p>Hi {user.name}!</p>
             <Button fillMode="outline" onClick={handleLogout} variant="white">
               Logout
             </Button>

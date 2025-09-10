@@ -11,6 +11,7 @@ datasource db {
 }
 
 enum Plan {
+  PUBLIC
   FREE
   BASIC
   PRO
@@ -25,7 +26,7 @@ model User {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   session      Session[]
-  plan         Plan          @default(FREE)
+  plan         Plan          @default(PUBLIC)
 }
 
 model Session {
@@ -47,7 +48,7 @@ model RestrictedBlock {
   pageSlug  String                  // e.g. "home", "profile"
   section   String                  // e.g. "hero", "sidebar.cta"
   payload   Json                    // the actual content
-  plan   Int      @default(1)    // 0=PUBLIC, 1=FREE, 2=BASIC, 3=PRO
+  plan      Plan     @default(PUBLIC)   
   updatedAt DateTime @updatedAt
 
   @@index([pageSlug, section, plan])

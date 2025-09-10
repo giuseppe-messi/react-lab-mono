@@ -1,8 +1,10 @@
+import type { Plan } from "./plan";
+
 type PageBlock = {
   id: string;
   section: string;
   payload: { text: string; heading: string };
-  plan: number;
+  plan: Plan;
 };
 type Slots = Record<string, PageBlock[]>;
 
