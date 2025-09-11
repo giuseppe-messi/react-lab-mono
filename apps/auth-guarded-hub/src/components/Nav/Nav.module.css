@@ -1,10 +1,16 @@
 .nav {
-  background-color: var(--color-primary);
+  background-color: var(--color-red);
   padding: var(--space-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: var(--color-white);
+  border-bottom: var(--app-border);
+  border-top: var(--app-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .nav .siteList {
@@ -14,6 +20,7 @@
 
 .nav .siteList > a {
   font-size: 1.2rem;
+  color: var(--color-white);
 }
 
 .userNameBox {
@@ -21,4 +28,12 @@
   gap: var(--space-md);
   align-items: center;
   font-size: 1.2rem;
+}
+
+@media (max-width: 500px) {
+  .nav {
+    flex-direction: column-reverse;
+    align-items: start;
+    gap: var(--space-md);
+  }
 }

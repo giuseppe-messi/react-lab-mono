@@ -1,54 +1,59 @@
 .registerForm {
-  background: var(--color-secondary);
+  background: var(--color-orange);
   padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
   max-width: 500px;
   margin: auto;
-  margin-top: var(--space-lg);
-  gap: var(--space-sm);
+  margin-top: var(--space-xl);
   border: 1px solid var(--color-primary);
   border-radius: 8px;
+  border: var(--app-border);
+}
+
+.registerFormInnerWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 83%;
+  gap: var(--space-sm);
+}
+
+.registerForm input,
+.registerForm select {
+  border: none;
+  width: 100%;
+  height: 24px;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  border-radius: 4px;
+  padding: 0px 5px;
+}
+
+.registerForm select {
+  text-align: center;
+}
+
+.registerForm a {
+  color: var(--color-red);
 }
 
 .formActions {
   display: flex;
   gap: 1rem;
-  justify-content: flex-end;
-  margin-top: var(--space-md);
-  width: 170px;
-  justify-content: center;
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
+  width: 80%;
 }
 
-.formActions button {
+.formActions > button {
   flex: 1;
-  padding: 0.4rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  border: 1px solid var(--color-primary);
-  transition: background 0.3s ease;
 }
 
-.formActions button[type="submit"] {
-  background: var(--white);
-  color: var(--color-primary);
-}
-
-.formActions button[type="submit"]:hover {
-  background: var(--color-primary);
-  color: var(--white);
-}
-
-.formActions button[type="reset"] {
-  background: transparent;
-  color: white;
-}
-
-.formActions button[type="reset"]:hover {
-  background: #444;
+.advicePasswordBox {
+  background-color: #ffe571;
+  padding: var(--space-md);
+  margin: var(--space-sm);
+  text-align: center;
 }

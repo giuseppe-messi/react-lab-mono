@@ -1,5 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ErrorBoundary, type FallbackProps } from "@react-lab-mono/ui";
+import {
+  ErrorBoundary,
+  LoadingSpinner,
+  type FallbackProps
+} from "@react-lab-mono/ui";
 import { lazy, Suspense } from "react";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Layout } from "./Layout";
@@ -21,7 +25,7 @@ function App() {
     <ErrorBoundary fallback={ErrorPageFallback}>
       <AuthProvider>
         <Router>
-          <Suspense fallback={<div className="loading">Loading...</div>}>
+          <Suspense fallback={<LoadingSpinner size="lg" />}>
             <Routes>
               <Route element={<Layout />}>
                 <Route element={<Home />} index />

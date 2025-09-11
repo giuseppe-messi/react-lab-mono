@@ -24,7 +24,7 @@ export const ConfirmPasswordModal = ({
 
   const { mutate, isLoading } = useMutate({
     url: ROUTES.CONFIRM_EMAIL as RouteKey,
-    type: "post"
+    method: "post"
   });
 
   const handleCheckPassword = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,7 +60,7 @@ export const ConfirmPasswordModal = ({
           <LoadingSpinner size="md" />
         ) : (
           <div className={styles.formActions}>
-            <Button fillMode="outline" size="sm" type="submit">
+            <Button fillMode="outline" size="sm" type="submit" variant="white">
               Confirm
             </Button>
             <Button

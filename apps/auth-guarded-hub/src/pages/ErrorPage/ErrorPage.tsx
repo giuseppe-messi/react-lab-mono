@@ -15,7 +15,7 @@ export const ErrorPage: React.FC<Props> = ({ onClearError }) => {
   return (
     <div className={styles.container}>
       <Typography type="h2">Something is not right!</Typography>
-      <Button fillMode="outline" onClick={handleBackHome} variant="white">
+      <Button fillMode="outline" onClick={handleBackHome}>
         Go Back Home
       </Button>
     </div>

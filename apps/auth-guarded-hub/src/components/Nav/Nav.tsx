@@ -1,8 +1,8 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
-import { useAuth } from "../contexts/AuthContext";
-import { ROUTES, type RouteKey } from "../api/routes";
-import { useMutate } from "../hooks/useMutate";
+import { useAuth } from "../../contexts/AuthContext";
+import { ROUTES, type RouteKey } from "../../api/routes";
+import { useMutate } from "../../hooks/useMutate";
 import styles from "./Nav.module.css";
 
 const navItems = [
@@ -20,7 +20,7 @@ export const Nav = () => {
   const location = useLocation();
   const { mutate } = useMutate({
     url: ROUTES.LOGOUT as RouteKey,
-    type: "post"
+    method: "post"
   });
 
   const handleLogout = async () => {
@@ -54,7 +54,9 @@ export const Nav = () => {
           <LoadingSpinner size="sm" />
         ) : user ? (
           <>
-            <p>Hi {user.name}!</p>
+            <p>
+              Hi <strong>{user.name}</strong>!
+            </p>
             <Button fillMode="outline" onClick={handleLogout} variant="white">
               Logout
             </Button>

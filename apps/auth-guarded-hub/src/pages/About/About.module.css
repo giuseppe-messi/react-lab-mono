@@ -1,3 +1,14 @@
+.aboutContainer {
+  background-color: var(--color-primary);
+  border-radius: var(--app-radius);
+  padding-bottom: var(--space-lg);
+}
+
+.aboutContainer > header > h1 {
+  color: var(--color-white);
+  padding-top: var(--space-lg);
+}
+
 .list {
   margin: var(--space-xs) 0 var(--space-sm) var(--space-lg);
   line-height: 1.7;

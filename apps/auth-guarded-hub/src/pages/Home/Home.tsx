@@ -26,6 +26,26 @@ const Home = () => {
     [data]
   );
 
+  const missingOutOnContentBanner = useMemo(
+    () =>
+      user?.plan !== PLAN_TIER.PRO && (
+        <div className={styles.homeInfoBox}>
+          {!user ? (
+            <p>
+              Your missing out on some great content in this section! Login or
+              Register to see it!
+            </p>
+          ) : (
+            <p>
+              You are on a {user.plan} plan! <br /> Your missing out on some
+              great content in this section! Upgrade your plan!
+            </p>
+          )}
+        </div>
+      ),
+    [user]
+  );
+
   const isLoading = isLoadingUser || isLoadingContent;
 
   return (
@@ -41,8 +61,6 @@ const Home = () => {
 
       <section className="card">
         <h2>Home Info</h2>
-
-        <p>Examples of tiered access content! (inclusive by level)</p>
 
         {Boolean(isLoading) && <LoadingSpinner size="sm" />}
 
@@ -62,14 +80,7 @@ const Home = () => {
                 </div>
               ))}
             </div>
-            {user?.plan !== PLAN_TIER.PRO && (
-              <div className={styles.homeInfoBox}>
-                <p>
-                  You are on a {user?.plan} plan! <br /> Your missing out on
-                  some great content in this section! Upgrade your plan!
-                </p>
-              </div>
-            )}
+            {missingOutOnContentBanner}
           </>
         )}
       </section>
@@ -94,14 +105,7 @@ const Home = () => {
                 </div>
               ))}
             </div>
-            {user?.plan !== PLAN_TIER.PRO && (
-              <div className={styles.homeInfoBox}>
-                <p>
-                  You are on a {user?.plan} plan! <br /> Your missing out on
-                  some great content in this section! Upgrade your plan!
-                </p>
-              </div>
-            )}
+            {missingOutOnContentBanner}
           </>
         )}
       </section>

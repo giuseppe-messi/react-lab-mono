@@ -10,7 +10,7 @@ const NotFound: React.FC = () => {
     <div className={styles.container}>
       <h2 className="titleH2">We can’t find that page!</h2>
 
-      <Button fillMode="outline" onClick={() => navigate("/")} variant="white">
+      <Button fillMode="outline" onClick={() => navigate("/")}>
         Go Back Home
       </Button>
     </div>
