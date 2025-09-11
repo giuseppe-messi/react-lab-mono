@@ -27,7 +27,8 @@
   --color-primary-rgb: 36 36 36;
   --color-secondary: #028090;
   --color-white: #ebebeb;
-  --color-red: #c33c54c7;
+  --color-red: #ae2139;
+  --color-orange: #ffb444;
   --color-light-red: #e15151;
   --color-light-green: #48bb78;
   --color-light-yellow: #e1c051;
@@ -51,17 +52,23 @@
 
   /* input focus */
   --input-focus: #0070f3;
+
+  /* app border */
+  --app-border: 8px solid var(--color-primary);
 }
 
 body {
   min-height: 100vh;
   width: 100%;
-  background: var(--color-primary);
+}
+
+main {
+  padding: 6em 0;
+  min-height: 100svh;
 }
 
 a {
   font-weight: 500;
-  color: var(--color-white);
   text-decoration: inherit;
   position: relative;
 }
@@ -83,6 +90,31 @@ a.slide:hover::after {
   transform: scaleX(1);
 }
 
+h1 {
+  font-size: 2.8em;
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-bottom: var(--space-md);
+}
+
+p {
+  font-size: 1.05em;
+}
+
+footer {
+  padding: var(--space-sm);
+  color: var(--color-white);
+  font-size: small;
+  flex: 0 0 auto;
+  background-color: var(--color-primary);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
 .container {
   max-width: 960px;
   margin: var(--space-xl) auto;
@@ -101,11 +133,10 @@ a.slide:hover::after {
 
 .card {
   background: white;
-  border: var(--border-light);
   border-radius: var(--app-radius);
   padding: var(--space-lg);
   margin: var(--space-lg) 0;
-  box-shadow: var(--shadow-sm);
+  border: var(--app-border);
 }
 
 .lead {
@@ -119,4 +150,16 @@ a.slide:hover::after {
   color: var(--text-subtle);
   margin-top: var(--space-sm);
   font-size: 0.95rem;
+}
+
+@media (max-width: 500px) {
+  main {
+    padding: 8em 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    font-size: 0.8rem;
+  }
 }

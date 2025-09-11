@@ -1,7 +1,8 @@
+import clsx from "clsx";
 import styles from "./About.module.css";
 
 const About = () => (
-  <div className="container">
+  <div className={clsx("container", styles.aboutContainer)}>
     <header className="hero">
       <h1>About</h1>
     </header>
@@ -9,10 +10,10 @@ const About = () => (
     <section className="card">
       <h2>What this is</h2>
       <p className="lead">
-        This project showcases a production-style auth flow that keeps sensitive
-        tokens off the client. The UI is a small, readable codebase that
-        demonstrates how I approach structure, accessibility, state, and “real
-        app” concerns without the noise.
+        This project shows a production-style auth flow that keeps sensitive
+        content off the client. The UI is intentionally small and easy to read,
+        so it highlights how I structure code, handle state, think about
+        accessibility, and approach “real app” concerns without extra clutter.
       </p>
     </section>
 
@@ -20,55 +21,54 @@ const About = () => (
       <h2>How to explore</h2>
       <ul className={styles.list}>
         <li>
-          Start here on <code>/</code> for the overview.
+          Start on <strong>Home</strong> for a quick overview.
         </li>
         <li>
-          Create an account at <code>/signup</code>, then sign in at{" "}
-          <code>/signin</code>.
+          Create an account at <strong>/register</strong>, then sign in at{" "}
+          <strong>/login</strong>.
         </li>
         <li>
-          Visit protected areas like <code>/dashboard</code> and{" "}
-          <code>/account</code>.
+          Check out protected routes like <strong>/profile</strong> and{" "}
+          <strong>/home</strong>.
         </li>
         <li>
-          Use <code>/logout</code> to end the session and return to public
-          pages.
+          Use the <strong>logout</strong> button to end the session and return
+          to public pages.
         </li>
       </ul>
       <p className="muted">
-        You won’t see the session token in DevTools — it’s stored in an{" "}
-        <b>HTTP-only</b> cookie so JavaScript cannot access it.
+        Session tokens won’t appear in DevTools — they’re stored in an{" "}
+        <b>HTTP-only</b> cookie that JavaScript can’t touch.
       </p>
     </section>
 
     <section className="card">
-      <h2>Auth &amp; session model (high-level)</h2>
+      <h2>Auth &amp; session model</h2>
       <ul className={styles.list}>
         <li>
-          <b>Credentials → Server:</b> Sign-in happens on the server (Netlify
-          Function).
+          <b>Credentials / Server:</b> Sign-in happens in a Netlify Function.
         </li>
         <li>
-          <b>Password safety:</b> Passwords are hashed with bcrypt and compared
+          <b>Password safety:</b> Passwords are hashed with bcrypt and checked
           server-side.
         </li>
         <li>
-          <b>Session creation:</b> Server creates a session (random token,
-          expiry) and sets an <b>HTTP-only, Secure, SameSite=Lax</b> cookie.
+          <b>Session creation:</b> The server generates a token with an expiry
+          and sets it in an <b>HTTP-only, Secure, SameSite=Lax</b> cookie.
         </li>
         <li>
-          <b>Auth checks:</b> Protected pages call a small “who am I” endpoint;
-          server validates the cookie against the session and returns user info.
+          <b>Auth checks:</b> Protected routes hit a “verifyMe” endpoint; the
+          server validates the cookie and returns user info.
         </li>
         <li>
-          <b>Logout:</b> Server deletes the session and instructs the browser to
-          clear the cookie.
+          <b>Logout:</b> The server clears the session and instructs the browser
+          to drop the cookie.
         </li>
       </ul>
       <p className="muted">
-        This design avoids storing tokens in <code>localStorage</code> or
-        exposing them to client JS, reducing the blast radius of XSS and common
-        token-leak patterns.
+        This avoids storing tokens in <code>localStorage</code> or exposing them
+        to client JS, which helps limit the impact of XSS and other token-leak
+        issues.
       </p>
     </section>
   </div>

@@ -1,7 +1,7 @@
 .container {
   text-align: center;
   padding-top: var(--space-xl);
-  color: var(--color-white);
+  color: var(--color-primary);
 }
 
 .container > h2 {

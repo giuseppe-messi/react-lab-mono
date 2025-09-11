@@ -2,22 +2,20 @@ import axios, { isCancel } from "axios";
 import { useCallback, useRef, useState } from "react";
 import type { RouteKey } from "../api/routes";
 
-type Type = "post" | "put";
+type Method = "post" | "put" | "delete";
 
 type Props = {
   url: RouteKey;
-  type: Type;
+  method: Method;
 };
 
-export const useMutate = <T>({ url, type }: Props) => {
+export const useMutate = <T>({ url, method }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const controllerRef = useRef<AbortController | null>(null);
 
-  const action: Type = type === "post" ? "post" : "put";
-
   const mutate = useCallback(
     async (
-      body: T,
+      body?: T,
       {
         onSuccess,
         onError
@@ -30,7 +28,7 @@ export const useMutate = <T>({ url, type }: Props) => {
       setIsLoading(true);
 
       try {
-        const { data } = await axios[action]<T>(url, body, {
+        const { data } = await axios[method]<T>(url, body, {
           signal: controller.signal
         });
 
@@ -43,7 +41,7 @@ export const useMutate = <T>({ url, type }: Props) => {
         if (!controller.signal.aborted) setIsLoading(false);
       }
     },
-    [url]
+    [url, method]
   );
 
   return {

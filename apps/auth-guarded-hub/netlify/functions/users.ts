@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { Plan } from "@prisma/client";
 import { prisma } from "../../prisma"; // <-- use the singleton
 import {
+  clearCookieHeader,
   createSession,
   getCookie,
   setCookieHeader,
@@ -23,13 +24,7 @@ const UpdateUser = z.object({
   name: z.string(),
   lastname: z.string(),
   email: z.email(),
-  // confirmPassword: z.string(),
   plan: z.enum(Plan)
-});
-
-// Schema for delete
-const DeleteUser = z.object({
-  id: z.string()
 });
 
 export default async (req: Request) => {
@@ -130,6 +125,35 @@ export default async (req: Request) => {
       });
 
       return Response.json(updatedUser, { status: 200 });
+    }
+
+    case "DELETE": {
+      /// same as verifyMe, DRY this up ///
+      const sid = getCookie(req.headers.get("cookie") ?? "");
+
+      if (!sid)
+        return Response.json({ message: "Unauthenticated" }, { status: 401 });
+
+      const session = await prisma.session.findUnique({
+        where: { secretHash: sha256(sid) },
+        include: { user: true }
+      });
+
+      if (!session || session.revokedAt || session.expiresAt < new Date()) {
+        return Response.json({ message: "Unauthenticated" }, { status: 401 });
+      }
+      /// ///
+
+      const userId = session.user.id;
+
+      await prisma.user.delete({
+        where: { id: userId }
+      });
+
+      return new Response(null, {
+        status: 204,
+        headers: { "Set-Cookie": clearCookieHeader }
+      });
     }
 
     default:

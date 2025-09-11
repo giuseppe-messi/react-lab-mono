@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import { Button, LoadingSpinner, useToastersStore } from "@react-lab-mono/ui";
+import clsx from "clsx";
 import { useAuth, type User } from "../../contexts/AuthContext";
 import { useMutate } from "../../hooks/useMutate";
 import { ROUTES, type RouteKey } from "../../api/routes";
@@ -20,9 +21,14 @@ const Profile = () => {
   const { enQueueToast } = useToastersStore();
   const planRef = useRef<HTMLSelectElement | null>(null);
 
+  const { mutate: deleteUser, isLoading: isDeleting } = useMutate({
+    url: ROUTES.USERS as RouteKey,
+    method: "delete"
+  });
+
   const { mutate, isLoading: isSaving } = useMutate<Omit<User, "password">>({
     url: ROUTES.USERS as RouteKey,
-    type: "put"
+    method: "put"
   });
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,6 +66,27 @@ const Profile = () => {
     });
   };
 
+  const handleDeleteAccount = async () => {
+    const answer = confirm("Are you sure you want to delete your account?");
+
+    if (!answer) return;
+
+    await deleteUser(pendingForm, {
+      onSuccess: () => {
+        enQueueToast("sucess", "Account deleted!");
+        void refresh?.();
+        setUser?.(null);
+      },
+      onError: (err) => {
+        let errorMessage = "Deleting your account failed!";
+        if (axios.isAxiosError(err)) {
+          errorMessage = err.response?.data?.message ?? errorMessage;
+        }
+        enQueueToast("error", errorMessage);
+      }
+    });
+  };
+
   const toggleEditing = () => {
     setIsEditing((prev) => !prev);
   };
@@ -67,7 +94,7 @@ const Profile = () => {
   const isLoading = isLoadingUser || isSaving;
 
   return (
-    <div className="container">
+    <div className={clsx("container", styles.profileContainer)}>
       <header className="hero">
         <h1>Profile</h1>
       </header>
@@ -82,8 +109,6 @@ const Profile = () => {
 
       {!isLoading && Boolean(user) && (
         <section className="card">
-          <h2>Your info</h2>
-
           {!isEditing && (
             <div className={styles.btnBox}>
               <Button
@@ -98,7 +123,7 @@ const Profile = () => {
             </div>
           )}
 
-          <form action="" onSubmit={handleSave}>
+          <form action="" className={styles.form} onSubmit={handleSave}>
             {Boolean(isEditing) && (
               <div className={styles.btnBox}>
                 <Button
@@ -184,6 +209,10 @@ const Profile = () => {
               </tbody>
             </table>
           </form>
+
+          <div className={styles.deleteAccountBox}>
+            <Button onClick={handleDeleteAccount}>Delete your account</Button>
+          </div>
         </section>
       )}
       <ConfirmPasswordModal

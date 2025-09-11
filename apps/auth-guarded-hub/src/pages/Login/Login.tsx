@@ -15,7 +15,7 @@ const Login = () => {
 
   const { mutate, isLoading } = useMutate({
     url: ROUTES.LOGIN as RouteKey,
-    type: "post"
+    method: "post"
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,11 +27,16 @@ const Login = () => {
       password: String(fd.get("password"))
     };
 
+    let previousPath = location.state?.from?.pathname;
+    if (!previousPath || ["login", "/register"].includes(previousPath)) {
+      previousPath = "/";
+    }
+
     await mutate(formData, {
       onSuccess: () => {
         enQueueToast("sucess", "Successfully logged in!");
         void refresh?.();
-        void navigate(location.state.from ?? "/");
+        void navigate(previousPath);
       },
       onError: (err) => {
         let errorMessage = "Login failed!";
@@ -57,10 +62,10 @@ const Login = () => {
         <LoadingSpinner size="md" />
       ) : (
         <div className={styles.formActions}>
-          <Button fillMode="outline" size="sm" type="submit">
+          <Button size="sm" type="submit">
             Log in
           </Button>
-          <Button fillMode="outline" size="sm" type="reset" variant="white">
+          <Button fillMode="outline" size="sm" type="reset">
             Clear
           </Button>
         </div>
