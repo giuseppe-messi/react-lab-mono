@@ -46,19 +46,11 @@ Every project is backed by unit and integration tests using Jest and React Testi
    - **Checkout the repo**: [apps/auth-guarded-hub/](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/auth-guarded-hub)
    - **Live demo**: [Auth-Guarded Hub](https://auth-guarded-hub.netlify.app/)
 
-3. **PWA Cache Demo** ( ❌ Coming Soon )
+3. **Probably something with WebSocket for real-time comunication** ( ❌ Coming Soon )
 
-   - **Core JS/Web Fundamentals**: Service Workers, IndexedDB via localForage, Web APIs
-   - **Data Fetching & API Integration**: fetch + runtime caching (Workbox)
-   - **Accessibility**: offline state banner, progressive enhancement
-   - **Build Tools & Workflow**: Vite PWA template, manifest.json
-   
-5. **Cross-Platform UI** ( ❌ Coming Soon )
+4. **Probably something related to fetching heavy API's loads** ( ❌ Coming Soon )
 
-   - **React Fundamentals** & **Type Safety**: JSX, props & state, TypeScript
-   - **Styling & Theming**: shared design-system tokens across web & native
-   - **Component Architecture**: code-sharing via React Native Web
-   - **Build Tools & Workflow**: Metro/RNW bundling, platform-agnostic styling
+5. **Probably a mobile App created with React Native** ( ❌ Coming Soon )
 
 ## 📁 Structure
 
