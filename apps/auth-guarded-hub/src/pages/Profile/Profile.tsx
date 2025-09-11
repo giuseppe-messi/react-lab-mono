@@ -21,7 +21,7 @@ const Profile = () => {
   const { enQueueToast } = useToastersStore();
   const planRef = useRef<HTMLSelectElement | null>(null);
 
-  const { mutate: deleteUser, isLoading: isDeleting } = useMutate({
+  const { mutate: deleteUser } = useMutate({
     url: ROUTES.USERS as RouteKey,
     method: "delete"
   });
