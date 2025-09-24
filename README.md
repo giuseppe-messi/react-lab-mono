@@ -22,7 +22,7 @@ Inside [apps/](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps) 
 Every project is backed by unit and integration tests using Jest and React Testing Library. I also automate linting, formatting, and type-checking using ESLint and TypeScript configuration files.
 
 
-1. **[Storybook](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)** ( 🧪 Work In Progress )
+1. **[Storybook](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)** ( ✅ Done - pretty much, just a general code clean up and testing missing )
 
    - **Checkout the repo**: [apps/docs](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)
    - **Live demo**: [Packages UI Storybook](https://storybook-package-ui.netlify.app/?path=/docs/button--docs)
