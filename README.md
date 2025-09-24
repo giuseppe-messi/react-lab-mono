@@ -22,12 +22,12 @@ Inside [apps/](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps) 
 Every project is backed by unit and integration tests using Jest and React Testing Library. I also automate linting, formatting, and type-checking using ESLint and TypeScript configuration files.
 
 
-1. **[Storybook](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)** ( ✅ Done - pretty much, just a general code clean up and testing missing )
+1. **[Storybook](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)** ( 🧪 Work In Progress )
 
    - **Checkout the repo**: [apps/docs](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)
    - **Live demo**: [Packages UI Storybook](https://storybook-package-ui.netlify.app/?path=/docs/button--docs)
 
-2. **[Optimistic UI Sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)**
+2. **[Optimistic UI Sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)** ( ✅ Done )
 
    - **State Management**: Zustand
    - **Mocked Data Fetching & API Integration**: mocking + optimistic UI
@@ -37,7 +37,7 @@ Every project is backed by unit and integration tests using Jest and React Testi
    - **Checkout the repo**: [apps/optimistic-ui-sandbox](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/optimistic-ui-sandbox)
    - **Live demo**: [Optimistic UI Sandbox](https://optimistic-ui-sandbox.netlify.app/)
 
-2. **[Auth-Guarded Hub](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/auth-guarded-hub)** ( 🧪 Work In Progress )
+2. **[Auth-Guarded Hub](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/auth-guarded-hub)** ( ✅ Done - pretty much, just a general code clean up and testing missing )
 
    - **Full-Stack Setup**: React (Vite) frontend + backend API built with Netlify Functions and Prisma/Postgres
    - **Database & Schema**: Prisma migrations managing a Postgres schema, deployed automatically on Netlify
