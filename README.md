@@ -17,11 +17,6 @@ Inside `packages/ui` you'll find a self-contained, production-ready React compon
 
 Inside `/apps/docs` you'll find the [Storybook](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs) project, which provides a visual playground and documentation for every UI component. You can check it live here: [Packages UI Storybook](https://storybook-package-ui.netlify.app/?path=/docs/button--docs).
 
-1. **[Storybook](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)** ( 🧪 Work In Progress )
-
-   - **Checkout the repo**: [apps/docs](https://github.com/giuseppe-messi/react-lab-mono/tree/main/apps/docs)
-   - **Live demo**: [Packages UI Storybook](https://storybook-package-ui.netlify.app/?path=/docs/button--docs)
-
 ## 📁 Structure
 
 ```bash
