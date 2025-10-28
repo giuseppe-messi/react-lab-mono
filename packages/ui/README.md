@@ -28,5 +28,3 @@ export function App() {
   return <Button>Click me</Button>;
 }
 ```
-
-This package is part of a larger monorepo called [react-lab-mono](https://github.com/giuseppe-messi/react-lab-mono).
